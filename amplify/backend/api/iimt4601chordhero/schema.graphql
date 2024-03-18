@@ -1,0 +1,41 @@
+type Report @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  content: String
+  teacherID: ID! @index(name: "byTeacher")
+  ukuleleID: ID! @index(name: "byUkulele")
+}
+
+type Order @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  teacherID: ID! @index(name: "byTeacher")
+  Ukuleles: [Ukulele] @hasMany(indexName: "byOrder", fields: ["id"])
+}
+
+type Product @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  price: String
+}
+
+type Teacher @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  Students: [Student] @hasMany(indexName: "byTeacher", fields: ["id"])
+  Ukuleles: [Ukulele] @hasMany(indexName: "byTeacher", fields: ["id"])
+  Orders: [Order] @hasMany(indexName: "byTeacher", fields: ["id"])
+  Reports: [Report] @hasMany(indexName: "byTeacher", fields: ["id"])
+}
+
+type Ukulele @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  teacherID: ID! @index(name: "byTeacher")
+  Reports: [Report] @hasMany(indexName: "byUkulele", fields: ["id"])
+  orderID: ID! @index(name: "byOrder")
+}
+
+type Student @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  teacherID: ID! @index(name: "byTeacher")
+  Ukulele: Ukulele @hasOne
+}
