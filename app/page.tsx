@@ -8,9 +8,9 @@ import ChordHeroBlackLogo from "../src/assets/Chord Hero Black Logo.png";
 
 const pages = [
   {
-    title: "Shop",
-    href: "shop",
-    description: "Place orders for ukuleles with ease.",
+    title: "Analytics",
+    href: "analytics",
+    description: "Check analytics of the Chord Hero NFTs.",
   },
   {
     title: "Order Status",
@@ -18,9 +18,9 @@ const pages = [
     description: "Track the progress of your ukulele delivery.",
   },
   {
-    title: "Ukulele Management",
+    title: "Ukuleles",
     href: "ukuleles",
-    description: "Manage purchased ukuleles and report any damages.",
+    description: "Check the list of ukuleles minted by Chord Hero.",
   },
   {
     title: "Students",
