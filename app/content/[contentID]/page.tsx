@@ -1,7 +1,13 @@
-import { Box, Container, Typography } from "@mui/material";
-import Image from "next/image";
+"use client";
+import * as React from "react";
 
-export default function Profile() {
+import { Box, Container, Typography } from "@mui/material";
+
+export default function ViewContent({
+  params,
+}: {
+  params: { contentID: string };
+}) {
   return (
     <Container maxWidth="lg">
       <Box
@@ -22,7 +28,7 @@ export default function Profile() {
             width: "100%",
           }}
         >
-          Profile
+          Content ID: {params.contentID}
         </Typography>
       </Box>
     </Container>

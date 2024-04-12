@@ -2,20 +2,20 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateReportInput = {
+export type CreateUserInput = {
   id?: string | null,
-  content?: string | null,
-  teacherID: string,
-  ukuleleID: string,
+  name?: string | null,
+  authID?: string | null,
+  isChordHero?: boolean | null,
 };
 
-export type ModelReportConditionInput = {
-  content?: ModelStringInput | null,
-  teacherID?: ModelIDInput | null,
-  ukuleleID?: ModelIDInput | null,
-  and?: Array< ModelReportConditionInput | null > | null,
-  or?: Array< ModelReportConditionInput | null > | null,
-  not?: ModelReportConditionInput | null,
+export type ModelUserConditionInput = {
+  name?: ModelStringInput | null,
+  authID?: ModelStringInput | null,
+  isChordHero?: ModelBooleanInput | null,
+  and?: Array< ModelUserConditionInput | null > | null,
+  or?: Array< ModelUserConditionInput | null > | null,
+  not?: ModelUserConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -58,6 +58,199 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type User = {
+  __typename: "User",
+  id: string,
+  name?: string | null,
+  authID?: string | null,
+  isChordHero?: boolean | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateUserInput = {
+  id: string,
+  name?: string | null,
+  authID?: string | null,
+  isChordHero?: boolean | null,
+};
+
+export type DeleteUserInput = {
+  id: string,
+};
+
+export type CreateSchoolInput = {
+  id?: string | null,
+  title?: string | null,
+};
+
+export type ModelSchoolConditionInput = {
+  title?: ModelStringInput | null,
+  and?: Array< ModelSchoolConditionInput | null > | null,
+  or?: Array< ModelSchoolConditionInput | null > | null,
+  not?: ModelSchoolConditionInput | null,
+};
+
+export type School = {
+  __typename: "School",
+  id: string,
+  title?: string | null,
+  Creators?: ModelCreatorConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelCreatorConnection = {
+  __typename: "ModelCreatorConnection",
+  items:  Array<Creator | null >,
+  nextToken?: string | null,
+};
+
+export type Creator = {
+  __typename: "Creator",
+  id: string,
+  name?: string | null,
+  Ukulele?: Ukulele | null,
+  schoolID: string,
+  createdAt: string,
+  updatedAt: string,
+  creatorUkuleleId?: string | null,
+};
+
+export type Ukulele = {
+  __typename: "Ukulele",
+  id: string,
+  title?: string | null,
+  tokenID?: string | null,
+  contractAddress?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateSchoolInput = {
+  id: string,
+  title?: string | null,
+};
+
+export type DeleteSchoolInput = {
+  id: string,
+};
+
+export type CreateContentInput = {
+  id?: string | null,
+  title?: string | null,
+  threshold?: number | null,
+  type?: ContentType | null,
+  requiredNFT?: string | null,
+};
+
+export enum ContentType {
+  VIDEO = "VIDEO",
+  TEXT = "TEXT",
+  PDF = "PDF",
+}
+
+
+export type ModelContentConditionInput = {
+  title?: ModelStringInput | null,
+  threshold?: ModelIntInput | null,
+  type?: ModelContentTypeInput | null,
+  requiredNFT?: ModelStringInput | null,
+  and?: Array< ModelContentConditionInput | null > | null,
+  or?: Array< ModelContentConditionInput | null > | null,
+  not?: ModelContentConditionInput | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type ModelContentTypeInput = {
+  eq?: ContentType | null,
+  ne?: ContentType | null,
+};
+
+export type Content = {
+  __typename: "Content",
+  id: string,
+  title?: string | null,
+  threshold?: number | null,
+  type?: ContentType | null,
+  requiredNFT?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateContentInput = {
+  id: string,
+  title?: string | null,
+  threshold?: number | null,
+  type?: ContentType | null,
+  requiredNFT?: string | null,
+};
+
+export type DeleteContentInput = {
+  id: string,
+};
+
+export type CreateUkuleleInput = {
+  id?: string | null,
+  title?: string | null,
+  tokenID?: string | null,
+  contractAddress?: string | null,
+};
+
+export type ModelUkuleleConditionInput = {
+  title?: ModelStringInput | null,
+  tokenID?: ModelStringInput | null,
+  contractAddress?: ModelStringInput | null,
+  and?: Array< ModelUkuleleConditionInput | null > | null,
+  or?: Array< ModelUkuleleConditionInput | null > | null,
+  not?: ModelUkuleleConditionInput | null,
+};
+
+export type UpdateUkuleleInput = {
+  id: string,
+  title?: string | null,
+  tokenID?: string | null,
+  contractAddress?: string | null,
+};
+
+export type DeleteUkuleleInput = {
+  id: string,
+};
+
+export type CreateCreatorInput = {
+  id?: string | null,
+  name?: string | null,
+  schoolID: string,
+  creatorUkuleleId?: string | null,
+};
+
+export type ModelCreatorConditionInput = {
+  name?: ModelStringInput | null,
+  schoolID?: ModelIDInput | null,
+  and?: Array< ModelCreatorConditionInput | null > | null,
+  or?: Array< ModelCreatorConditionInput | null > | null,
+  not?: ModelCreatorConditionInput | null,
+  creatorUkuleleId?: ModelIDInput | null,
+};
+
 export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
@@ -74,46 +267,72 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type Report = {
-  __typename: "Report",
+export type UpdateCreatorInput = {
   id: string,
-  content?: string | null,
-  teacherID: string,
-  ukuleleID: string,
-  createdAt: string,
-  updatedAt: string,
+  name?: string | null,
+  schoolID?: string | null,
+  creatorUkuleleId?: string | null,
 };
 
-export type UpdateReportInput = {
-  id: string,
-  content?: string | null,
-  teacherID?: string | null,
-  ukuleleID?: string | null,
-};
-
-export type DeleteReportInput = {
+export type DeleteCreatorInput = {
   id: string,
 };
 
-export type CreateOrderInput = {
-  id?: string | null,
-  teacherID: string,
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  authID?: ModelStringInput | null,
+  isChordHero?: ModelBooleanInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
 };
 
-export type ModelOrderConditionInput = {
-  teacherID?: ModelIDInput | null,
-  and?: Array< ModelOrderConditionInput | null > | null,
-  or?: Array< ModelOrderConditionInput | null > | null,
-  not?: ModelOrderConditionInput | null,
+export type ModelUserConnection = {
+  __typename: "ModelUserConnection",
+  items:  Array<User | null >,
+  nextToken?: string | null,
 };
 
-export type Order = {
-  __typename: "Order",
-  id: string,
-  teacherID: string,
-  Ukuleles?: ModelUkuleleConnection | null,
-  createdAt: string,
-  updatedAt: string,
+export type ModelSchoolFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  and?: Array< ModelSchoolFilterInput | null > | null,
+  or?: Array< ModelSchoolFilterInput | null > | null,
+  not?: ModelSchoolFilterInput | null,
+};
+
+export type ModelSchoolConnection = {
+  __typename: "ModelSchoolConnection",
+  items:  Array<School | null >,
+  nextToken?: string | null,
+};
+
+export type ModelContentFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  threshold?: ModelIntInput | null,
+  type?: ModelContentTypeInput | null,
+  requiredNFT?: ModelStringInput | null,
+  and?: Array< ModelContentFilterInput | null > | null,
+  or?: Array< ModelContentFilterInput | null > | null,
+  not?: ModelContentFilterInput | null,
+};
+
+export type ModelContentConnection = {
+  __typename: "ModelContentConnection",
+  items:  Array<Content | null >,
+  nextToken?: string | null,
+};
+
+export type ModelUkuleleFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  tokenID?: ModelStringInput | null,
+  contractAddress?: ModelStringInput | null,
+  and?: Array< ModelUkuleleFilterInput | null > | null,
+  or?: Array< ModelUkuleleFilterInput | null > | null,
+  not?: ModelUkuleleFilterInput | null,
 };
 
 export type ModelUkuleleConnection = {
@@ -122,179 +341,14 @@ export type ModelUkuleleConnection = {
   nextToken?: string | null,
 };
 
-export type Ukulele = {
-  __typename: "Ukulele",
-  id: string,
-  teacherID: string,
-  Reports?: ModelReportConnection | null,
-  orderID: string,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type ModelReportConnection = {
-  __typename: "ModelReportConnection",
-  items:  Array<Report | null >,
-  nextToken?: string | null,
-};
-
-export type UpdateOrderInput = {
-  id: string,
-  teacherID?: string | null,
-};
-
-export type DeleteOrderInput = {
-  id: string,
-};
-
-export type CreateProductInput = {
-  id?: string | null,
-  name?: string | null,
-  price?: string | null,
-};
-
-export type ModelProductConditionInput = {
-  name?: ModelStringInput | null,
-  price?: ModelStringInput | null,
-  and?: Array< ModelProductConditionInput | null > | null,
-  or?: Array< ModelProductConditionInput | null > | null,
-  not?: ModelProductConditionInput | null,
-};
-
-export type Product = {
-  __typename: "Product",
-  id: string,
-  name?: string | null,
-  price?: string | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type UpdateProductInput = {
-  id: string,
-  name?: string | null,
-  price?: string | null,
-};
-
-export type DeleteProductInput = {
-  id: string,
-};
-
-export type CreateTeacherInput = {
-  id?: string | null,
-  name?: string | null,
-};
-
-export type ModelTeacherConditionInput = {
-  name?: ModelStringInput | null,
-  and?: Array< ModelTeacherConditionInput | null > | null,
-  or?: Array< ModelTeacherConditionInput | null > | null,
-  not?: ModelTeacherConditionInput | null,
-};
-
-export type Teacher = {
-  __typename: "Teacher",
-  id: string,
-  name?: string | null,
-  Students?: ModelStudentConnection | null,
-  Ukuleles?: ModelUkuleleConnection | null,
-  Orders?: ModelOrderConnection | null,
-  Reports?: ModelReportConnection | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type ModelStudentConnection = {
-  __typename: "ModelStudentConnection",
-  items:  Array<Student | null >,
-  nextToken?: string | null,
-};
-
-export type Student = {
-  __typename: "Student",
-  id: string,
-  name?: string | null,
-  teacherID: string,
-  Ukulele?: Ukulele | null,
-  createdAt: string,
-  updatedAt: string,
-  studentUkuleleId?: string | null,
-};
-
-export type ModelOrderConnection = {
-  __typename: "ModelOrderConnection",
-  items:  Array<Order | null >,
-  nextToken?: string | null,
-};
-
-export type UpdateTeacherInput = {
-  id: string,
-  name?: string | null,
-};
-
-export type DeleteTeacherInput = {
-  id: string,
-};
-
-export type CreateUkuleleInput = {
-  id?: string | null,
-  teacherID: string,
-  orderID: string,
-};
-
-export type ModelUkuleleConditionInput = {
-  teacherID?: ModelIDInput | null,
-  orderID?: ModelIDInput | null,
-  and?: Array< ModelUkuleleConditionInput | null > | null,
-  or?: Array< ModelUkuleleConditionInput | null > | null,
-  not?: ModelUkuleleConditionInput | null,
-};
-
-export type UpdateUkuleleInput = {
-  id: string,
-  teacherID?: string | null,
-  orderID?: string | null,
-};
-
-export type DeleteUkuleleInput = {
-  id: string,
-};
-
-export type CreateStudentInput = {
-  id?: string | null,
-  name?: string | null,
-  teacherID: string,
-  studentUkuleleId?: string | null,
-};
-
-export type ModelStudentConditionInput = {
-  name?: ModelStringInput | null,
-  teacherID?: ModelIDInput | null,
-  and?: Array< ModelStudentConditionInput | null > | null,
-  or?: Array< ModelStudentConditionInput | null > | null,
-  not?: ModelStudentConditionInput | null,
-  studentUkuleleId?: ModelIDInput | null,
-};
-
-export type UpdateStudentInput = {
-  id: string,
-  name?: string | null,
-  teacherID?: string | null,
-  studentUkuleleId?: string | null,
-};
-
-export type DeleteStudentInput = {
-  id: string,
-};
-
-export type ModelReportFilterInput = {
+export type ModelCreatorFilterInput = {
   id?: ModelIDInput | null,
-  content?: ModelStringInput | null,
-  teacherID?: ModelIDInput | null,
-  ukuleleID?: ModelIDInput | null,
-  and?: Array< ModelReportFilterInput | null > | null,
-  or?: Array< ModelReportFilterInput | null > | null,
-  not?: ModelReportFilterInput | null,
+  name?: ModelStringInput | null,
+  schoolID?: ModelIDInput | null,
+  and?: Array< ModelCreatorFilterInput | null > | null,
+  or?: Array< ModelCreatorFilterInput | null > | null,
+  not?: ModelCreatorFilterInput | null,
+  creatorUkuleleId?: ModelIDInput | null,
 };
 
 export enum ModelSortDirection {
@@ -303,69 +357,13 @@ export enum ModelSortDirection {
 }
 
 
-export type ModelOrderFilterInput = {
-  id?: ModelIDInput | null,
-  teacherID?: ModelIDInput | null,
-  and?: Array< ModelOrderFilterInput | null > | null,
-  or?: Array< ModelOrderFilterInput | null > | null,
-  not?: ModelOrderFilterInput | null,
-};
-
-export type ModelProductFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  price?: ModelStringInput | null,
-  and?: Array< ModelProductFilterInput | null > | null,
-  or?: Array< ModelProductFilterInput | null > | null,
-  not?: ModelProductFilterInput | null,
-};
-
-export type ModelProductConnection = {
-  __typename: "ModelProductConnection",
-  items:  Array<Product | null >,
-  nextToken?: string | null,
-};
-
-export type ModelTeacherFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  and?: Array< ModelTeacherFilterInput | null > | null,
-  or?: Array< ModelTeacherFilterInput | null > | null,
-  not?: ModelTeacherFilterInput | null,
-};
-
-export type ModelTeacherConnection = {
-  __typename: "ModelTeacherConnection",
-  items:  Array<Teacher | null >,
-  nextToken?: string | null,
-};
-
-export type ModelUkuleleFilterInput = {
-  id?: ModelIDInput | null,
-  teacherID?: ModelIDInput | null,
-  orderID?: ModelIDInput | null,
-  and?: Array< ModelUkuleleFilterInput | null > | null,
-  or?: Array< ModelUkuleleFilterInput | null > | null,
-  not?: ModelUkuleleFilterInput | null,
-};
-
-export type ModelStudentFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  teacherID?: ModelIDInput | null,
-  and?: Array< ModelStudentFilterInput | null > | null,
-  or?: Array< ModelStudentFilterInput | null > | null,
-  not?: ModelStudentFilterInput | null,
-  studentUkuleleId?: ModelIDInput | null,
-};
-
-export type ModelSubscriptionReportFilterInput = {
+export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  content?: ModelSubscriptionStringInput | null,
-  teacherID?: ModelSubscriptionIDInput | null,
-  ukuleleID?: ModelSubscriptionIDInput | null,
-  and?: Array< ModelSubscriptionReportFilterInput | null > | null,
-  or?: Array< ModelSubscriptionReportFilterInput | null > | null,
+  name?: ModelSubscriptionStringInput | null,
+  authID?: ModelSubscriptionStringInput | null,
+  isChordHero?: ModelSubscriptionBooleanInput | null,
+  and?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  or?: Array< ModelSubscriptionUserFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -398,224 +396,120 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionOrderFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  teacherID?: ModelSubscriptionIDInput | null,
-  and?: Array< ModelSubscriptionOrderFilterInput | null > | null,
-  or?: Array< ModelSubscriptionOrderFilterInput | null > | null,
+export type ModelSubscriptionBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
 };
 
-export type ModelSubscriptionProductFilterInput = {
+export type ModelSubscriptionSchoolFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  price?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionProductFilterInput | null > | null,
-  or?: Array< ModelSubscriptionProductFilterInput | null > | null,
+  title?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionSchoolFilterInput | null > | null,
+  or?: Array< ModelSubscriptionSchoolFilterInput | null > | null,
 };
 
-export type ModelSubscriptionTeacherFilterInput = {
+export type ModelSubscriptionContentFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionTeacherFilterInput | null > | null,
-  or?: Array< ModelSubscriptionTeacherFilterInput | null > | null,
+  title?: ModelSubscriptionStringInput | null,
+  threshold?: ModelSubscriptionIntInput | null,
+  type?: ModelSubscriptionStringInput | null,
+  requiredNFT?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionContentFilterInput | null > | null,
+  or?: Array< ModelSubscriptionContentFilterInput | null > | null,
+};
+
+export type ModelSubscriptionIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  in?: Array< number | null > | null,
+  notIn?: Array< number | null > | null,
 };
 
 export type ModelSubscriptionUkuleleFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  teacherID?: ModelSubscriptionIDInput | null,
-  orderID?: ModelSubscriptionIDInput | null,
+  title?: ModelSubscriptionStringInput | null,
+  tokenID?: ModelSubscriptionStringInput | null,
+  contractAddress?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUkuleleFilterInput | null > | null,
   or?: Array< ModelSubscriptionUkuleleFilterInput | null > | null,
 };
 
-export type ModelSubscriptionStudentFilterInput = {
+export type ModelSubscriptionCreatorFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
-  teacherID?: ModelSubscriptionIDInput | null,
-  and?: Array< ModelSubscriptionStudentFilterInput | null > | null,
-  or?: Array< ModelSubscriptionStudentFilterInput | null > | null,
+  schoolID?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionCreatorFilterInput | null > | null,
+  or?: Array< ModelSubscriptionCreatorFilterInput | null > | null,
 };
 
-export type CreateReportMutationVariables = {
-  input: CreateReportInput,
-  condition?: ModelReportConditionInput | null,
+export type CreateUserMutationVariables = {
+  input: CreateUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type CreateReportMutation = {
-  createReport?:  {
-    __typename: "Report",
-    id: string,
-    content?: string | null,
-    teacherID: string,
-    ukuleleID: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateReportMutationVariables = {
-  input: UpdateReportInput,
-  condition?: ModelReportConditionInput | null,
-};
-
-export type UpdateReportMutation = {
-  updateReport?:  {
-    __typename: "Report",
-    id: string,
-    content?: string | null,
-    teacherID: string,
-    ukuleleID: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteReportMutationVariables = {
-  input: DeleteReportInput,
-  condition?: ModelReportConditionInput | null,
-};
-
-export type DeleteReportMutation = {
-  deleteReport?:  {
-    __typename: "Report",
-    id: string,
-    content?: string | null,
-    teacherID: string,
-    ukuleleID: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreateOrderMutationVariables = {
-  input: CreateOrderInput,
-  condition?: ModelOrderConditionInput | null,
-};
-
-export type CreateOrderMutation = {
-  createOrder?:  {
-    __typename: "Order",
-    id: string,
-    teacherID: string,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateOrderMutationVariables = {
-  input: UpdateOrderInput,
-  condition?: ModelOrderConditionInput | null,
-};
-
-export type UpdateOrderMutation = {
-  updateOrder?:  {
-    __typename: "Order",
-    id: string,
-    teacherID: string,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteOrderMutationVariables = {
-  input: DeleteOrderInput,
-  condition?: ModelOrderConditionInput | null,
-};
-
-export type DeleteOrderMutation = {
-  deleteOrder?:  {
-    __typename: "Order",
-    id: string,
-    teacherID: string,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreateProductMutationVariables = {
-  input: CreateProductInput,
-  condition?: ModelProductConditionInput | null,
-};
-
-export type CreateProductMutation = {
-  createProduct?:  {
-    __typename: "Product",
+export type CreateUserMutation = {
+  createUser?:  {
+    __typename: "User",
     id: string,
     name?: string | null,
-    price?: string | null,
+    authID?: string | null,
+    isChordHero?: boolean | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type UpdateProductMutationVariables = {
-  input: UpdateProductInput,
-  condition?: ModelProductConditionInput | null,
+export type UpdateUserMutationVariables = {
+  input: UpdateUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type UpdateProductMutation = {
-  updateProduct?:  {
-    __typename: "Product",
+export type UpdateUserMutation = {
+  updateUser?:  {
+    __typename: "User",
     id: string,
     name?: string | null,
-    price?: string | null,
+    authID?: string | null,
+    isChordHero?: boolean | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type DeleteProductMutationVariables = {
-  input: DeleteProductInput,
-  condition?: ModelProductConditionInput | null,
+export type DeleteUserMutationVariables = {
+  input: DeleteUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type DeleteProductMutation = {
-  deleteProduct?:  {
-    __typename: "Product",
+export type DeleteUserMutation = {
+  deleteUser?:  {
+    __typename: "User",
     id: string,
     name?: string | null,
-    price?: string | null,
+    authID?: string | null,
+    isChordHero?: boolean | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type CreateTeacherMutationVariables = {
-  input: CreateTeacherInput,
-  condition?: ModelTeacherConditionInput | null,
+export type CreateSchoolMutationVariables = {
+  input: CreateSchoolInput,
+  condition?: ModelSchoolConditionInput | null,
 };
 
-export type CreateTeacherMutation = {
-  createTeacher?:  {
-    __typename: "Teacher",
+export type CreateSchoolMutation = {
+  createSchool?:  {
+    __typename: "School",
     id: string,
-    name?: string | null,
-    Students?:  {
-      __typename: "ModelStudentConnection",
-      nextToken?: string | null,
-    } | null,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    Orders?:  {
-      __typename: "ModelOrderConnection",
-      nextToken?: string | null,
-    } | null,
-    Reports?:  {
-      __typename: "ModelReportConnection",
+    title?: string | null,
+    Creators?:  {
+      __typename: "ModelCreatorConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -623,30 +517,18 @@ export type CreateTeacherMutation = {
   } | null,
 };
 
-export type UpdateTeacherMutationVariables = {
-  input: UpdateTeacherInput,
-  condition?: ModelTeacherConditionInput | null,
+export type UpdateSchoolMutationVariables = {
+  input: UpdateSchoolInput,
+  condition?: ModelSchoolConditionInput | null,
 };
 
-export type UpdateTeacherMutation = {
-  updateTeacher?:  {
-    __typename: "Teacher",
+export type UpdateSchoolMutation = {
+  updateSchool?:  {
+    __typename: "School",
     id: string,
-    name?: string | null,
-    Students?:  {
-      __typename: "ModelStudentConnection",
-      nextToken?: string | null,
-    } | null,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    Orders?:  {
-      __typename: "ModelOrderConnection",
-      nextToken?: string | null,
-    } | null,
-    Reports?:  {
-      __typename: "ModelReportConnection",
+    title?: string | null,
+    Creators?:  {
+      __typename: "ModelCreatorConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -654,32 +536,74 @@ export type UpdateTeacherMutation = {
   } | null,
 };
 
-export type DeleteTeacherMutationVariables = {
-  input: DeleteTeacherInput,
-  condition?: ModelTeacherConditionInput | null,
+export type DeleteSchoolMutationVariables = {
+  input: DeleteSchoolInput,
+  condition?: ModelSchoolConditionInput | null,
 };
 
-export type DeleteTeacherMutation = {
-  deleteTeacher?:  {
-    __typename: "Teacher",
+export type DeleteSchoolMutation = {
+  deleteSchool?:  {
+    __typename: "School",
     id: string,
-    name?: string | null,
-    Students?:  {
-      __typename: "ModelStudentConnection",
+    title?: string | null,
+    Creators?:  {
+      __typename: "ModelCreatorConnection",
       nextToken?: string | null,
     } | null,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    Orders?:  {
-      __typename: "ModelOrderConnection",
-      nextToken?: string | null,
-    } | null,
-    Reports?:  {
-      __typename: "ModelReportConnection",
-      nextToken?: string | null,
-    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateContentMutationVariables = {
+  input: CreateContentInput,
+  condition?: ModelContentConditionInput | null,
+};
+
+export type CreateContentMutation = {
+  createContent?:  {
+    __typename: "Content",
+    id: string,
+    title?: string | null,
+    threshold?: number | null,
+    type?: ContentType | null,
+    requiredNFT?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateContentMutationVariables = {
+  input: UpdateContentInput,
+  condition?: ModelContentConditionInput | null,
+};
+
+export type UpdateContentMutation = {
+  updateContent?:  {
+    __typename: "Content",
+    id: string,
+    title?: string | null,
+    threshold?: number | null,
+    type?: ContentType | null,
+    requiredNFT?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteContentMutationVariables = {
+  input: DeleteContentInput,
+  condition?: ModelContentConditionInput | null,
+};
+
+export type DeleteContentMutation = {
+  deleteContent?:  {
+    __typename: "Content",
+    id: string,
+    title?: string | null,
+    threshold?: number | null,
+    type?: ContentType | null,
+    requiredNFT?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -694,12 +618,9 @@ export type CreateUkuleleMutation = {
   createUkulele?:  {
     __typename: "Ukulele",
     id: string,
-    teacherID: string,
-    Reports?:  {
-      __typename: "ModelReportConnection",
-      nextToken?: string | null,
-    } | null,
-    orderID: string,
+    title?: string | null,
+    tokenID?: string | null,
+    contractAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -714,12 +635,9 @@ export type UpdateUkuleleMutation = {
   updateUkulele?:  {
     __typename: "Ukulele",
     id: string,
-    teacherID: string,
-    Reports?:  {
-      __typename: "ModelReportConnection",
-      nextToken?: string | null,
-    } | null,
-    orderID: string,
+    title?: string | null,
+    tokenID?: string | null,
+    contractAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -734,267 +652,123 @@ export type DeleteUkuleleMutation = {
   deleteUkulele?:  {
     __typename: "Ukulele",
     id: string,
-    teacherID: string,
-    Reports?:  {
-      __typename: "ModelReportConnection",
-      nextToken?: string | null,
-    } | null,
-    orderID: string,
+    title?: string | null,
+    tokenID?: string | null,
+    contractAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type CreateStudentMutationVariables = {
-  input: CreateStudentInput,
-  condition?: ModelStudentConditionInput | null,
+export type CreateCreatorMutationVariables = {
+  input: CreateCreatorInput,
+  condition?: ModelCreatorConditionInput | null,
 };
 
-export type CreateStudentMutation = {
-  createStudent?:  {
-    __typename: "Student",
+export type CreateCreatorMutation = {
+  createCreator?:  {
+    __typename: "Creator",
     id: string,
     name?: string | null,
-    teacherID: string,
     Ukulele?:  {
       __typename: "Ukulele",
       id: string,
-      teacherID: string,
-      orderID: string,
+      title?: string | null,
+      tokenID?: string | null,
+      contractAddress?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
+    schoolID: string,
     createdAt: string,
     updatedAt: string,
-    studentUkuleleId?: string | null,
+    creatorUkuleleId?: string | null,
   } | null,
 };
 
-export type UpdateStudentMutationVariables = {
-  input: UpdateStudentInput,
-  condition?: ModelStudentConditionInput | null,
+export type UpdateCreatorMutationVariables = {
+  input: UpdateCreatorInput,
+  condition?: ModelCreatorConditionInput | null,
 };
 
-export type UpdateStudentMutation = {
-  updateStudent?:  {
-    __typename: "Student",
+export type UpdateCreatorMutation = {
+  updateCreator?:  {
+    __typename: "Creator",
     id: string,
     name?: string | null,
-    teacherID: string,
     Ukulele?:  {
       __typename: "Ukulele",
       id: string,
-      teacherID: string,
-      orderID: string,
+      title?: string | null,
+      tokenID?: string | null,
+      contractAddress?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
+    schoolID: string,
     createdAt: string,
     updatedAt: string,
-    studentUkuleleId?: string | null,
+    creatorUkuleleId?: string | null,
   } | null,
 };
 
-export type DeleteStudentMutationVariables = {
-  input: DeleteStudentInput,
-  condition?: ModelStudentConditionInput | null,
+export type DeleteCreatorMutationVariables = {
+  input: DeleteCreatorInput,
+  condition?: ModelCreatorConditionInput | null,
 };
 
-export type DeleteStudentMutation = {
-  deleteStudent?:  {
-    __typename: "Student",
+export type DeleteCreatorMutation = {
+  deleteCreator?:  {
+    __typename: "Creator",
     id: string,
     name?: string | null,
-    teacherID: string,
     Ukulele?:  {
       __typename: "Ukulele",
       id: string,
-      teacherID: string,
-      orderID: string,
+      title?: string | null,
+      tokenID?: string | null,
+      contractAddress?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
+    schoolID: string,
     createdAt: string,
     updatedAt: string,
-    studentUkuleleId?: string | null,
+    creatorUkuleleId?: string | null,
   } | null,
 };
 
-export type GetReportQueryVariables = {
+export type GetUserQueryVariables = {
   id: string,
 };
 
-export type GetReportQuery = {
-  getReport?:  {
-    __typename: "Report",
-    id: string,
-    content?: string | null,
-    teacherID: string,
-    ukuleleID: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListReportsQueryVariables = {
-  filter?: ModelReportFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListReportsQuery = {
-  listReports?:  {
-    __typename: "ModelReportConnection",
-    items:  Array< {
-      __typename: "Report",
-      id: string,
-      content?: string | null,
-      teacherID: string,
-      ukuleleID: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ReportsByTeacherIDQueryVariables = {
-  teacherID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelReportFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ReportsByTeacherIDQuery = {
-  reportsByTeacherID?:  {
-    __typename: "ModelReportConnection",
-    items:  Array< {
-      __typename: "Report",
-      id: string,
-      content?: string | null,
-      teacherID: string,
-      ukuleleID: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ReportsByUkuleleIDQueryVariables = {
-  ukuleleID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelReportFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ReportsByUkuleleIDQuery = {
-  reportsByUkuleleID?:  {
-    __typename: "ModelReportConnection",
-    items:  Array< {
-      __typename: "Report",
-      id: string,
-      content?: string | null,
-      teacherID: string,
-      ukuleleID: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetOrderQueryVariables = {
-  id: string,
-};
-
-export type GetOrderQuery = {
-  getOrder?:  {
-    __typename: "Order",
-    id: string,
-    teacherID: string,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListOrdersQueryVariables = {
-  filter?: ModelOrderFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListOrdersQuery = {
-  listOrders?:  {
-    __typename: "ModelOrderConnection",
-    items:  Array< {
-      __typename: "Order",
-      id: string,
-      teacherID: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type OrdersByTeacherIDQueryVariables = {
-  teacherID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelOrderFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type OrdersByTeacherIDQuery = {
-  ordersByTeacherID?:  {
-    __typename: "ModelOrderConnection",
-    items:  Array< {
-      __typename: "Order",
-      id: string,
-      teacherID: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetProductQueryVariables = {
-  id: string,
-};
-
-export type GetProductQuery = {
-  getProduct?:  {
-    __typename: "Product",
+export type GetUserQuery = {
+  getUser?:  {
+    __typename: "User",
     id: string,
     name?: string | null,
-    price?: string | null,
+    authID?: string | null,
+    isChordHero?: boolean | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type ListProductsQueryVariables = {
-  filter?: ModelProductFilterInput | null,
+export type ListUsersQueryVariables = {
+  filter?: ModelUserFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListProductsQuery = {
-  listProducts?:  {
-    __typename: "ModelProductConnection",
+export type ListUsersQuery = {
+  listUsers?:  {
+    __typename: "ModelUserConnection",
     items:  Array< {
-      __typename: "Product",
+      __typename: "User",
       id: string,
       name?: string | null,
-      price?: string | null,
+      authID?: string | null,
+      isChordHero?: boolean | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1002,29 +776,17 @@ export type ListProductsQuery = {
   } | null,
 };
 
-export type GetTeacherQueryVariables = {
+export type GetSchoolQueryVariables = {
   id: string,
 };
 
-export type GetTeacherQuery = {
-  getTeacher?:  {
-    __typename: "Teacher",
+export type GetSchoolQuery = {
+  getSchool?:  {
+    __typename: "School",
     id: string,
-    name?: string | null,
-    Students?:  {
-      __typename: "ModelStudentConnection",
-      nextToken?: string | null,
-    } | null,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    Orders?:  {
-      __typename: "ModelOrderConnection",
-      nextToken?: string | null,
-    } | null,
-    Reports?:  {
-      __typename: "ModelReportConnection",
+    title?: string | null,
+    Creators?:  {
+      __typename: "ModelCreatorConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -1032,19 +794,59 @@ export type GetTeacherQuery = {
   } | null,
 };
 
-export type ListTeachersQueryVariables = {
-  filter?: ModelTeacherFilterInput | null,
+export type ListSchoolsQueryVariables = {
+  filter?: ModelSchoolFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListTeachersQuery = {
-  listTeachers?:  {
-    __typename: "ModelTeacherConnection",
+export type ListSchoolsQuery = {
+  listSchools?:  {
+    __typename: "ModelSchoolConnection",
     items:  Array< {
-      __typename: "Teacher",
+      __typename: "School",
       id: string,
-      name?: string | null,
+      title?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetContentQueryVariables = {
+  id: string,
+};
+
+export type GetContentQuery = {
+  getContent?:  {
+    __typename: "Content",
+    id: string,
+    title?: string | null,
+    threshold?: number | null,
+    type?: ContentType | null,
+    requiredNFT?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListContentsQueryVariables = {
+  filter?: ModelContentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListContentsQuery = {
+  listContents?:  {
+    __typename: "ModelContentConnection",
+    items:  Array< {
+      __typename: "Content",
+      id: string,
+      title?: string | null,
+      threshold?: number | null,
+      type?: ContentType | null,
+      requiredNFT?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1060,12 +862,9 @@ export type GetUkuleleQuery = {
   getUkulele?:  {
     __typename: "Ukulele",
     id: string,
-    teacherID: string,
-    Reports?:  {
-      __typename: "ModelReportConnection",
-      nextToken?: string | null,
-    } | null,
-    orderID: string,
+    title?: string | null,
+    tokenID?: string | null,
+    contractAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1083,8 +882,9 @@ export type ListUkulelesQuery = {
     items:  Array< {
       __typename: "Ukulele",
       id: string,
-      teacherID: string,
-      orderID: string,
+      title?: string | null,
+      tokenID?: string | null,
+      contractAddress?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1092,292 +892,136 @@ export type ListUkulelesQuery = {
   } | null,
 };
 
-export type UkulelesByTeacherIDQueryVariables = {
-  teacherID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUkuleleFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type UkulelesByTeacherIDQuery = {
-  ukulelesByTeacherID?:  {
-    __typename: "ModelUkuleleConnection",
-    items:  Array< {
-      __typename: "Ukulele",
-      id: string,
-      teacherID: string,
-      orderID: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type UkulelesByOrderIDQueryVariables = {
-  orderID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUkuleleFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type UkulelesByOrderIDQuery = {
-  ukulelesByOrderID?:  {
-    __typename: "ModelUkuleleConnection",
-    items:  Array< {
-      __typename: "Ukulele",
-      id: string,
-      teacherID: string,
-      orderID: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetStudentQueryVariables = {
+export type GetCreatorQueryVariables = {
   id: string,
 };
 
-export type GetStudentQuery = {
-  getStudent?:  {
-    __typename: "Student",
+export type GetCreatorQuery = {
+  getCreator?:  {
+    __typename: "Creator",
     id: string,
     name?: string | null,
-    teacherID: string,
     Ukulele?:  {
       __typename: "Ukulele",
       id: string,
-      teacherID: string,
-      orderID: string,
+      title?: string | null,
+      tokenID?: string | null,
+      contractAddress?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
+    schoolID: string,
     createdAt: string,
     updatedAt: string,
-    studentUkuleleId?: string | null,
+    creatorUkuleleId?: string | null,
   } | null,
 };
 
-export type ListStudentsQueryVariables = {
-  filter?: ModelStudentFilterInput | null,
+export type ListCreatorsQueryVariables = {
+  filter?: ModelCreatorFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListStudentsQuery = {
-  listStudents?:  {
-    __typename: "ModelStudentConnection",
+export type ListCreatorsQuery = {
+  listCreators?:  {
+    __typename: "ModelCreatorConnection",
     items:  Array< {
-      __typename: "Student",
+      __typename: "Creator",
       id: string,
       name?: string | null,
-      teacherID: string,
+      schoolID: string,
       createdAt: string,
       updatedAt: string,
-      studentUkuleleId?: string | null,
+      creatorUkuleleId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
-export type StudentsByTeacherIDQueryVariables = {
-  teacherID: string,
+export type CreatorsBySchoolIDQueryVariables = {
+  schoolID: string,
   sortDirection?: ModelSortDirection | null,
-  filter?: ModelStudentFilterInput | null,
+  filter?: ModelCreatorFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type StudentsByTeacherIDQuery = {
-  studentsByTeacherID?:  {
-    __typename: "ModelStudentConnection",
+export type CreatorsBySchoolIDQuery = {
+  creatorsBySchoolID?:  {
+    __typename: "ModelCreatorConnection",
     items:  Array< {
-      __typename: "Student",
+      __typename: "Creator",
       id: string,
       name?: string | null,
-      teacherID: string,
+      schoolID: string,
       createdAt: string,
       updatedAt: string,
-      studentUkuleleId?: string | null,
+      creatorUkuleleId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
-export type OnCreateReportSubscriptionVariables = {
-  filter?: ModelSubscriptionReportFilterInput | null,
+export type OnCreateUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
 };
 
-export type OnCreateReportSubscription = {
-  onCreateReport?:  {
-    __typename: "Report",
-    id: string,
-    content?: string | null,
-    teacherID: string,
-    ukuleleID: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateReportSubscriptionVariables = {
-  filter?: ModelSubscriptionReportFilterInput | null,
-};
-
-export type OnUpdateReportSubscription = {
-  onUpdateReport?:  {
-    __typename: "Report",
-    id: string,
-    content?: string | null,
-    teacherID: string,
-    ukuleleID: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteReportSubscriptionVariables = {
-  filter?: ModelSubscriptionReportFilterInput | null,
-};
-
-export type OnDeleteReportSubscription = {
-  onDeleteReport?:  {
-    __typename: "Report",
-    id: string,
-    content?: string | null,
-    teacherID: string,
-    ukuleleID: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateOrderSubscriptionVariables = {
-  filter?: ModelSubscriptionOrderFilterInput | null,
-};
-
-export type OnCreateOrderSubscription = {
-  onCreateOrder?:  {
-    __typename: "Order",
-    id: string,
-    teacherID: string,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateOrderSubscriptionVariables = {
-  filter?: ModelSubscriptionOrderFilterInput | null,
-};
-
-export type OnUpdateOrderSubscription = {
-  onUpdateOrder?:  {
-    __typename: "Order",
-    id: string,
-    teacherID: string,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteOrderSubscriptionVariables = {
-  filter?: ModelSubscriptionOrderFilterInput | null,
-};
-
-export type OnDeleteOrderSubscription = {
-  onDeleteOrder?:  {
-    __typename: "Order",
-    id: string,
-    teacherID: string,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateProductSubscriptionVariables = {
-  filter?: ModelSubscriptionProductFilterInput | null,
-};
-
-export type OnCreateProductSubscription = {
-  onCreateProduct?:  {
-    __typename: "Product",
+export type OnCreateUserSubscription = {
+  onCreateUser?:  {
+    __typename: "User",
     id: string,
     name?: string | null,
-    price?: string | null,
+    authID?: string | null,
+    isChordHero?: boolean | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnUpdateProductSubscriptionVariables = {
-  filter?: ModelSubscriptionProductFilterInput | null,
+export type OnUpdateUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
 };
 
-export type OnUpdateProductSubscription = {
-  onUpdateProduct?:  {
-    __typename: "Product",
+export type OnUpdateUserSubscription = {
+  onUpdateUser?:  {
+    __typename: "User",
     id: string,
     name?: string | null,
-    price?: string | null,
+    authID?: string | null,
+    isChordHero?: boolean | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnDeleteProductSubscriptionVariables = {
-  filter?: ModelSubscriptionProductFilterInput | null,
+export type OnDeleteUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
 };
 
-export type OnDeleteProductSubscription = {
-  onDeleteProduct?:  {
-    __typename: "Product",
+export type OnDeleteUserSubscription = {
+  onDeleteUser?:  {
+    __typename: "User",
     id: string,
     name?: string | null,
-    price?: string | null,
+    authID?: string | null,
+    isChordHero?: boolean | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnCreateTeacherSubscriptionVariables = {
-  filter?: ModelSubscriptionTeacherFilterInput | null,
+export type OnCreateSchoolSubscriptionVariables = {
+  filter?: ModelSubscriptionSchoolFilterInput | null,
 };
 
-export type OnCreateTeacherSubscription = {
-  onCreateTeacher?:  {
-    __typename: "Teacher",
+export type OnCreateSchoolSubscription = {
+  onCreateSchool?:  {
+    __typename: "School",
     id: string,
-    name?: string | null,
-    Students?:  {
-      __typename: "ModelStudentConnection",
-      nextToken?: string | null,
-    } | null,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    Orders?:  {
-      __typename: "ModelOrderConnection",
-      nextToken?: string | null,
-    } | null,
-    Reports?:  {
-      __typename: "ModelReportConnection",
+    title?: string | null,
+    Creators?:  {
+      __typename: "ModelCreatorConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -1385,29 +1029,17 @@ export type OnCreateTeacherSubscription = {
   } | null,
 };
 
-export type OnUpdateTeacherSubscriptionVariables = {
-  filter?: ModelSubscriptionTeacherFilterInput | null,
+export type OnUpdateSchoolSubscriptionVariables = {
+  filter?: ModelSubscriptionSchoolFilterInput | null,
 };
 
-export type OnUpdateTeacherSubscription = {
-  onUpdateTeacher?:  {
-    __typename: "Teacher",
+export type OnUpdateSchoolSubscription = {
+  onUpdateSchool?:  {
+    __typename: "School",
     id: string,
-    name?: string | null,
-    Students?:  {
-      __typename: "ModelStudentConnection",
-      nextToken?: string | null,
-    } | null,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    Orders?:  {
-      __typename: "ModelOrderConnection",
-      nextToken?: string | null,
-    } | null,
-    Reports?:  {
-      __typename: "ModelReportConnection",
+    title?: string | null,
+    Creators?:  {
+      __typename: "ModelCreatorConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -1415,31 +1047,70 @@ export type OnUpdateTeacherSubscription = {
   } | null,
 };
 
-export type OnDeleteTeacherSubscriptionVariables = {
-  filter?: ModelSubscriptionTeacherFilterInput | null,
+export type OnDeleteSchoolSubscriptionVariables = {
+  filter?: ModelSubscriptionSchoolFilterInput | null,
 };
 
-export type OnDeleteTeacherSubscription = {
-  onDeleteTeacher?:  {
-    __typename: "Teacher",
+export type OnDeleteSchoolSubscription = {
+  onDeleteSchool?:  {
+    __typename: "School",
     id: string,
-    name?: string | null,
-    Students?:  {
-      __typename: "ModelStudentConnection",
+    title?: string | null,
+    Creators?:  {
+      __typename: "ModelCreatorConnection",
       nextToken?: string | null,
     } | null,
-    Ukuleles?:  {
-      __typename: "ModelUkuleleConnection",
-      nextToken?: string | null,
-    } | null,
-    Orders?:  {
-      __typename: "ModelOrderConnection",
-      nextToken?: string | null,
-    } | null,
-    Reports?:  {
-      __typename: "ModelReportConnection",
-      nextToken?: string | null,
-    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateContentSubscriptionVariables = {
+  filter?: ModelSubscriptionContentFilterInput | null,
+};
+
+export type OnCreateContentSubscription = {
+  onCreateContent?:  {
+    __typename: "Content",
+    id: string,
+    title?: string | null,
+    threshold?: number | null,
+    type?: ContentType | null,
+    requiredNFT?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateContentSubscriptionVariables = {
+  filter?: ModelSubscriptionContentFilterInput | null,
+};
+
+export type OnUpdateContentSubscription = {
+  onUpdateContent?:  {
+    __typename: "Content",
+    id: string,
+    title?: string | null,
+    threshold?: number | null,
+    type?: ContentType | null,
+    requiredNFT?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteContentSubscriptionVariables = {
+  filter?: ModelSubscriptionContentFilterInput | null,
+};
+
+export type OnDeleteContentSubscription = {
+  onDeleteContent?:  {
+    __typename: "Content",
+    id: string,
+    title?: string | null,
+    threshold?: number | null,
+    type?: ContentType | null,
+    requiredNFT?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1453,12 +1124,9 @@ export type OnCreateUkuleleSubscription = {
   onCreateUkulele?:  {
     __typename: "Ukulele",
     id: string,
-    teacherID: string,
-    Reports?:  {
-      __typename: "ModelReportConnection",
-      nextToken?: string | null,
-    } | null,
-    orderID: string,
+    title?: string | null,
+    tokenID?: string | null,
+    contractAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1472,12 +1140,9 @@ export type OnUpdateUkuleleSubscription = {
   onUpdateUkulele?:  {
     __typename: "Ukulele",
     id: string,
-    teacherID: string,
-    Reports?:  {
-      __typename: "ModelReportConnection",
-      nextToken?: string | null,
-    } | null,
-    orderID: string,
+    title?: string | null,
+    tokenID?: string | null,
+    contractAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1491,85 +1156,85 @@ export type OnDeleteUkuleleSubscription = {
   onDeleteUkulele?:  {
     __typename: "Ukulele",
     id: string,
-    teacherID: string,
-    Reports?:  {
-      __typename: "ModelReportConnection",
-      nextToken?: string | null,
-    } | null,
-    orderID: string,
+    title?: string | null,
+    tokenID?: string | null,
+    contractAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnCreateStudentSubscriptionVariables = {
-  filter?: ModelSubscriptionStudentFilterInput | null,
+export type OnCreateCreatorSubscriptionVariables = {
+  filter?: ModelSubscriptionCreatorFilterInput | null,
 };
 
-export type OnCreateStudentSubscription = {
-  onCreateStudent?:  {
-    __typename: "Student",
+export type OnCreateCreatorSubscription = {
+  onCreateCreator?:  {
+    __typename: "Creator",
     id: string,
     name?: string | null,
-    teacherID: string,
     Ukulele?:  {
       __typename: "Ukulele",
       id: string,
-      teacherID: string,
-      orderID: string,
+      title?: string | null,
+      tokenID?: string | null,
+      contractAddress?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
+    schoolID: string,
     createdAt: string,
     updatedAt: string,
-    studentUkuleleId?: string | null,
+    creatorUkuleleId?: string | null,
   } | null,
 };
 
-export type OnUpdateStudentSubscriptionVariables = {
-  filter?: ModelSubscriptionStudentFilterInput | null,
+export type OnUpdateCreatorSubscriptionVariables = {
+  filter?: ModelSubscriptionCreatorFilterInput | null,
 };
 
-export type OnUpdateStudentSubscription = {
-  onUpdateStudent?:  {
-    __typename: "Student",
+export type OnUpdateCreatorSubscription = {
+  onUpdateCreator?:  {
+    __typename: "Creator",
     id: string,
     name?: string | null,
-    teacherID: string,
     Ukulele?:  {
       __typename: "Ukulele",
       id: string,
-      teacherID: string,
-      orderID: string,
+      title?: string | null,
+      tokenID?: string | null,
+      contractAddress?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
+    schoolID: string,
     createdAt: string,
     updatedAt: string,
-    studentUkuleleId?: string | null,
+    creatorUkuleleId?: string | null,
   } | null,
 };
 
-export type OnDeleteStudentSubscriptionVariables = {
-  filter?: ModelSubscriptionStudentFilterInput | null,
+export type OnDeleteCreatorSubscriptionVariables = {
+  filter?: ModelSubscriptionCreatorFilterInput | null,
 };
 
-export type OnDeleteStudentSubscription = {
-  onDeleteStudent?:  {
-    __typename: "Student",
+export type OnDeleteCreatorSubscription = {
+  onDeleteCreator?:  {
+    __typename: "Creator",
     id: string,
     name?: string | null,
-    teacherID: string,
     Ukulele?:  {
       __typename: "Ukulele",
       id: string,
-      teacherID: string,
-      orderID: string,
+      title?: string | null,
+      tokenID?: string | null,
+      contractAddress?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
+    schoolID: string,
     createdAt: string,
     updatedAt: string,
-    studentUkuleleId?: string | null,
+    creatorUkuleleId?: string | null,
   } | null,
 };

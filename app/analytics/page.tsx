@@ -508,7 +508,7 @@ const dummyData = {
 };
 
 export default function Analytics() {
-  const [owners, setOwners] = useState<[]>([]);
+  const [owners, setOwners] = useState<any[]>([]);
 
   useEffect(() => {
     console.log(dummyData);

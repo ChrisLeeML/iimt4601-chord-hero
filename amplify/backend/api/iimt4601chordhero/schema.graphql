@@ -1,41 +1,41 @@
-type Report @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  content: String
-  teacherID: ID! @index(name: "byTeacher")
-  ukuleleID: ID! @index(name: "byUkulele")
-}
-
-type Order @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  teacherID: ID! @index(name: "byTeacher")
-  Ukuleles: [Ukulele] @hasMany(indexName: "byOrder", fields: ["id"])
-}
-
-type Product @model @auth(rules: [{allow: public}]) {
+type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
-  price: String
+  authID: String
+  isChordHero: Boolean
 }
 
-type Teacher @model @auth(rules: [{allow: public}]) {
+type School @model @auth(rules: [{allow: public}]) {
   id: ID!
-  name: String
-  Students: [Student] @hasMany(indexName: "byTeacher", fields: ["id"])
-  Ukuleles: [Ukulele] @hasMany(indexName: "byTeacher", fields: ["id"])
-  Orders: [Order] @hasMany(indexName: "byTeacher", fields: ["id"])
-  Reports: [Report] @hasMany(indexName: "byTeacher", fields: ["id"])
+  title: String
+  Creators: [Creator] @hasMany(indexName: "bySchool", fields: ["id"])
+}
+
+enum ContentType {
+  VIDEO
+  TEXT
+  PDF
+}
+
+type Content @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String
+  threshold: Int
+  type: ContentType
+  requiredNFT: String
 }
 
 type Ukulele @model @auth(rules: [{allow: public}]) {
   id: ID!
-  teacherID: ID! @index(name: "byTeacher")
-  Reports: [Report] @hasMany(indexName: "byUkulele", fields: ["id"])
-  orderID: ID! @index(name: "byOrder")
+  title: String
+  tokenID: String
+  contractAddress: String
 }
 
-type Student @model @auth(rules: [{allow: public}]) {
+type Creator @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
-  teacherID: ID! @index(name: "byTeacher")
   Ukulele: Ukulele @hasOne
+  schoolID: ID! @index(name: "bySchool")
 }
+ 

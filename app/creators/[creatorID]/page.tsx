@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { Box, Container, Typography } from "@mui/material";
 
-export default function Order({ params }: { params: { orderID: string } }) {
+export default function Student({ params }: { params: { creatorID: string } }) {
   return (
     <Container maxWidth="lg">
       <Box
@@ -24,7 +24,7 @@ export default function Order({ params }: { params: { orderID: string } }) {
             width: "100%",
           }}
         >
-          Order ID: {params.orderID}
+          Student ID: {params.creatorID}
         </Typography>
       </Box>
     </Container>

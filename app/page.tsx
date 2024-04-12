@@ -13,9 +13,9 @@ const pages = [
     description: "Check analytics of the Chord Hero NFTs.",
   },
   {
-    title: "Order Status",
-    href: "orders",
-    description: "Track the progress of your ukulele delivery.",
+    title: "Exclusive Content",
+    href: "content",
+    description: "Access exclusive content only for Chord Hero NFT holders!",
   },
   {
     title: "Ukuleles",
@@ -23,15 +23,9 @@ const pages = [
     description: "Check the list of ukuleles minted by Chord Hero.",
   },
   {
-    title: "Students",
-    href: "students",
-    description:
-      "Effortlessly assign ukuleles to students and manage profiles.",
-  },
-  {
-    title: "Profile",
-    href: "profile",
-    description: "Manage your personal profile and account settings.",
+    title: "Creators",
+    href: "creators",
+    description: "Manage the creator profiles.",
   },
 ];
 

@@ -8,191 +8,29 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const getReport = /* GraphQL */ `query GetReport($id: ID!) {
-  getReport(id: $id) {
-    id
-    content
-    teacherID
-    ukuleleID
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetReportQueryVariables, APITypes.GetReportQuery>;
-export const listReports = /* GraphQL */ `query ListReports(
-  $filter: ModelReportFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listReports(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      content
-      teacherID
-      ukuleleID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListReportsQueryVariables,
-  APITypes.ListReportsQuery
->;
-export const reportsByTeacherID = /* GraphQL */ `query ReportsByTeacherID(
-  $teacherID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelReportFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  reportsByTeacherID(
-    teacherID: $teacherID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      content
-      teacherID
-      ukuleleID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ReportsByTeacherIDQueryVariables,
-  APITypes.ReportsByTeacherIDQuery
->;
-export const reportsByUkuleleID = /* GraphQL */ `query ReportsByUkuleleID(
-  $ukuleleID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelReportFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  reportsByUkuleleID(
-    ukuleleID: $ukuleleID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      content
-      teacherID
-      ukuleleID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ReportsByUkuleleIDQueryVariables,
-  APITypes.ReportsByUkuleleIDQuery
->;
-export const getOrder = /* GraphQL */ `query GetOrder($id: ID!) {
-  getOrder(id: $id) {
-    id
-    teacherID
-    Ukuleles {
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetOrderQueryVariables, APITypes.GetOrderQuery>;
-export const listOrders = /* GraphQL */ `query ListOrders(
-  $filter: ModelOrderFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      teacherID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListOrdersQueryVariables,
-  APITypes.ListOrdersQuery
->;
-export const ordersByTeacherID = /* GraphQL */ `query OrdersByTeacherID(
-  $teacherID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelOrderFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  ordersByTeacherID(
-    teacherID: $teacherID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      teacherID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.OrdersByTeacherIDQueryVariables,
-  APITypes.OrdersByTeacherIDQuery
->;
-export const getProduct = /* GraphQL */ `query GetProduct($id: ID!) {
-  getProduct(id: $id) {
+export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
+  getUser(id: $id) {
     id
     name
-    price
+    authID
+    isChordHero
     createdAt
     updatedAt
     __typename
   }
 }
-` as GeneratedQuery<
-  APITypes.GetProductQueryVariables,
-  APITypes.GetProductQuery
->;
-export const listProducts = /* GraphQL */ `query ListProducts(
-  $filter: ModelProductFilterInput
+` as GeneratedQuery<APITypes.GetUserQueryVariables, APITypes.GetUserQuery>;
+export const listUsers = /* GraphQL */ `query ListUsers(
+  $filter: ModelUserFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       name
-      price
+      authID
+      isChordHero
       createdAt
       updatedAt
       __typename
@@ -201,27 +39,12 @@ export const listProducts = /* GraphQL */ `query ListProducts(
     __typename
   }
 }
-` as GeneratedQuery<
-  APITypes.ListProductsQueryVariables,
-  APITypes.ListProductsQuery
->;
-export const getTeacher = /* GraphQL */ `query GetTeacher($id: ID!) {
-  getTeacher(id: $id) {
+` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;
+export const getSchool = /* GraphQL */ `query GetSchool($id: ID!) {
+  getSchool(id: $id) {
     id
-    name
-    Students {
-      nextToken
-      __typename
-    }
-    Ukuleles {
-      nextToken
-      __typename
-    }
-    Orders {
-      nextToken
-      __typename
-    }
-    Reports {
+    title
+    Creators {
       nextToken
       __typename
     }
@@ -230,19 +53,16 @@ export const getTeacher = /* GraphQL */ `query GetTeacher($id: ID!) {
     __typename
   }
 }
-` as GeneratedQuery<
-  APITypes.GetTeacherQueryVariables,
-  APITypes.GetTeacherQuery
->;
-export const listTeachers = /* GraphQL */ `query ListTeachers(
-  $filter: ModelTeacherFilterInput
+` as GeneratedQuery<APITypes.GetSchoolQueryVariables, APITypes.GetSchoolQuery>;
+export const listSchools = /* GraphQL */ `query ListSchools(
+  $filter: ModelSchoolFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listTeachers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listSchools(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      name
+      title
       createdAt
       updatedAt
       __typename
@@ -252,18 +72,55 @@ export const listTeachers = /* GraphQL */ `query ListTeachers(
   }
 }
 ` as GeneratedQuery<
-  APITypes.ListTeachersQueryVariables,
-  APITypes.ListTeachersQuery
+  APITypes.ListSchoolsQueryVariables,
+  APITypes.ListSchoolsQuery
+>;
+export const getContent = /* GraphQL */ `query GetContent($id: ID!) {
+  getContent(id: $id) {
+    id
+    title
+    threshold
+    type
+    requiredNFT
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetContentQueryVariables,
+  APITypes.GetContentQuery
+>;
+export const listContents = /* GraphQL */ `query ListContents(
+  $filter: ModelContentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listContents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      title
+      threshold
+      type
+      requiredNFT
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListContentsQueryVariables,
+  APITypes.ListContentsQuery
 >;
 export const getUkulele = /* GraphQL */ `query GetUkulele($id: ID!) {
   getUkulele(id: $id) {
     id
-    teacherID
-    Reports {
-      nextToken
-      __typename
-    }
-    orderID
+    title
+    tokenID
+    contractAddress
     createdAt
     updatedAt
     __typename
@@ -281,8 +138,9 @@ export const listUkuleles = /* GraphQL */ `query ListUkuleles(
   listUkuleles(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      teacherID
-      orderID
+      title
+      tokenID
+      contractAddress
       createdAt
       updatedAt
       __typename
@@ -295,102 +153,43 @@ export const listUkuleles = /* GraphQL */ `query ListUkuleles(
   APITypes.ListUkulelesQueryVariables,
   APITypes.ListUkulelesQuery
 >;
-export const ukulelesByTeacherID = /* GraphQL */ `query UkulelesByTeacherID(
-  $teacherID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelUkuleleFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  ukulelesByTeacherID(
-    teacherID: $teacherID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      teacherID
-      orderID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.UkulelesByTeacherIDQueryVariables,
-  APITypes.UkulelesByTeacherIDQuery
->;
-export const ukulelesByOrderID = /* GraphQL */ `query UkulelesByOrderID(
-  $orderID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelUkuleleFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  ukulelesByOrderID(
-    orderID: $orderID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      teacherID
-      orderID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.UkulelesByOrderIDQueryVariables,
-  APITypes.UkulelesByOrderIDQuery
->;
-export const getStudent = /* GraphQL */ `query GetStudent($id: ID!) {
-  getStudent(id: $id) {
+export const getCreator = /* GraphQL */ `query GetCreator($id: ID!) {
+  getCreator(id: $id) {
     id
     name
-    teacherID
     Ukulele {
       id
-      teacherID
-      orderID
+      title
+      tokenID
+      contractAddress
       createdAt
       updatedAt
       __typename
     }
+    schoolID
     createdAt
     updatedAt
-    studentUkuleleId
+    creatorUkuleleId
     __typename
   }
 }
 ` as GeneratedQuery<
-  APITypes.GetStudentQueryVariables,
-  APITypes.GetStudentQuery
+  APITypes.GetCreatorQueryVariables,
+  APITypes.GetCreatorQuery
 >;
-export const listStudents = /* GraphQL */ `query ListStudents(
-  $filter: ModelStudentFilterInput
+export const listCreators = /* GraphQL */ `query ListCreators(
+  $filter: ModelCreatorFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listStudents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listCreators(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       name
-      teacherID
+      schoolID
       createdAt
       updatedAt
-      studentUkuleleId
+      creatorUkuleleId
       __typename
     }
     nextToken
@@ -398,18 +197,18 @@ export const listStudents = /* GraphQL */ `query ListStudents(
   }
 }
 ` as GeneratedQuery<
-  APITypes.ListStudentsQueryVariables,
-  APITypes.ListStudentsQuery
+  APITypes.ListCreatorsQueryVariables,
+  APITypes.ListCreatorsQuery
 >;
-export const studentsByTeacherID = /* GraphQL */ `query StudentsByTeacherID(
-  $teacherID: ID!
+export const creatorsBySchoolID = /* GraphQL */ `query CreatorsBySchoolID(
+  $schoolID: ID!
   $sortDirection: ModelSortDirection
-  $filter: ModelStudentFilterInput
+  $filter: ModelCreatorFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  studentsByTeacherID(
-    teacherID: $teacherID
+  creatorsBySchoolID(
+    schoolID: $schoolID
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -418,10 +217,10 @@ export const studentsByTeacherID = /* GraphQL */ `query StudentsByTeacherID(
     items {
       id
       name
-      teacherID
+      schoolID
       createdAt
       updatedAt
-      studentUkuleleId
+      creatorUkuleleId
       __typename
     }
     nextToken
@@ -429,6 +228,6 @@ export const studentsByTeacherID = /* GraphQL */ `query StudentsByTeacherID(
   }
 }
 ` as GeneratedQuery<
-  APITypes.StudentsByTeacherIDQueryVariables,
-  APITypes.StudentsByTeacherIDQuery
+  APITypes.CreatorsBySchoolIDQueryVariables,
+  APITypes.CreatorsBySchoolIDQuery
 >;

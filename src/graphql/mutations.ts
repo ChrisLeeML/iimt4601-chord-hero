@@ -8,191 +8,68 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
-export const createReport = /* GraphQL */ `mutation CreateReport(
-  $input: CreateReportInput!
-  $condition: ModelReportConditionInput
+export const createUser = /* GraphQL */ `mutation CreateUser(
+  $input: CreateUserInput!
+  $condition: ModelUserConditionInput
 ) {
-  createReport(input: $input, condition: $condition) {
-    id
-    content
-    teacherID
-    ukuleleID
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateReportMutationVariables,
-  APITypes.CreateReportMutation
->;
-export const updateReport = /* GraphQL */ `mutation UpdateReport(
-  $input: UpdateReportInput!
-  $condition: ModelReportConditionInput
-) {
-  updateReport(input: $input, condition: $condition) {
-    id
-    content
-    teacherID
-    ukuleleID
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateReportMutationVariables,
-  APITypes.UpdateReportMutation
->;
-export const deleteReport = /* GraphQL */ `mutation DeleteReport(
-  $input: DeleteReportInput!
-  $condition: ModelReportConditionInput
-) {
-  deleteReport(input: $input, condition: $condition) {
-    id
-    content
-    teacherID
-    ukuleleID
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteReportMutationVariables,
-  APITypes.DeleteReportMutation
->;
-export const createOrder = /* GraphQL */ `mutation CreateOrder(
-  $input: CreateOrderInput!
-  $condition: ModelOrderConditionInput
-) {
-  createOrder(input: $input, condition: $condition) {
-    id
-    teacherID
-    Ukuleles {
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateOrderMutationVariables,
-  APITypes.CreateOrderMutation
->;
-export const updateOrder = /* GraphQL */ `mutation UpdateOrder(
-  $input: UpdateOrderInput!
-  $condition: ModelOrderConditionInput
-) {
-  updateOrder(input: $input, condition: $condition) {
-    id
-    teacherID
-    Ukuleles {
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateOrderMutationVariables,
-  APITypes.UpdateOrderMutation
->;
-export const deleteOrder = /* GraphQL */ `mutation DeleteOrder(
-  $input: DeleteOrderInput!
-  $condition: ModelOrderConditionInput
-) {
-  deleteOrder(input: $input, condition: $condition) {
-    id
-    teacherID
-    Ukuleles {
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteOrderMutationVariables,
-  APITypes.DeleteOrderMutation
->;
-export const createProduct = /* GraphQL */ `mutation CreateProduct(
-  $input: CreateProductInput!
-  $condition: ModelProductConditionInput
-) {
-  createProduct(input: $input, condition: $condition) {
+  createUser(input: $input, condition: $condition) {
     id
     name
-    price
+    authID
+    isChordHero
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateProductMutationVariables,
-  APITypes.CreateProductMutation
+  APITypes.CreateUserMutationVariables,
+  APITypes.CreateUserMutation
 >;
-export const updateProduct = /* GraphQL */ `mutation UpdateProduct(
-  $input: UpdateProductInput!
-  $condition: ModelProductConditionInput
+export const updateUser = /* GraphQL */ `mutation UpdateUser(
+  $input: UpdateUserInput!
+  $condition: ModelUserConditionInput
 ) {
-  updateProduct(input: $input, condition: $condition) {
+  updateUser(input: $input, condition: $condition) {
     id
     name
-    price
+    authID
+    isChordHero
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateProductMutationVariables,
-  APITypes.UpdateProductMutation
+  APITypes.UpdateUserMutationVariables,
+  APITypes.UpdateUserMutation
 >;
-export const deleteProduct = /* GraphQL */ `mutation DeleteProduct(
-  $input: DeleteProductInput!
-  $condition: ModelProductConditionInput
+export const deleteUser = /* GraphQL */ `mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
 ) {
-  deleteProduct(input: $input, condition: $condition) {
+  deleteUser(input: $input, condition: $condition) {
     id
     name
-    price
+    authID
+    isChordHero
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteProductMutationVariables,
-  APITypes.DeleteProductMutation
+  APITypes.DeleteUserMutationVariables,
+  APITypes.DeleteUserMutation
 >;
-export const createTeacher = /* GraphQL */ `mutation CreateTeacher(
-  $input: CreateTeacherInput!
-  $condition: ModelTeacherConditionInput
+export const createSchool = /* GraphQL */ `mutation CreateSchool(
+  $input: CreateSchoolInput!
+  $condition: ModelSchoolConditionInput
 ) {
-  createTeacher(input: $input, condition: $condition) {
+  createSchool(input: $input, condition: $condition) {
     id
-    name
-    Students {
-      nextToken
-      __typename
-    }
-    Ukuleles {
-      nextToken
-      __typename
-    }
-    Orders {
-      nextToken
-      __typename
-    }
-    Reports {
+    title
+    Creators {
       nextToken
       __typename
     }
@@ -202,29 +79,17 @@ export const createTeacher = /* GraphQL */ `mutation CreateTeacher(
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateTeacherMutationVariables,
-  APITypes.CreateTeacherMutation
+  APITypes.CreateSchoolMutationVariables,
+  APITypes.CreateSchoolMutation
 >;
-export const updateTeacher = /* GraphQL */ `mutation UpdateTeacher(
-  $input: UpdateTeacherInput!
-  $condition: ModelTeacherConditionInput
+export const updateSchool = /* GraphQL */ `mutation UpdateSchool(
+  $input: UpdateSchoolInput!
+  $condition: ModelSchoolConditionInput
 ) {
-  updateTeacher(input: $input, condition: $condition) {
+  updateSchool(input: $input, condition: $condition) {
     id
-    name
-    Students {
-      nextToken
-      __typename
-    }
-    Ukuleles {
-      nextToken
-      __typename
-    }
-    Orders {
-      nextToken
-      __typename
-    }
-    Reports {
+    title
+    Creators {
       nextToken
       __typename
     }
@@ -234,29 +99,17 @@ export const updateTeacher = /* GraphQL */ `mutation UpdateTeacher(
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateTeacherMutationVariables,
-  APITypes.UpdateTeacherMutation
+  APITypes.UpdateSchoolMutationVariables,
+  APITypes.UpdateSchoolMutation
 >;
-export const deleteTeacher = /* GraphQL */ `mutation DeleteTeacher(
-  $input: DeleteTeacherInput!
-  $condition: ModelTeacherConditionInput
+export const deleteSchool = /* GraphQL */ `mutation DeleteSchool(
+  $input: DeleteSchoolInput!
+  $condition: ModelSchoolConditionInput
 ) {
-  deleteTeacher(input: $input, condition: $condition) {
+  deleteSchool(input: $input, condition: $condition) {
     id
-    name
-    Students {
-      nextToken
-      __typename
-    }
-    Ukuleles {
-      nextToken
-      __typename
-    }
-    Orders {
-      nextToken
-      __typename
-    }
-    Reports {
+    title
+    Creators {
       nextToken
       __typename
     }
@@ -266,8 +119,65 @@ export const deleteTeacher = /* GraphQL */ `mutation DeleteTeacher(
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteTeacherMutationVariables,
-  APITypes.DeleteTeacherMutation
+  APITypes.DeleteSchoolMutationVariables,
+  APITypes.DeleteSchoolMutation
+>;
+export const createContent = /* GraphQL */ `mutation CreateContent(
+  $input: CreateContentInput!
+  $condition: ModelContentConditionInput
+) {
+  createContent(input: $input, condition: $condition) {
+    id
+    title
+    threshold
+    type
+    requiredNFT
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateContentMutationVariables,
+  APITypes.CreateContentMutation
+>;
+export const updateContent = /* GraphQL */ `mutation UpdateContent(
+  $input: UpdateContentInput!
+  $condition: ModelContentConditionInput
+) {
+  updateContent(input: $input, condition: $condition) {
+    id
+    title
+    threshold
+    type
+    requiredNFT
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateContentMutationVariables,
+  APITypes.UpdateContentMutation
+>;
+export const deleteContent = /* GraphQL */ `mutation DeleteContent(
+  $input: DeleteContentInput!
+  $condition: ModelContentConditionInput
+) {
+  deleteContent(input: $input, condition: $condition) {
+    id
+    title
+    threshold
+    type
+    requiredNFT
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteContentMutationVariables,
+  APITypes.DeleteContentMutation
 >;
 export const createUkulele = /* GraphQL */ `mutation CreateUkulele(
   $input: CreateUkuleleInput!
@@ -275,12 +185,9 @@ export const createUkulele = /* GraphQL */ `mutation CreateUkulele(
 ) {
   createUkulele(input: $input, condition: $condition) {
     id
-    teacherID
-    Reports {
-      nextToken
-      __typename
-    }
-    orderID
+    title
+    tokenID
+    contractAddress
     createdAt
     updatedAt
     __typename
@@ -296,12 +203,9 @@ export const updateUkulele = /* GraphQL */ `mutation UpdateUkulele(
 ) {
   updateUkulele(input: $input, condition: $condition) {
     id
-    teacherID
-    Reports {
-      nextToken
-      __typename
-    }
-    orderID
+    title
+    tokenID
+    contractAddress
     createdAt
     updatedAt
     __typename
@@ -317,12 +221,9 @@ export const deleteUkulele = /* GraphQL */ `mutation DeleteUkulele(
 ) {
   deleteUkulele(input: $input, condition: $condition) {
     id
-    teacherID
-    Reports {
-      nextToken
-      __typename
-    }
-    orderID
+    title
+    tokenID
+    contractAddress
     createdAt
     updatedAt
     __typename
@@ -332,81 +233,84 @@ export const deleteUkulele = /* GraphQL */ `mutation DeleteUkulele(
   APITypes.DeleteUkuleleMutationVariables,
   APITypes.DeleteUkuleleMutation
 >;
-export const createStudent = /* GraphQL */ `mutation CreateStudent(
-  $input: CreateStudentInput!
-  $condition: ModelStudentConditionInput
+export const createCreator = /* GraphQL */ `mutation CreateCreator(
+  $input: CreateCreatorInput!
+  $condition: ModelCreatorConditionInput
 ) {
-  createStudent(input: $input, condition: $condition) {
+  createCreator(input: $input, condition: $condition) {
     id
     name
-    teacherID
     Ukulele {
       id
-      teacherID
-      orderID
+      title
+      tokenID
+      contractAddress
       createdAt
       updatedAt
       __typename
     }
+    schoolID
     createdAt
     updatedAt
-    studentUkuleleId
+    creatorUkuleleId
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateStudentMutationVariables,
-  APITypes.CreateStudentMutation
+  APITypes.CreateCreatorMutationVariables,
+  APITypes.CreateCreatorMutation
 >;
-export const updateStudent = /* GraphQL */ `mutation UpdateStudent(
-  $input: UpdateStudentInput!
-  $condition: ModelStudentConditionInput
+export const updateCreator = /* GraphQL */ `mutation UpdateCreator(
+  $input: UpdateCreatorInput!
+  $condition: ModelCreatorConditionInput
 ) {
-  updateStudent(input: $input, condition: $condition) {
+  updateCreator(input: $input, condition: $condition) {
     id
     name
-    teacherID
     Ukulele {
       id
-      teacherID
-      orderID
+      title
+      tokenID
+      contractAddress
       createdAt
       updatedAt
       __typename
     }
+    schoolID
     createdAt
     updatedAt
-    studentUkuleleId
+    creatorUkuleleId
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateStudentMutationVariables,
-  APITypes.UpdateStudentMutation
+  APITypes.UpdateCreatorMutationVariables,
+  APITypes.UpdateCreatorMutation
 >;
-export const deleteStudent = /* GraphQL */ `mutation DeleteStudent(
-  $input: DeleteStudentInput!
-  $condition: ModelStudentConditionInput
+export const deleteCreator = /* GraphQL */ `mutation DeleteCreator(
+  $input: DeleteCreatorInput!
+  $condition: ModelCreatorConditionInput
 ) {
-  deleteStudent(input: $input, condition: $condition) {
+  deleteCreator(input: $input, condition: $condition) {
     id
     name
-    teacherID
     Ukulele {
       id
-      teacherID
-      orderID
+      title
+      tokenID
+      contractAddress
       createdAt
       updatedAt
       __typename
     }
+    schoolID
     createdAt
     updatedAt
-    studentUkuleleId
+    creatorUkuleleId
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteStudentMutationVariables,
-  APITypes.DeleteStudentMutation
+  APITypes.DeleteCreatorMutationVariables,
+  APITypes.DeleteCreatorMutation
 >;
