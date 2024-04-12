@@ -21,9 +21,9 @@ import { Divider, Modal, TextField } from "@mui/material";
 
 const pages = [
   { title: "Analytics", href: "anaytics" },
-  { title: "Order Status", href: "orders" },
-  { title: "Ukuleles", href: "ukuleles" },
-  { title: "Students", href: "students" },
+  { title: "Exclusive Content", href: "content" },
+  { title: "Ukuleles", href: "ukulele" },
+  { title: "Creators", href: "creator" },
 ];
 const MetaMaskButton = () => {
   const { status, connect, account, chainId, ethereum } = useMetaMask();

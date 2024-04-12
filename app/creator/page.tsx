@@ -71,7 +71,7 @@ export default function Students() {
             width: "100%",
           }}
         >
-          Students
+          Creators
         </Typography>
       </Box>
 

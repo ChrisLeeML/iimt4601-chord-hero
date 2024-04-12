@@ -1,7 +1,15 @@
 "use client";
 import * as React from "react";
 
-import { Box, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import ChordHeroBlackLogo from "../src/assets/Chord Hero Black Logo.png";
@@ -53,35 +61,126 @@ function Home() {
         </Typography>
       </Box>
 
-      <Box
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
         style={{
           width: "100%",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
-          gap: 10,
-          paddingTop: 20,
+          padding: "50px 0px",
         }}
       >
+        <Grid
+          item
+          justifyContent="center"
+          xs={12}
+          sm={4}
+          style={{ marginBottom: 10 }}
+        >
+          <Box
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <Button
+              variant="contained"
+              size="large"
+              style={{
+                width: "100%",
+                maxWidth: "200px",
+                color: "white",
+                background: "black",
+                padding: "15px 0px",
+              }}
+              href="https://chordhero.com/en-hk"
+            >
+              Website
+            </Button>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          justifyContent="center"
+          xs={12}
+          sm={4}
+          style={{ marginBottom: 10 }}
+        >
+          <Box
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <Button
+              variant="contained"
+              size="large"
+              style={{
+                width: "100%",
+                maxWidth: "200px",
+                color: "white",
+                background: "black",
+                padding: "15px 0px",
+              }}
+              href="https://www.instagram.com/chordheromusic/"
+            >
+              Social Media
+            </Button>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          justifyContent="center"
+          xs={12}
+          sm={4}
+          style={{ marginBottom: 10 }}
+        >
+          <Box
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <Button
+              variant="contained"
+              size="large"
+              style={{
+                width: "100%",
+                maxWidth: "200px",
+                color: "white",
+                background: "black",
+                padding: "15px 0px",
+              }}
+              href="https://opensea.io/"
+            >
+              OpenSea
+            </Button>
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Grid
+        container
+        style={{
+          width: "100%",
+          paddingTop: 20,
+        }}
+        spacing={2}
+      >
         {pages.map((page) => (
-          <Link key={page.title} href={page.href}>
-            <Box
+          <Grid item key={page.title} xs={6} sm={4} md={3}>
+            <Card
               style={{
                 padding: 20,
                 borderRadius: 10,
-                height: "100%",
+                height: 150,
+                width: "100%",
               }}
               sx={{ boxShadow: 2 }}
             >
-              <Typography style={{ fontWeight: "bold", fontSize: "18px" }}>
-                {page.title}
-              </Typography>
-              <Typography style={{ fontSize: "14px" }}>
-                {page.description}
-              </Typography>
-            </Box>
-          </Link>
+              <CardActionArea href={page.href}>
+                <Typography style={{ fontWeight: "bold", fontSize: "18px" }}>
+                  {page.title}
+                </Typography>
+                <Typography style={{ fontSize: "14px" }}>
+                  {page.description}
+                </Typography>
+              </CardActionArea>
+            </Card>
+          </Grid>
         ))}
-      </Box>
+      </Grid>
     </Container>
   );
 }
