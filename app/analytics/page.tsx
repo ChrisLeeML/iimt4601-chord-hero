@@ -507,6 +507,28 @@ const dummyData = {
   },
 };
 
+// const FetchByContract = async () =>{
+//     const nftType = "polygon";
+//     const contractAddress = req.body.contractAddress;
+//     //const tokenId = req.body.tokenId;
+//     const url = `https://api.simplehash.com/api/v0/nfts/${nftType}/${contractAddress}`;
+
+//     const headers = {
+//       accept: "application/json",
+//       "X-API-KEY": process.env.API_KEY,
+//     };
+
+//     try {
+//       const response = await axios.get(url, { headers });
+//       const data = response.data;
+//       console.log(data);
+//       res.status(200).json(data);
+//     } catch (error) {
+//       console.log(error);
+//       res.status(500).json({ error: "An error occured." });
+//     }
+// }
+
 export default function Analytics() {
   const [owners, setOwners] = useState<any[]>([]);
 
