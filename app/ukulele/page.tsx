@@ -1,16 +1,9 @@
 import * as React from "react";
-import { cookies } from "next/headers";
-import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 import { Box, Container, Typography, Grid } from "@mui/material";
 import Link from "next/link";
-import config from "../../src/amplifyconfiguration.json";
 import { listUkuleles } from "@/src/graphql/queries";
 import { Ukulele } from "@/src/API";
-
-export const cookieBasedClient = generateServerClientUsingCookies({
-  config: config,
-  cookies,
-});
+import { cookieBasedClient } from "../layout";
 
 const ListUkuleles = async () => {
   try {

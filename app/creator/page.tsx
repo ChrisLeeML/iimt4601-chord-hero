@@ -1,18 +1,10 @@
 import * as React from "react";
-import { cookies } from "next/headers";
-import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 import { Box, Container, Grid, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
-import config from "../../src/amplifyconfiguration.json";
-
 import { getSchool, getUkulele, listCreators } from "@/src/graphql/queries";
 import { Creator } from "@/src/API";
-
-export const cookieBasedClient = generateServerClientUsingCookies({
-  config: config,
-  cookies,
-});
+import { cookieBasedClient } from "../layout";
 
 const ListCreators = async () => {
   try {
@@ -33,7 +25,7 @@ const ListCreators = async () => {
       const ukuleleResult = await cookieBasedClient.graphql({
         query: getUkulele,
         variables: {
-          id: creator.creatorUkuleleId,
+          id: creator.creatorUkuleleId as string,
         },
       });
 

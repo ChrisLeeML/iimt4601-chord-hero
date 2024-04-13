@@ -1,6 +1,4 @@
 import React from "react";
-import { cookies } from "next/headers";
-import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 import {
   Box,
   Card,
@@ -12,12 +10,7 @@ import {
 } from "@mui/material";
 import { Content } from "@/src/API";
 import { listContents } from "@/src/graphql/queries";
-import config from "../../src/amplifyconfiguration.json";
-
-export const cookieBasedClient = generateServerClientUsingCookies({
-  config: config,
-  cookies,
-});
+import { cookieBasedClient } from "../layout";
 
 const ListContent = async () => {
   try {
@@ -111,9 +104,10 @@ export default async function ContentList() {
                 >
                   {content
                     .filter(
-                      (contentItem) => contentItem.threshold === rowIndex + 1
+                      (contentItem: Content) =>
+                        contentItem.threshold === rowIndex + 1
                     )
-                    .map((contentItem) => (
+                    .map((contentItem: Content) => (
                       <Grid
                         item
                         xs={3}
