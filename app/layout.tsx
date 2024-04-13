@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/src/components/NavBar";
 import BottomBar from "@/src/components/BottomBar";
-import config from "@/src/aws-exports";
+import config from "../src/amplifyconfiguration.json";
 import { Amplify } from "aws-amplify";
 
 export const cookieBasedClient = generateServerClientUsingCookies({
@@ -13,7 +13,9 @@ export const cookieBasedClient = generateServerClientUsingCookies({
   cookies,
 });
 
-Amplify.configure(config);
+Amplify.configure(config, {
+  ssr: true, // required when using Amplify with Next.js
+});
 
 const inter = Inter({ subsets: ["latin"] });
 
