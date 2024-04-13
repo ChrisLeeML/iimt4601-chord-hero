@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/src/components/NavBar";
 import BottomBar from "@/src/components/BottomBar";
-import config from "../src/amplifyconfiguration.json";
+import config from "../amplifyconfig";
 import { Amplify } from "aws-amplify";
 
 export const cookieBasedClient = generateServerClientUsingCookies({
