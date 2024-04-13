@@ -16,6 +16,8 @@ export type ModelUserConditionInput = {
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type ModelStringInput = {
@@ -96,6 +98,8 @@ export type ModelSchoolConditionInput = {
   and?: Array< ModelSchoolConditionInput | null > | null,
   or?: Array< ModelSchoolConditionInput | null > | null,
   not?: ModelSchoolConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type School = {
@@ -166,6 +170,8 @@ export type ModelContentConditionInput = {
   and?: Array< ModelContentConditionInput | null > | null,
   or?: Array< ModelContentConditionInput | null > | null,
   not?: ModelContentConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type ModelIntInput = {
@@ -222,6 +228,8 @@ export type ModelUkuleleConditionInput = {
   and?: Array< ModelUkuleleConditionInput | null > | null,
   or?: Array< ModelUkuleleConditionInput | null > | null,
   not?: ModelUkuleleConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type UpdateUkuleleInput = {
@@ -248,6 +256,8 @@ export type ModelCreatorConditionInput = {
   and?: Array< ModelCreatorConditionInput | null > | null,
   or?: Array< ModelCreatorConditionInput | null > | null,
   not?: ModelCreatorConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   creatorUkuleleId?: ModelIDInput | null,
 };
 
@@ -283,6 +293,8 @@ export type ModelUserFilterInput = {
   name?: ModelStringInput | null,
   authID?: ModelStringInput | null,
   isChordHero?: ModelBooleanInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
@@ -297,6 +309,8 @@ export type ModelUserConnection = {
 export type ModelSchoolFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelSchoolFilterInput | null > | null,
   or?: Array< ModelSchoolFilterInput | null > | null,
   not?: ModelSchoolFilterInput | null,
@@ -314,6 +328,8 @@ export type ModelContentFilterInput = {
   threshold?: ModelIntInput | null,
   type?: ModelContentTypeInput | null,
   requiredNFT?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelContentFilterInput | null > | null,
   or?: Array< ModelContentFilterInput | null > | null,
   not?: ModelContentFilterInput | null,
@@ -330,6 +346,8 @@ export type ModelUkuleleFilterInput = {
   title?: ModelStringInput | null,
   tokenID?: ModelStringInput | null,
   contractAddress?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelUkuleleFilterInput | null > | null,
   or?: Array< ModelUkuleleFilterInput | null > | null,
   not?: ModelUkuleleFilterInput | null,
@@ -345,6 +363,8 @@ export type ModelCreatorFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
   schoolID?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelCreatorFilterInput | null > | null,
   or?: Array< ModelCreatorFilterInput | null > | null,
   not?: ModelCreatorFilterInput | null,
@@ -362,6 +382,8 @@ export type ModelSubscriptionUserFilterInput = {
   name?: ModelSubscriptionStringInput | null,
   authID?: ModelSubscriptionStringInput | null,
   isChordHero?: ModelSubscriptionBooleanInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
 };
@@ -404,6 +426,8 @@ export type ModelSubscriptionBooleanInput = {
 export type ModelSubscriptionSchoolFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   title?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionSchoolFilterInput | null > | null,
   or?: Array< ModelSubscriptionSchoolFilterInput | null > | null,
 };
@@ -414,6 +438,8 @@ export type ModelSubscriptionContentFilterInput = {
   threshold?: ModelSubscriptionIntInput | null,
   type?: ModelSubscriptionStringInput | null,
   requiredNFT?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionContentFilterInput | null > | null,
   or?: Array< ModelSubscriptionContentFilterInput | null > | null,
 };
@@ -435,6 +461,8 @@ export type ModelSubscriptionUkuleleFilterInput = {
   title?: ModelSubscriptionStringInput | null,
   tokenID?: ModelSubscriptionStringInput | null,
   contractAddress?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUkuleleFilterInput | null > | null,
   or?: Array< ModelSubscriptionUkuleleFilterInput | null > | null,
 };
@@ -443,8 +471,11 @@ export type ModelSubscriptionCreatorFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
   schoolID?: ModelSubscriptionIDInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionCreatorFilterInput | null > | null,
   or?: Array< ModelSubscriptionCreatorFilterInput | null > | null,
+  creatorUkuleleId?: ModelSubscriptionIDInput | null,
 };
 
 export type CreateUserMutationVariables = {

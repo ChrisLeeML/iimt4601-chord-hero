@@ -1,58 +1,63 @@
-"use client";
 import * as React from "react";
-
-import { Box, Container, Typography } from "@mui/material";
+import { cookies } from "next/headers";
+import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
-import BlankProfileImg from "../../src/assets/blank-profile.jpeg";
+import config from "../../src/amplifyconfiguration.json";
 
-export default function Students() {
-  const students = [
-    {
-      id: "STUDENT-SAMPLE-ID",
-      image: BlankProfileImg,
-      name: "Yoon Minseo​",
-      studentID: "303XXXXXXX",
-      ukuleleID: "UKULELE-SAMPLE-ID",
-    },
-    {
-      id: "STUDENT-SAMPLE-ID",
-      image: BlankProfileImg,
-      name: "Lee Christopher",
-      studentID: "303XXXXXXX",
-      ukuleleID: "UKULELE-SAMPLE-ID",
-    },
-    {
-      id: "STUDENT-SAMPLE-ID",
-      image: BlankProfileImg,
-      name: "Lee Jihoo​",
-      studentID: "303XXXXXXX",
-      ukuleleID: "UKULELE-SAMPLE-ID",
-    },
-    {
-      id: "STUDENT-SAMPLE-ID",
-      image: BlankProfileImg,
-      name: "Yoo Sunwoo​",
-      studentID: "303XXXXXXX",
-      ukuleleID: "UKULELE-SAMPLE-ID",
-    },
-    {
-      id: "STUDENT-SAMPLE-ID",
-      image: BlankProfileImg,
-      name: "Koh Wooah​",
-      studentID: "303XXXXXXX",
-      ukuleleID: "UKULELE-SAMPLE-ID",
-    },
-    {
-      id: "STUDENT-SAMPLE-ID",
-      image: BlankProfileImg,
-      name: "Choi Dayeun​",
-      studentID: "303XXXXXXX",
-      ukuleleID: "UKULELE-SAMPLE-ID",
-    },
-  ];
+import { getSchool, getUkulele, listCreators } from "@/src/graphql/queries";
+import { Creator } from "@/src/API";
+
+export const cookieBasedClient = generateServerClientUsingCookies({
+  config: config,
+  cookies,
+});
+
+const ListCreators = async () => {
+  try {
+    const { data }: any = await cookieBasedClient.graphql({
+      query: listCreators,
+    });
+
+    const creators = data.listCreators.items;
+
+    const fetchPromises = creators.map(async (creator: Creator) => {
+      const schoolResult = await cookieBasedClient.graphql({
+        query: getSchool,
+        variables: {
+          id: creator.schoolID,
+        },
+      });
+
+      const ukuleleResult = await cookieBasedClient.graphql({
+        query: getUkulele,
+        variables: {
+          id: creator.creatorUkuleleId,
+        },
+      });
+
+      return {
+        ...creator,
+        school: schoolResult.data.getSchool,
+        ukulele: ukuleleResult.data.getUkulele,
+      };
+    });
+
+    const contentList = await Promise.all(fetchPromises);
+
+    console.log(contentList);
+    return contentList;
+  } catch (error) {
+    console.error("Error at ListCreators: ", error);
+  }
+};
+
+export default async function creators() {
+  const creators = await ListCreators();
+
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" style={{ minHeight: "100vh" }}>
       <Box
         style={{
           marginTop: 30,
@@ -75,46 +80,47 @@ export default function Students() {
         </Typography>
       </Box>
 
-      <Box
+      <Grid
+        container
         style={{
           width: "100%",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr",
-          gap: 10,
           paddingTop: 20,
         }}
+        spacing={2}
       >
-        {students.map((student) => (
-          <Link key={student.id} href={`students/${student.id}`}>
-            <Box
-              style={{
-                padding: 20,
-                borderRadius: 10,
-                height: "100%",
-              }}
-              sx={{ boxShadow: 2 }}
-            >
-              <Image
-                src={student.image}
-                alt={student.name}
-                style={{ width: "100%", height: "auto" }}
-              />
-              <Typography style={{ fontSize: "8px", color: "gray" }}>
-                {student.id}
-              </Typography>
-              <Typography style={{ fontWeight: "bold", fontSize: "18px" }}>
-                {student.name}
-              </Typography>
-              <Typography style={{ fontSize: "14px" }}>
-                {student.studentID}
-              </Typography>
-              <Typography style={{ fontSize: "14px", fontStyle: "italic" }}>
-                Assigned Ukulele: {student.ukuleleID}
-              </Typography>
-            </Box>
-          </Link>
+        {creators?.map((creator) => (
+          <Grid key={creator.id} item xs={6} sm={4} md={3} lg={2}>
+            <Link href={`creator/${creator.id}`}>
+              <Box
+                style={{
+                  padding: 20,
+                  borderRadius: 10,
+                  height: "100%",
+                }}
+                sx={{ boxShadow: 2 }}
+              >
+                <Image
+                  src={require("../../src/assets/blank-profile.jpeg")}
+                  alt={creator.name}
+                  style={{ width: "100%", height: "auto" }}
+                />
+                <Typography style={{ fontSize: "8px", color: "gray" }}>
+                  {creator.id}
+                </Typography>
+                <Typography style={{ fontWeight: "bold", fontSize: "18px" }}>
+                  {creator.name}
+                </Typography>
+                <Typography style={{ fontSize: "12px", fontStyle: "italic" }}>
+                  {creator.school.title}
+                </Typography>
+                <Typography style={{ fontSize: "12px", fontStyle: "italic" }}>
+                  Ukulele: {creator.ukulele.title}
+                </Typography>
+              </Box>
+            </Link>
+          </Grid>
         ))}
-      </Box>
+      </Grid>
     </Container>
   );
 }

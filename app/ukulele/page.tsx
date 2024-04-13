@@ -1,58 +1,36 @@
-"use client";
 import * as React from "react";
-
-import { Box, Button, Container, Typography } from "@mui/material";
+import { cookies } from "next/headers";
+import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
+import { Box, Container, Typography, Grid } from "@mui/material";
 import Link from "next/link";
-import Image from "next/image";
-import ChordHeroMakerSet from "../../src/assets/Chord Hero Ukulele Set.jpg";
+import config from "../../src/amplifyconfiguration.json";
+import { listUkuleles } from "@/src/graphql/queries";
+import { Ukulele } from "@/src/API";
 
-export default function Ukuleles() {
-  const ukuleles = [
-    {
-      id: "UKULELE-SAMPLE-ID",
-      studentID: "STUDENT-SAMPLE-ID",
-      image: ChordHeroMakerSet,
-      title: "Chord Hero Ukulele Maker Set",
-      assignedTo: "Yoon Minseo​",
-    },
-    {
-      id: "UKULELE-SAMPLE-ID",
-      studentID: "STUDENT-SAMPLE-ID",
-      image: ChordHeroMakerSet,
-      title: "Chord Hero Ukulele Maker Set",
-      assignedTo: "Lee Christopher",
-    },
-    {
-      id: "UKULELE-SAMPLE-ID",
-      studentID: "STUDENT-SAMPLE-ID",
-      image: ChordHeroMakerSet,
-      title: "Chord Hero Ukulele Maker Set",
-      assignedTo: "Lee Jihoo​",
-    },
-    {
-      id: "UKULELE-SAMPLE-ID",
-      studentID: "STUDENT-SAMPLE-ID",
-      image: ChordHeroMakerSet,
-      title: "Chord Hero Ukulele Maker Set",
-      assignedTo: "Yoo Sunwoo​",
-    },
-    {
-      id: "UKULELE-SAMPLE-ID",
-      studentID: "STUDENT-SAMPLE-ID",
-      image: ChordHeroMakerSet,
-      title: "Chord Hero Ukulele Maker Set",
-      assignedTo: "Koh Wooah​",
-    },
-    {
-      id: "UKULELE-SAMPLE-ID",
-      studentID: "STUDENT-SAMPLE-ID",
-      image: ChordHeroMakerSet,
-      title: "Chord Hero Ukulele Maker Set",
-      assignedTo: "Choi Dayeun​",
-    },
-  ];
+export const cookieBasedClient = generateServerClientUsingCookies({
+  config: config,
+  cookies,
+});
+
+const ListUkuleles = async () => {
+  try {
+    const { data }: any = await cookieBasedClient.graphql({
+      query: listUkuleles,
+    });
+
+    const creators = data.listUkuleles.items;
+
+    console.log(creators);
+    return creators;
+  } catch (error) {
+    console.error("Error at ListUkuleles: ", error);
+  }
+};
+
+export default async function Ukuleles() {
+  const ukuleles = await ListUkuleles();
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" style={{ minHeight: "100vh" }}>
       <Box
         style={{
           marginTop: 30,
@@ -75,51 +53,47 @@ export default function Ukuleles() {
         </Typography>
       </Box>
 
-      <Box
+      <Grid
+        container
         style={{
           width: "100%",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr",
-          gap: 10,
           paddingTop: 20,
         }}
+        spacing={2}
       >
-        {ukuleles.map((ukulele) => (
-          <Link key={ukulele.id} href={`ukuleles/${ukulele.id}`}>
-            <Box
-              style={{
-                padding: 20,
-                borderRadius: 10,
-                height: "100%",
-              }}
-              sx={{ boxShadow: 2 }}
-            >
-              <Image
+        {ukuleles?.map((ukulele: Ukulele) => (
+          <Grid key={ukulele.id} item xs={6} sm={4} md={3}>
+            <Link href={`ukuleles/${ukulele.id}`}>
+              <Box
+                style={{
+                  padding: 20,
+                  borderRadius: 10,
+                  height: "100%",
+                }}
+                sx={{ boxShadow: 2 }}
+              >
+                {/* <Image
                 src={ukulele.image}
                 alt={ukulele.title}
                 style={{ width: "100%", height: "auto" }}
-              />
-              <Typography style={{ fontSize: "8px", color: "gray" }}>
-                {ukulele.id}
-              </Typography>
-              <Typography style={{ fontWeight: "bold", fontSize: "14px" }}>
-                {ukulele.title}
-              </Typography>
-              <Typography style={{ fontSize: "14px" }}>
-                Assigned to: {ukulele.assignedTo}
-              </Typography>
-              <Typography style={{ fontSize: "10px", fontStyle: "italic" }}>
-                Student ID: {ukulele.studentID}
-              </Typography>
-              <Button style={{ background: "red", marginTop: 10 }}>
-                <Typography style={{ color: "white", fontSize: "10px" }}>
-                  Report Damage
+              /> */}
+                <Typography style={{ fontSize: "8px", color: "gray" }}>
+                  {ukulele.id}
                 </Typography>
-              </Button>
-            </Box>
-          </Link>
+                <Typography style={{ fontWeight: "bold", fontSize: "14px" }}>
+                  {ukulele.title}
+                </Typography>
+                <Typography style={{ fontSize: "10px", fontStyle: "italic" }}>
+                  Creator:
+                </Typography>
+                <Typography style={{ fontSize: "10px", fontStyle: "italic" }}>
+                  NFT Owned by:
+                </Typography>
+              </Box>
+            </Link>
+          </Grid>
         ))}
-      </Box>
+      </Grid>
     </Container>
   );
 }

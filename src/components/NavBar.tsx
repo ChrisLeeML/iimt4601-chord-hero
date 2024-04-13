@@ -20,7 +20,7 @@ import { useMetaMask } from "metamask-react";
 import { Divider, Modal, TextField } from "@mui/material";
 
 const pages = [
-  { title: "Analytics", href: "anaytics" },
+  { title: "Analytics", href: "analytics" },
   { title: "Exclusive Content", href: "content" },
   { title: "Ukuleles", href: "ukulele" },
   { title: "Creators", href: "creator" },

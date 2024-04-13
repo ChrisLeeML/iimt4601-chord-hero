@@ -1,8 +1,19 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
+import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/src/components/NavBar";
 import BottomBar from "@/src/components/BottomBar";
+import config from "../src/amplifyconfiguration.json";
+import { Amplify } from "aws-amplify";
+
+export const cookieBasedClient = generateServerClientUsingCookies({
+  config: config,
+  cookies,
+});
+
+Amplify.configure(config);
 
 const inter = Inter({ subsets: ["latin"] });
 
