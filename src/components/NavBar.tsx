@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,8 +15,9 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Image from "next/image";
 import ChordHeroWhiteLogo from "../assets/Chord Hero White Logo.png";
-import { MetaMaskProvider } from "metamask-react";
-import { useMetaMask } from "metamask-react";
+import MetamaskLogo from "../assets/metamask.png";
+
+import { MetaMaskProvider, useMetaMask } from "metamask-react";
 import { Divider, Modal, TextField } from "@mui/material";
 
 const pages = [
@@ -25,39 +26,61 @@ const pages = [
   { title: "Ukuleles", href: "ukulele" },
   { title: "Creators", href: "creator" },
 ];
-const MetaMaskButton = () => {
-  const { status, connect, account, chainId, ethereum } = useMetaMask();
-
-  if (status === "initializing")
-    return <div>Synchronisation with MetaMask ongoing...</div>;
-
-  if (status === "unavailable") return <div>MetaMask not available :(</div>;
-
-  if (status === "notConnected")
-    return <button onClick={connect}>Connect to MetaMask</button>;
-
-  if (status === "connecting") return <div>Connecting...</div>;
-
-  if (status === "connected")
-    return (
-      <div>
-        Connected account {account} on chain ID {chainId}
-      </div>
-    );
-
-  return null;
-};
 
 function NavBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [isSignedIn, setIsSignedIn] = React.useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-  const [isSignInLoading, setIsSignInLoading] = React.useState<boolean>(false);
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isSignInLoading, setIsSignInLoading] = useState<boolean>(false);
+  const [isMetamask, setIsMetamask] = useState<boolean>(false);
+
+  const MetaMaskStatus = () => {
+    const { status, connect, account, chainId, ethereum } = useMetaMask();
+
+    if (status === "initializing")
+      return <Typography>MetaMask getting ready...</Typography>;
+
+    if (status === "unavailable")
+      return <Typography>MetaMask Unavailable</Typography>;
+
+    if (status === "notConnected") {
+      setIsSignedIn(false);
+      setIsMetamask(false);
+      return (
+        <Button
+          variant="outlined"
+          style={{ color: "black", borderColor: "black", marginBottom: 10 }}
+          onClick={connect}
+        >
+          <Image src={MetamaskLogo} alt="" width={20} height={20} />
+          <Typography style={{ marginLeft: 10 }}>
+            Log in with Metamask
+          </Typography>
+        </Button>
+      );
+    }
+
+    if (status === "connecting") return <Typography>Connecting...</Typography>;
+
+    if (status === "connected") {
+      setIsModalOpen(false);
+      setIsSignedIn(true);
+      setIsMetamask(true);
+      return (
+        <Button variant="outlined" style={{ borderColor: "white" }}>
+          <Typography
+            noWrap
+            style={{ color: "white", textOverflow: "ellipsis", width: "100px" }}
+          >
+            {account}
+          </Typography>
+        </Button>
+      );
+    }
+
+    return null;
+  };
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -153,10 +176,14 @@ function NavBar() {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
-                    />
+                    {isMetamask ? (
+                      <MetaMaskStatus />
+                    ) : (
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="/static/images/avatar/2.jpg"
+                      />
+                    )}
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -180,9 +207,11 @@ function NavBar() {
                       <Typography textAlign="center">Profile</Typography>
                     </MenuItem>
                   </Link>
-                  <MenuItem onClick={handleLogOut}>
-                    <Typography textAlign="center">Logout</Typography>
-                  </MenuItem>
+                  {isMetamask ? null : (
+                    <MenuItem onClick={handleLogOut}>
+                      <Typography textAlign="center">Logout</Typography>
+                    </MenuItem>
+                  )}
                 </Menu>
               </Box>
             ) : (
@@ -258,12 +287,8 @@ function NavBar() {
               Sign In
             </Button>
             <Divider style={{ margin: 30 }}>OR</Divider>
-            <Button
-              variant="outlined"
-              style={{ color: "black", borderColor: "black", marginBottom: 10 }}
-            >
-              Log in with Metamask
-            </Button>
+
+            <MetaMaskStatus />
           </Box>
         </Box>
       </Modal>

@@ -10,7 +10,6 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
 import Image from "next/image";
 import ChordHeroBlackLogo from "../src/assets/Chord Hero Black Logo.png";
 
@@ -27,25 +26,27 @@ const pages = [
   },
   {
     title: "Ukuleles",
-    href: "ukuleles",
+    href: "ukulele",
     description: "Check the list of ukuleles minted by Chord Hero.",
   },
   {
     title: "Creators",
-    href: "creators",
+    href: "creator",
     description: "Manage the creator profiles.",
   },
 ];
 
 function Home() {
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" style={{ minHeight: "100vh" }}>
       <Box
         style={{
           display: "flex",
           flexDirection: "column",
+          justifyContent: "flex-start",
           alignItems: "center",
           width: "100%",
+          height: "100%",
         }}
       >
         <Image
@@ -162,14 +163,16 @@ function Home() {
           <Grid item key={page.title} xs={6} sm={4} md={3}>
             <Card
               style={{
-                padding: 20,
                 borderRadius: 10,
                 height: 150,
                 width: "100%",
               }}
               sx={{ boxShadow: 2 }}
             >
-              <CardActionArea href={page.href}>
+              <CardActionArea
+                href={page.href}
+                style={{ width: "100%", height: "100%", padding: 20 }}
+              >
                 <Typography style={{ fontWeight: "bold", fontSize: "18px" }}>
                   {page.title}
                 </Typography>

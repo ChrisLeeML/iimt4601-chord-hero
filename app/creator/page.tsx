@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cookies } from "next/headers";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import config from "../../src/amplifyconfiguration.json";
@@ -62,8 +62,8 @@ export default async function creators() {
         style={{
           marginTop: 30,
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
+          justifyContent: "space-between",
           width: "100%",
         }}
       >
@@ -78,6 +78,13 @@ export default async function creators() {
         >
           Creators
         </Typography>
+        <Button
+          variant="contained"
+          style={{ background: "black", width: "200px" }}
+          href="/creator/create"
+        >
+          Add Creator
+        </Button>
       </Box>
 
       <Grid

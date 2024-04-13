@@ -7,9 +7,7 @@ function BottomBar() {
     <AppBar
       position="static"
       style={{ background: "black", height: "100px", marginTop: "50px" }}
-    >
-      <Container maxWidth="xl"></Container>
-    </AppBar>
+    />
   );
 }
 export default BottomBar;
