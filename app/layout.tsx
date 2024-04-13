@@ -9,7 +9,7 @@ import config from "../amplifyconfig";
 import { Amplify } from "aws-amplify";
 
 Amplify.configure(config, {
-  ssr: true, // required when using Amplify with Next.js
+  ssr: true,
 });
 
 export const cookieBasedClient = generateServerClientUsingCookies({

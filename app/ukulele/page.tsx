@@ -13,7 +13,6 @@ const ListUkuleles = async () => {
 
     const creators = data.listUkuleles.items;
 
-    console.log(creators);
     return creators;
   } catch (error) {
     console.error("Error at ListUkuleles: ", error);

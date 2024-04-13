@@ -38,7 +38,6 @@ const ListCreators = async () => {
 
     const contentList = await Promise.all(fetchPromises);
 
-    console.log(contentList);
     return contentList;
   } catch (error) {
     console.error("Error at ListCreators: ", error);
