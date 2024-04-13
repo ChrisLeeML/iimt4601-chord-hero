@@ -8,13 +8,13 @@ import BottomBar from "@/src/components/BottomBar";
 import config from "../amplifyconfig";
 import { Amplify } from "aws-amplify";
 
+Amplify.configure(config, {
+  ssr: true, // required when using Amplify with Next.js
+});
+
 export const cookieBasedClient = generateServerClientUsingCookies({
   config: config,
   cookies,
-});
-
-Amplify.configure(config, {
-  ssr: true, // required when using Amplify with Next.js
 });
 
 const inter = Inter({ subsets: ["latin"] });
