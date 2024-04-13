@@ -511,8 +511,7 @@ import {
 const FetchByContract = async () =>{
     const nftType = "polygon";
     //const contractAddress = req.body.contractAddress;
-    //Need to get contractAddress from user input OR default value
-    const contractAddress = '0x2953399124F0cBB46d2CbACD8A89cF0599974963'
+    const contractAddress = '0x2953399124F0cBB46d2CbACD8A89cF0599974963s'
 ;   const tokenId = '78655756395228556566244677429854963634410546405516720580801289032955980677620'
     const url = `https://api.simplehash.com/api/v0/nfts/${nftType}/${contractAddress}/${tokenId}`;
 
