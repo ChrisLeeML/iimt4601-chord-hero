@@ -28,7 +28,7 @@ const FetchByContract = async () =>{
       "X-API-KEY": 'jihoolee529_sk_33a931b9-be65-41db-827c-ff09c2b316bf_g222szbb6t04ufl4'
 
     };
-    console.log("HI");
+
     try {
       const response = await axios.get(url, { headers });
       const data = response.data;
