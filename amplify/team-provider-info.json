@@ -1,4 +1,17 @@
 {
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-chordhero-dev-220230-authRole",
+      "UnauthRoleArn": "arn:aws:iam::755426373431:role/amplify-chordhero-dev-220230-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::755426373431:role/amplify-chordhero-dev-220230-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-chordhero-dev-220230-deployment",
+      "UnauthRoleName": "amplify-chordhero-dev-220230-unauthRole",
+      "StackName": "amplify-chordhero-dev-220230",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:755426373431:stack/amplify-chordhero-dev-220230/253a46d0-f355-11ee-8f45-0a494388934b",
+      "AmplifyAppId": "d3pfs4uvoms4p6"
+    }
+  },
   "staging": {
     "awscloudformation": {
       "AuthRoleName": "amplify-amplifyee8ebabb12164-staging-54425-authRole",
