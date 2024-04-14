@@ -2,7 +2,7 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "chordhero",
+  "projectName": "iimt4601chordhero",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
@@ -14,4 +14,3 @@
       "StartCommand": "npm run-script start"
     }
   }
-}
