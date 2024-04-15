@@ -81,7 +81,8 @@ export const getContent = /* GraphQL */ `query GetContent($id: ID!) {
     title
     threshold
     type
-    requiredNFT
+    videoLink
+    textContent
     createdAt
     updatedAt
     __typename
@@ -102,7 +103,8 @@ export const listContents = /* GraphQL */ `query ListContents(
       title
       threshold
       type
-      requiredNFT
+      videoLink
+      textContent
       createdAt
       updatedAt
       __typename

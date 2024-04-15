@@ -32,27 +32,31 @@ export default function ContentCreateForm(props) {
     title: "",
     threshold: "",
     type: "",
-    requiredNFT: "",
+    videoLink: "",
+    textContent: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [threshold, setThreshold] = React.useState(initialValues.threshold);
   const [type, setType] = React.useState(initialValues.type);
-  const [requiredNFT, setRequiredNFT] = React.useState(
-    initialValues.requiredNFT
+  const [videoLink, setVideoLink] = React.useState(initialValues.videoLink);
+  const [textContent, setTextContent] = React.useState(
+    initialValues.textContent
   );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
     setThreshold(initialValues.threshold);
     setType(initialValues.type);
-    setRequiredNFT(initialValues.requiredNFT);
+    setVideoLink(initialValues.videoLink);
+    setTextContent(initialValues.textContent);
     setErrors({});
   };
   const validations = {
     title: [],
     threshold: [],
     type: [],
-    requiredNFT: [],
+    videoLink: [{ type: "URL" }],
+    textContent: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -83,7 +87,8 @@ export default function ContentCreateForm(props) {
           title,
           threshold,
           type,
-          requiredNFT,
+          videoLink,
+          textContent,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -149,7 +154,8 @@ export default function ContentCreateForm(props) {
               title: value,
               threshold,
               type,
-              requiredNFT,
+              videoLink,
+              textContent,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -180,7 +186,8 @@ export default function ContentCreateForm(props) {
               title,
               threshold: value,
               type,
-              requiredNFT,
+              videoLink,
+              textContent,
             };
             const result = onChange(modelFields);
             value = result?.threshold ?? value;
@@ -207,7 +214,8 @@ export default function ContentCreateForm(props) {
               title,
               threshold,
               type: value,
-              requiredNFT,
+              videoLink,
+              textContent,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -239,10 +247,10 @@ export default function ContentCreateForm(props) {
         ></option>
       </SelectField>
       <TextField
-        label="Required nft"
+        label="Video link"
         isRequired={false}
         isReadOnly={false}
-        value={requiredNFT}
+        value={videoLink}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -250,20 +258,49 @@ export default function ContentCreateForm(props) {
               title,
               threshold,
               type,
-              requiredNFT: value,
+              videoLink: value,
+              textContent,
             };
             const result = onChange(modelFields);
-            value = result?.requiredNFT ?? value;
+            value = result?.videoLink ?? value;
           }
-          if (errors.requiredNFT?.hasError) {
-            runValidationTasks("requiredNFT", value);
+          if (errors.videoLink?.hasError) {
+            runValidationTasks("videoLink", value);
           }
-          setRequiredNFT(value);
+          setVideoLink(value);
         }}
-        onBlur={() => runValidationTasks("requiredNFT", requiredNFT)}
-        errorMessage={errors.requiredNFT?.errorMessage}
-        hasError={errors.requiredNFT?.hasError}
-        {...getOverrideProps(overrides, "requiredNFT")}
+        onBlur={() => runValidationTasks("videoLink", videoLink)}
+        errorMessage={errors.videoLink?.errorMessage}
+        hasError={errors.videoLink?.hasError}
+        {...getOverrideProps(overrides, "videoLink")}
+      ></TextField>
+      <TextField
+        label="Text content"
+        isRequired={false}
+        isReadOnly={false}
+        value={textContent}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              threshold,
+              type,
+              videoLink,
+              textContent: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.textContent ?? value;
+          }
+          if (errors.textContent?.hasError) {
+            runValidationTasks("textContent", value);
+          }
+          setTextContent(value);
+        }}
+        onBlur={() => runValidationTasks("textContent", textContent)}
+        errorMessage={errors.textContent?.errorMessage}
+        hasError={errors.textContent?.hasError}
+        {...getOverrideProps(overrides, "textContent")}
       ></TextField>
       <Flex
         justifyContent="space-between"

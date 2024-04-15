@@ -131,7 +131,8 @@ export const createContent = /* GraphQL */ `mutation CreateContent(
     title
     threshold
     type
-    requiredNFT
+    videoLink
+    textContent
     createdAt
     updatedAt
     __typename
@@ -150,7 +151,8 @@ export const updateContent = /* GraphQL */ `mutation UpdateContent(
     title
     threshold
     type
-    requiredNFT
+    videoLink
+    textContent
     createdAt
     updatedAt
     __typename
@@ -169,7 +171,8 @@ export const deleteContent = /* GraphQL */ `mutation DeleteContent(
     title
     threshold
     type
-    requiredNFT
+    videoLink
+    textContent
     createdAt
     updatedAt
     __typename

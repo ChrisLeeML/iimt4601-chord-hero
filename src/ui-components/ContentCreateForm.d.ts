@@ -25,13 +25,15 @@ export declare type ContentCreateFormInputValues = {
     title?: string;
     threshold?: number;
     type?: string;
-    requiredNFT?: string;
+    videoLink?: string;
+    textContent?: string;
 };
 export declare type ContentCreateFormValidationValues = {
     title?: ValidationFunction<string>;
     threshold?: ValidationFunction<number>;
     type?: ValidationFunction<string>;
-    requiredNFT?: ValidationFunction<string>;
+    videoLink?: ValidationFunction<string>;
+    textContent?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ContentCreateFormOverridesProps = {
@@ -39,7 +41,8 @@ export declare type ContentCreateFormOverridesProps = {
     title?: PrimitiveOverrideProps<TextFieldProps>;
     threshold?: PrimitiveOverrideProps<TextFieldProps>;
     type?: PrimitiveOverrideProps<SelectFieldProps>;
-    requiredNFT?: PrimitiveOverrideProps<TextFieldProps>;
+    videoLink?: PrimitiveOverrideProps<TextFieldProps>;
+    textContent?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ContentCreateFormProps = React.PropsWithChildren<{
     overrides?: ContentCreateFormOverridesProps | undefined | null;

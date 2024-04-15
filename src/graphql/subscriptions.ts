@@ -110,7 +110,8 @@ export const onCreateContent = /* GraphQL */ `subscription OnCreateContent($filt
     title
     threshold
     type
-    requiredNFT
+    videoLink
+    textContent
     createdAt
     updatedAt
     __typename
@@ -126,7 +127,8 @@ export const onUpdateContent = /* GraphQL */ `subscription OnUpdateContent($filt
     title
     threshold
     type
-    requiredNFT
+    videoLink
+    textContent
     createdAt
     updatedAt
     __typename
@@ -142,7 +144,8 @@ export const onDeleteContent = /* GraphQL */ `subscription OnDeleteContent($filt
     title
     threshold
     type
-    requiredNFT
+    videoLink
+    textContent
     createdAt
     updatedAt
     __typename
