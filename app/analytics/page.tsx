@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-const axios = require("axios");
+import axios from "axios";
 
 import {
   Box,
