@@ -62,7 +62,8 @@ const FetchByUkulele = async () => {
 
   try {
     const responses = await Promise.all(requests);
-    console.log(responses);
+    //console.log(responses);
+    return responses;
     // Do something with all responses
   } catch (error) {
     // Handle any error from all requests
@@ -72,21 +73,25 @@ const FetchByUkulele = async () => {
 
 export default function Analytics() {
   const [owners, setOwners] = useState<any[]>([]);
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<any[][]>([]);
   const [index, setIndex] = useState<number>(0);
-  //AddUkulele();
-  /*const addUkulele = AddUkulele();
-  console.log(addUkulele);*/
+  console.log("data is", data)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await FetchByContract();
+        const ukuleleDataArray = [];
+        const galleryPassData = await FetchByContract();
         const ukuleleData = await FetchByUkulele();
-        setOwners(data.owners);
-        setData([data]);
-        setData(prevData => [...prevData, ukuleleData]);
-        console.log("data", data, index);
+
+        for(let element of ukuleleData){
+          ukuleleDataArray.push(element.data);
+        }
+        
+        setOwners(galleryPassData.owners);
+        setData([[galleryPassData], ukuleleDataArray]);
+        
+        
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -156,74 +161,77 @@ export default function Analytics() {
         </Button>
       </Box>
       {data.length > 0 ? (
-        <Box
-          style={{
-            width: "100%",
-            paddingTop: 20,
-            gap: 10,
-          }}
-        >
-          <Box style={{ width: "100%", gap: 10, marginBottom: 15 }}>
-            <Typography style={{ fontSize: 18, fontWeight: "600" }}>
-              {data[index].name}
-            </Typography>
-            <Typography style={{ fontSize: 14, marginBottom: 15 }}>
-              {data[index].description}
-            </Typography>
-            <Typography style={{ fontSize: 14 }}>
-              <b>Chain:</b> {data[index].chain}
-            </Typography>
-            <Typography style={{ fontSize: 14 }}>
-              <b>NFT ID:</b> {data[index].nft_id}
-            </Typography>
-            <Typography style={{ fontSize: 14 }}>
-              <b>Contract Address:</b> {data[index].contract_address}
-            </Typography>
-            <Typography style={{ fontSize: 14 }}>
-              <b>Token ID:</b> {data[index].token_id}
-            </Typography>
-          </Box>
-
-          <Typography
-            style={{ marginBottom: 10, fontWeight: "600", fontSize: 14 }}
+        data[index].map((item, i) => (
+          <Box
+            key={i}
+            style={{
+              width: "100%",
+              paddingTop: 20,
+              gap: 10,
+            }}
           >
-            Owners ({data[index].owner_count})
-          </Typography>
-          <TableContainer component={Paper}>
-            <Table
-              sx={{ minWidth: 650 }}
-              aria-label="Chord Hero NFT Owners List Table"
+            <Box style={{ width: "100%", gap: 10, marginBottom: 15 }}>
+              <Typography style={{ fontSize: 18, fontWeight: "600" }}>
+                {item.name}
+              </Typography>
+              <Typography style={{ fontSize: 14, marginBottom: 15 }}>
+                {item.description}
+              </Typography>
+              <Typography style={{ fontSize: 14 }}>
+                <b>Chain:</b> {item.chain}
+              </Typography>
+              <Typography style={{ fontSize: 14 }}>
+                <b>NFT ID:</b> {item.nft_id}
+              </Typography>
+              <Typography style={{ fontSize: 14 }}>
+                <b>Contract Address:</b> {item.contract_address}
+              </Typography>
+              <Typography style={{ fontSize: 14 }}>
+                <b>Token ID:</b> {item.token_id}
+              </Typography>
+            </Box>
+
+            <Typography
+              style={{ marginBottom: 10, fontWeight: "600", fontSize: 14 }}
             >
-              <TableHead>
-                <TableRow>
-                  <TableCell>Wallet Address</TableCell>
-                  <TableCell align="right">Quantity</TableCell>
-                  <TableCell align="right">Date of First Acquisition</TableCell>
-                  <TableCell align="right">Date of Last Acquisition</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {owners.map((owner) => (
-                  <TableRow
-                    key={owner.owner_address}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {owner.owner_address}
-                    </TableCell>
-                    <TableCell align="right">{owner.quantity}</TableCell>
-                    <TableCell align="right">
-                      {owner.first_acquired_date}
-                    </TableCell>
-                    <TableCell align="right">
-                      {owner.last_acquired_date}
-                    </TableCell>
+              Owners ({item.owner_count})
+            </Typography>
+            <TableContainer component={Paper}>
+              <Table
+                sx={{ minWidth: 650 }}
+                aria-label="NFT Owners List Table"
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Wallet Address</TableCell>
+                    <TableCell align="right">Quantity</TableCell>
+                    <TableCell align="right">Date of First Acquisition</TableCell>
+                    <TableCell align="right">Date of Last Acquisition</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
+                </TableHead>
+                <TableBody>
+                  {item.owners.map((owner) => (
+                    <TableRow
+                      key={owner.owner_address}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {owner.owner_address}
+                      </TableCell>
+                      <TableCell align="right">{owner.quantity}</TableCell>
+                      <TableCell align="right">
+                        {owner.first_acquired_date}
+                      </TableCell>
+                      <TableCell align="right">
+                        {owner.last_acquired_date}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+        ))
       ) : null}
     </Container>
   );
