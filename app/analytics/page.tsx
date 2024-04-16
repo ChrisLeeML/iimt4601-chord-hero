@@ -1,6 +1,12 @@
 "use client";
+import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { getUkulele, listUkuleles } from "@/src/graphql/queries";
+import { createUkulele } from "@/src/graphql/mutations";
+import * as ukuleleData from "@/src/ukulele.json";
+import { cookieBasedClient } from "../layout";
+import { Ukulele } from "@/src/API";
 
 import {
   Box,
@@ -19,8 +25,7 @@ import {
 const FetchByContract = async () => {
   const nftType = "polygon";
   const contractAddress = "0x2953399124F0cBB46d2CbACD8A89cF0599974963";
-  const tokenId =
-    "78655756395228556566244677429854963634410546405516720580801289032955980677620";
+  const tokenId = "78655756395228556566244677429854963634410546405516720580801289032955980677620";
   const url = `https://api.simplehash.com/api/v0/nfts/${nftType}/${contractAddress}/${tokenId}`;
 
   const headers = {
@@ -32,24 +37,56 @@ const FetchByContract = async () => {
   try {
     const response = await axios.get(url, { headers });
     const data = response.data;
-    console.log(data);
+    //console.log(data);
     return data;
   } catch (error) {
     console.error("Error at FetchByContract: ", error);
   }
 };
 
+const FetchByUkulele = async () => {
+  const headers = {
+    accept: "application/json",
+    "X-API-KEY":
+      "jihoolee529_sk_33a931b9-be65-41db-827c-ff09c2b316bf_g222szbb6t04ufl4",
+  };
+
+  const requests = ukuleleData.map(element => {
+    const nftType = element.chain;
+    const contractAddress = element.contractAddress;
+    const tokenId = element.tokenID;
+    const url = `https://api.simplehash.com/api/v0/nfts/${nftType}/${contractAddress}/${tokenId}`;
+
+    return axios.get(url, { headers }).catch(error => console.error(error));
+  });
+
+  try {
+    const responses = await Promise.all(requests);
+    console.log(responses);
+    // Do something with all responses
+  } catch (error) {
+    // Handle any error from all requests
+  }
+};
+
+
 export default function Analytics() {
   const [owners, setOwners] = useState<any[]>([]);
   const [data, setData] = useState<any[]>([]);
   const [index, setIndex] = useState<number>(0);
+  //AddUkulele();
+  /*const addUkulele = AddUkulele();
+  console.log(addUkulele);*/
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await FetchByContract();
+        const ukuleleData = await FetchByUkulele();
         setOwners(data.owners);
         setData([data]);
+        setData(prevData => [...prevData, ukuleleData]);
+        console.log("data", data, index);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
