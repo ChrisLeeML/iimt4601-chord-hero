@@ -22,6 +22,13 @@ import {
   Button,
 } from "@mui/material";
 
+interface Owner {
+  owner_address: string;
+  quantity: number;
+  first_acquired_date: string;
+  last_acquired_date: string;
+}
+
 const FetchByContract = async () => {
   const nftType = "polygon";
   const contractAddress = "0x2953399124F0cBB46d2CbACD8A89cF0599974963";
@@ -72,7 +79,7 @@ const FetchByUkulele = async () => {
 
 
 export default function Analytics() {
-  const [owners, setOwners] = useState<any[]>([]);
+  const [owners, setOwners] = useState<Owner[]>([]);
   const [data, setData] = useState<any[][]>([]);
   const [index, setIndex] = useState<number>(0);
   console.log("data is", data)
@@ -80,12 +87,16 @@ export default function Analytics() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const ukuleleDataArray = [];
+        const ukuleleDataArray: any[] = [];
         const galleryPassData = await FetchByContract();
         const ukuleleData = await FetchByUkulele();
 
-        for(let element of ukuleleData){
-          ukuleleDataArray.push(element.data);
+        if (Array.isArray(ukuleleData)) {
+          for (let element of ukuleleData) {
+              if (element && element.data) {
+                  ukuleleDataArray.push(element.data);
+              }
+          }
         }
         
         setOwners(galleryPassData.owners);
@@ -210,7 +221,7 @@ export default function Analytics() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {item.owners.map((owner) => (
+                  {item.owners.map((owner: Owner) => (
                     <TableRow
                       key={owner.owner_address}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
