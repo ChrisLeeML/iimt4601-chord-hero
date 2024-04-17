@@ -159,7 +159,6 @@ export type CreateContentInput = {
 export enum ContentType {
   VIDEO = "VIDEO",
   TEXT = "TEXT",
-  PDF = "PDF",
 }
 
 

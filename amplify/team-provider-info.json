@@ -10,6 +10,11 @@
       "StackName": "amplify-amplifyee8ebabb12164-staging-54425",
       "StackId": "arn:aws:cloudformation:us-east-2:259652921108:stack/amplify-amplifyee8ebabb12164-staging-54425/942ea870-e4ea-11ee-a0e9-0a2417332757",
       "AmplifyAppId": "d8qk42sxvs3jl"
+    },
+    "categories": {
+      "api": {
+        "iimt4601chordhero": {}
+      }
     }
   }
 }

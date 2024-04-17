@@ -25,11 +25,13 @@ export declare type UkuleleCreateFormInputValues = {
     title?: string;
     tokenID?: string;
     contractAddress?: string;
+    chain?: string;
 };
 export declare type UkuleleCreateFormValidationValues = {
     title?: ValidationFunction<string>;
     tokenID?: ValidationFunction<string>;
     contractAddress?: ValidationFunction<string>;
+    chain?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UkuleleCreateFormOverridesProps = {
@@ -37,6 +39,7 @@ export declare type UkuleleCreateFormOverridesProps = {
     title?: PrimitiveOverrideProps<TextFieldProps>;
     tokenID?: PrimitiveOverrideProps<TextFieldProps>;
     contractAddress?: PrimitiveOverrideProps<TextFieldProps>;
+    chain?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UkuleleCreateFormProps = React.PropsWithChildren<{
     overrides?: UkuleleCreateFormOverridesProps | undefined | null;

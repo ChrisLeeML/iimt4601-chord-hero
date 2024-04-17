@@ -26,23 +26,27 @@ export default function UkuleleCreateForm(props) {
     title: "",
     tokenID: "",
     contractAddress: "",
+    chain: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [tokenID, setTokenID] = React.useState(initialValues.tokenID);
   const [contractAddress, setContractAddress] = React.useState(
     initialValues.contractAddress
   );
+  const [chain, setChain] = React.useState(initialValues.chain);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
     setTokenID(initialValues.tokenID);
     setContractAddress(initialValues.contractAddress);
+    setChain(initialValues.chain);
     setErrors({});
   };
   const validations = {
     title: [],
     tokenID: [],
     contractAddress: [],
+    chain: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -73,6 +77,7 @@ export default function UkuleleCreateForm(props) {
           title,
           tokenID,
           contractAddress,
+          chain,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -138,6 +143,7 @@ export default function UkuleleCreateForm(props) {
               title: value,
               tokenID,
               contractAddress,
+              chain,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -164,6 +170,7 @@ export default function UkuleleCreateForm(props) {
               title,
               tokenID: value,
               contractAddress,
+              chain,
             };
             const result = onChange(modelFields);
             value = result?.tokenID ?? value;
@@ -190,6 +197,7 @@ export default function UkuleleCreateForm(props) {
               title,
               tokenID,
               contractAddress: value,
+              chain,
             };
             const result = onChange(modelFields);
             value = result?.contractAddress ?? value;
@@ -203,6 +211,33 @@ export default function UkuleleCreateForm(props) {
         errorMessage={errors.contractAddress?.errorMessage}
         hasError={errors.contractAddress?.hasError}
         {...getOverrideProps(overrides, "contractAddress")}
+      ></TextField>
+      <TextField
+        label="Chain"
+        isRequired={false}
+        isReadOnly={false}
+        value={chain}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              tokenID,
+              contractAddress,
+              chain: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.chain ?? value;
+          }
+          if (errors.chain?.hasError) {
+            runValidationTasks("chain", value);
+          }
+          setChain(value);
+        }}
+        onBlur={() => runValidationTasks("chain", chain)}
+        errorMessage={errors.chain?.errorMessage}
+        hasError={errors.chain?.hasError}
+        {...getOverrideProps(overrides, "chain")}
       ></TextField>
       <Flex
         justifyContent="space-between"

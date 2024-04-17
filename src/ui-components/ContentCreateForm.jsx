@@ -240,11 +240,6 @@ export default function ContentCreateForm(props) {
           value="TEXT"
           {...getOverrideProps(overrides, "typeoption1")}
         ></option>
-        <option
-          children="Pdf"
-          value="PDF"
-          {...getOverrideProps(overrides, "typeoption2")}
-        ></option>
       </SelectField>
       <TextField
         label="Video link"
