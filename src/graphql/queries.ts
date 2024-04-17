@@ -145,6 +145,7 @@ export const listUkuleles = /* GraphQL */ `query ListUkuleles(
       contractAddress
       createdAt
       updatedAt
+      chain
       __typename
     }
     nextToken

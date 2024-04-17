@@ -2,11 +2,12 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getUkulele, listUkuleles } from "@/src/graphql/queries";
-import { createUkulele } from "@/src/graphql/mutations";
-import * as ukuleleData from "@/src/ukulele.json";
-import { cookieBasedClient } from "../layout";
-import { Ukulele } from "@/src/API";
+// import { getUkulele, listUkuleles } from "@/src/graphql/queries";
+// import { createUkulele } from "@/src/graphql/mutations";
+// import * as ukuleleData from "@/src/ukulele.json";
+// import { cookieBasedClient } from "../layout";
+// import { Ukulele } from "@/src/API";
+import { GetUkulele } from '@/src/api/ukuleleService';
 
 import {
   Box,
@@ -21,6 +22,7 @@ import {
   TableBody,
   Button,
 } from "@mui/material";
+//import { Allura } from "next/font/google";
 
 interface Owner {
   owner_address: string;
@@ -51,14 +53,16 @@ const FetchByContract = async () => {
   }
 };
 
-const FetchByUkulele = async () => {
+const FetchByUkulele = async (items: Array<any>) => {
   const headers = {
     accept: "application/json",
     "X-API-KEY":
       "jihoolee529_sk_33a931b9-be65-41db-827c-ff09c2b316bf_g222szbb6t04ufl4",
   };
 
-  const requests = ukuleleData.map(element => {
+  const requests = items.map(element => {
+    //const nftType = element.chain;
+    //console.log("ELEMENT", element);
     const nftType = element.chain;
     const contractAddress = element.contractAddress;
     const tokenId = element.tokenID;
@@ -69,14 +73,14 @@ const FetchByUkulele = async () => {
 
   try {
     const responses = await Promise.all(requests);
-    //console.log(responses);
+    console.log("RESPONSES", responses);
     return responses;
     // Do something with all responses
   } catch (error) {
     // Handle any error from all requests
+    console.error(error);
   }
 };
-
 
 export default function Analytics() {
   const [owners, setOwners] = useState<Owner[]>([]);
@@ -89,20 +93,25 @@ export default function Analytics() {
       try {
         const ukuleleDataArray: any[] = [];
         const galleryPassData = await FetchByContract();
-        const ukuleleData = await FetchByUkulele();
+        const ukuleleData = await GetUkulele(); //read ukulele data stored in DB
+        var ukuleleItems: any[] = [];
+        if (ukuleleData){
+          ukuleleItems = ukuleleData.listUkuleles.items; //store items attribute only
+        }
+        const ukuleleFetchResult = await FetchByUkulele(ukuleleItems); //based on items data from DB, send simpleHash API request
 
-        if (Array.isArray(ukuleleData)) {
-          for (let element of ukuleleData) {
-              if (element && element.data) {
-                  ukuleleDataArray.push(element.data);
-              }
+        if (Array.isArray(ukuleleFetchResult)) { //check type of fetched result
+          for (let element of ukuleleFetchResult) {
+            if (element && Object.keys(element.data).length) {
+              ukuleleDataArray.push(element.data); //stores data attribute of fetched result into array
+            }
           }
         }
-        
+
+        ukuleleDataArray.sort((a, b) => a.name.localeCompare(b.name)); //sort by alphabetical order, but not working LOL
         setOwners(galleryPassData.owners);
         setData([[galleryPassData], ukuleleDataArray]);
-        
-        
+            
       } catch (error) {
         console.error("Error fetching data:", error);
       }
