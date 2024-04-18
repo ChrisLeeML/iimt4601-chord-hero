@@ -37,14 +37,16 @@ const ListCreators = async () => {
     });
 
     const contentList = await Promise.all(fetchPromises);
+    console.log("###### Checking contentList: ", contentList);
 
     return contentList;
   } catch (error) {
     console.error("Error at ListCreators: ", error);
+    throw error;
   }
 };
 
-export default async function creators() {
+export default async function CreatorsPage() {
   const creators = await ListCreators();
 
   return (
