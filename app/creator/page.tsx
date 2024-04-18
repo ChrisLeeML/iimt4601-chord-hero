@@ -86,38 +86,46 @@ export default async function creators() {
         }}
         spacing={2}
       >
-        {creators?.map((creator) => (
-          <Grid key={creator.id} item xs={6} sm={4} md={3} lg={2}>
-            <Link href={`creator/${creator.id}`}>
-              <Box
-                style={{
-                  padding: 20,
-                  borderRadius: 10,
-                  height: "100%",
-                }}
-                sx={{ boxShadow: 2 }}
-              >
-                <Image
-                  src={require("../../src/assets/blank-profile.jpeg")}
-                  alt={creator.name}
-                  style={{ width: "100%", height: "auto" }}
-                />
-                <Typography style={{ fontSize: "8px", color: "gray" }}>
-                  {creator.id}
-                </Typography>
-                <Typography style={{ fontWeight: "bold", fontSize: "18px" }}>
-                  {creator.name}
-                </Typography>
-                <Typography style={{ fontSize: "12px", fontStyle: "italic" }}>
-                  {creator.school.title}
-                </Typography>
-                <Typography style={{ fontSize: "12px", fontStyle: "italic" }}>
-                  Ukulele: {creator.ukulele.title}
-                </Typography>
-              </Box>
-            </Link>
-          </Grid>
-        ))}
+        {creators && creators.length > 0
+          ? creators?.map((creator) => (
+              <Grid key={creator.id} item xs={6} sm={4} md={3} lg={2}>
+                <Link href={`creator/${creator.id}`}>
+                  <Box
+                    style={{
+                      padding: 20,
+                      borderRadius: 10,
+                      height: "100%",
+                    }}
+                    sx={{ boxShadow: 2 }}
+                  >
+                    <Image
+                      src={require("../../src/assets/blank-profile.jpeg")}
+                      alt={creator.name}
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                    <Typography style={{ fontSize: "8px", color: "gray" }}>
+                      {creator.id}
+                    </Typography>
+                    <Typography
+                      style={{ fontWeight: "bold", fontSize: "18px" }}
+                    >
+                      {creator.name}
+                    </Typography>
+                    <Typography
+                      style={{ fontSize: "12px", fontStyle: "italic" }}
+                    >
+                      {creator.school.title}
+                    </Typography>
+                    <Typography
+                      style={{ fontSize: "12px", fontStyle: "italic" }}
+                    >
+                      Ukulele: {creator.ukulele.title}
+                    </Typography>
+                  </Box>
+                </Link>
+              </Grid>
+            ))
+          : null}
       </Grid>
     </Container>
   );
