@@ -24,7 +24,7 @@ export default function Student({ params }: { params: { creatorID: string } }) {
             width: "100%",
           }}
         >
-          Student ID: {params.creatorID}
+          Editing Student ID: {params.creatorID}
         </Typography>
       </Box>
     </Container>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Container, Typography, Grid } from "@mui/material";
+import { Box, Container, Typography, Grid, Button } from "@mui/material";
 import Link from "next/link";
 import { listUkuleles } from "@/src/graphql/queries";
 import { Ukulele } from "@/src/API";
@@ -27,8 +27,8 @@ export default async function Ukuleles() {
         style={{
           marginTop: 30,
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
+          justifyContent: "space-between",
           width: "100%",
         }}
       >
@@ -43,6 +43,13 @@ export default async function Ukuleles() {
         >
           Ukulele Management
         </Typography>
+        <Button
+          variant="contained"
+          style={{ background: "black", width: "200px" }}
+          href="/ukulele/create"
+        >
+          Add Ukulele
+        </Button>
       </Box>
 
       <Grid
@@ -55,7 +62,7 @@ export default async function Ukuleles() {
       >
         {ukuleles?.map((ukulele: Ukulele) => (
           <Grid key={ukulele.id} item xs={6} sm={4} md={3}>
-            <Link href={`ukuleles/${ukulele.id}`}>
+            <Link href={`ukulele/${ukulele.id}`}>
               <Box
                 style={{
                   padding: 20,
