@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { Content, ContentType } from "@/src/API";
 import { cookieBasedClient } from "../../layout";
 import { getContent } from "@/src/graphql/queries";
@@ -27,40 +27,59 @@ export default async function ViewContent({
   params: { contentID: string };
 }) {
   const content = await handleGetContent(params.contentID);
+  // Implement a client-side method to fetch the Ukulele detail. [TO DO]
 
   return (
     <Container maxWidth="lg" style={{ minHeight: "100vh" }}>
       {content ? (
-        <Box
-          style={{
-            marginTop: 100,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            width: "100%",
-          }}
-        >
-          <Typography
+        <>
+          <Box
             style={{
-              fontSize: "10px",
-              fontWeight: "bold",
-              color: "gray",
-              textAlign: "left",
+              marginTop: 100,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
               width: "100%",
             }}
           >
-            {params.contentID}
-          </Typography>
-          <Typography
-            style={{
-              fontSize: "20px",
-              fontWeight: "bold",
-              textAlign: "left",
-              width: "100%",
-            }}
-          >
-            {content.title}
-          </Typography>
+            <Box
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <Typography
+                style={{
+                  fontSize: "10px",
+                  fontWeight: "bold",
+                  color: "gray",
+                  textAlign: "left",
+                  width: "100%",
+                }}
+              >
+                {params.contentID}
+              </Typography>
+              <Typography
+                style={{
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  textAlign: "left",
+                  width: "100%",
+                }}
+              >
+                {content.title}
+              </Typography>
+            </Box>
+            <Button
+              variant="contained"
+              style={{ background: "black", width: "200px" }}
+              href={`/content/${params.contentID}/edit`}
+            >
+              Edit Content
+            </Button>
+          </Box>
           <Box style={{ minHeight: "70vh" }}>
             {content.textContent ? (
               <Typography
@@ -87,7 +106,7 @@ export default async function ViewContent({
               </Box>
             ) : null}
           </Box>
-        </Box>
+        </>
       ) : (
         "404"
       )}

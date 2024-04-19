@@ -252,7 +252,7 @@ export default function Analytics() {
               </TableContainer>
             </Box>
           ))
-        : null}
+        : "Loading..."}
     </Container>
   );
 }

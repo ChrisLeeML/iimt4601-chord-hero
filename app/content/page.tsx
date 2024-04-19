@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Container, Divider, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { Content } from "@/src/API";
 import { listContents } from "@/src/graphql/queries";
 import { cookieBasedClient } from "../layout";
@@ -29,8 +36,8 @@ export default async function ContentList() {
         style={{
           marginTop: 30,
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
+          justifyContent: "space-between",
           width: "100%",
         }}
       >
@@ -45,6 +52,13 @@ export default async function ContentList() {
         >
           Exclusive Content
         </Typography>
+        <Button
+          variant="contained"
+          style={{ background: "black", width: "200px" }}
+          href="/content/create"
+        >
+          Add Content
+        </Button>
       </Box>
 
       <Box

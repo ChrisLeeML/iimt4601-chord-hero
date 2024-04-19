@@ -10,12 +10,14 @@ import React, { useState } from "react";
 import { CreateCreator } from "../api/ukuleleService";
 import { useRouter } from "next/navigation";
 
-const CreateUkuleleForm = () => {
+const CreateContentForm = () => {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
-  const [tokenID, setTokenID] = useState<string>("");
-  const [contractAddress, setContractAddress] = useState<string>("");
-  const [chain, setChain] = useState<string>("");
+  const [threshold, setThreshold] = useState<string>("");
+  const [type, setType] = useState<string>(""); // Video or Text
+  const [videoLink, setVideoLink] = useState<string>(""); // If Video
+  const [textContent, setTextContent] = useState<string>(""); // If Text
+
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -75,7 +77,7 @@ const CreateUkuleleForm = () => {
         }}
       >
         <FormLabel style={{ fontSize: 24, marginBottom: 10 }}>
-          Create a Ukulele
+          Create a Exclusive Content
         </FormLabel>
         <TextField
           label="title"
@@ -84,22 +86,28 @@ const CreateUkuleleForm = () => {
           onChange={(e) => setTitle(e.target.value)}
         />
         <TextField
-          label="tokenID"
+          label="threshold"
           style={{ marginBottom: 20, width: 400 }}
-          value={tokenID}
-          onChange={(e) => setTokenID(e.target.value)}
+          value={threshold}
+          onChange={(e) => setThreshold(e.target.value)}
         />
         <TextField
-          label="contractAddress"
+          label="type"
           style={{ marginBottom: 20, width: 400 }}
-          value={contractAddress}
-          onChange={(e) => setContractAddress(e.target.value)}
-        />{" "}
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+        />
         <TextField
-          label="chain"
+          label="videoLink"
           style={{ marginBottom: 20, width: 400 }}
-          value={chain}
-          onChange={(e) => setChain(e.target.value)}
+          value={videoLink}
+          onChange={(e) => setVideoLink(e.target.value)}
+        />
+        <TextField
+          label="textContent"
+          style={{ marginBottom: 20, width: 400 }}
+          value={textContent}
+          onChange={(e) => setTextContent(e.target.value)}
         />
         <Button
           style={{ background: loading ? "gray" : "black", marginBottom: 50 }}
@@ -118,4 +126,4 @@ const CreateUkuleleForm = () => {
   );
 };
 
-export default CreateUkuleleForm;
+export default CreateContentForm;

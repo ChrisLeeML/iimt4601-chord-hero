@@ -2,13 +2,13 @@
 import * as React from "react";
 
 import { Box, Container, Typography } from "@mui/material";
-import EditCreatorForm from "@/src/components/EditCreatorForm";
 
-export default function EditCreator({
+export default function EditContent({
   params,
 }: {
-  params: { creatorID: string };
+  params: { contentID: string };
 }) {
+  // Implement a form submission. [TO DO]
   return (
     <Container maxWidth="lg" style={{ minHeight: "100vh" }}>
       <Box
@@ -29,10 +29,9 @@ export default function EditCreator({
             width: "100%",
           }}
         >
-          Editing Creator ID: {params.creatorID}
+          Editing Content ID: {params.contentID}
         </Typography>
       </Box>
-      <EditCreatorForm />
     </Container>
   );
 }

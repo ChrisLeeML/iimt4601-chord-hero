@@ -2,12 +2,12 @@
 import * as React from "react";
 
 import { Box, Container, Typography } from "@mui/material";
-import EditCreatorForm from "@/src/components/EditCreatorForm";
+import EditUkuleleForm from "@/src/components/EditUkuleleForm";
 
 export default function EditCreator({
   params,
 }: {
-  params: { creatorID: string };
+  params: { ukuleleID: string };
 }) {
   return (
     <Container maxWidth="lg" style={{ minHeight: "100vh" }}>
@@ -29,10 +29,10 @@ export default function EditCreator({
             width: "100%",
           }}
         >
-          Editing Creator ID: {params.creatorID}
+          Editing Ukulele ID: {params.ukuleleID}
         </Typography>
       </Box>
-      <EditCreatorForm />
+      <EditUkuleleForm />
     </Container>
   );
 }

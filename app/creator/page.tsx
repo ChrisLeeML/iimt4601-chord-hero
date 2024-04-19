@@ -1,8 +1,5 @@
 import * as React from "react";
-import { Box, Container, Grid, Typography, Button } from "@mui/material";
-import Link from "next/link";
-import Image from "next/image";
-import { ListCreators } from "@/src/api/ukuleleService";
+import { Box, Container, Typography, Button } from "@mui/material";
 import CreatorsGrid from "@/src/components/CreatorsGrid";
 
 export default async function CreatorsPage() {

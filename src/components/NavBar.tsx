@@ -97,13 +97,15 @@ function NavBar() {
     setAnchorElUser(null);
   };
 
-  const handleLogOut = () => {
+  // Implement a real sign out. [TO DO]
+  const handleSignOut = () => {
     //
   };
 
   const handleSignIn = () => {
     setIsSignInLoading(true);
   };
+  // Implement a real sign in. [TO DO]
 
   return (
     <MetaMaskProvider>
@@ -209,7 +211,7 @@ function NavBar() {
                     </MenuItem>
                   </Link>
                   {isMetamask ? null : (
-                    <MenuItem onClick={handleLogOut}>
+                    <MenuItem onClick={handleSignOut}>
                       <Typography textAlign="center">Logout</Typography>
                     </MenuItem>
                   )}
@@ -264,6 +266,9 @@ function NavBar() {
               alignItems: "center",
             }}
           >
+            <Typography style={{ marginBottom: 10 }}>
+              Chord Hero Staff Login
+            </Typography>
             <TextField
               id="outlined-basic"
               label="Email"
@@ -282,13 +287,16 @@ function NavBar() {
             <Button
               variant="outlined"
               style={{ color: "black", borderColor: "black", marginBottom: 10 }}
+              size="large"
               disabled={isSignInLoading}
               onClick={handleSignIn}
             >
               Sign In
             </Button>
             <Divider style={{ margin: 30 }}>OR</Divider>
-
+            <Typography style={{ marginBottom: 10 }}>
+              Chord Hero NFT Holder
+            </Typography>
             <MetaMaskStatus />
           </Box>
         </Box>

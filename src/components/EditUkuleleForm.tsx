@@ -1,5 +1,6 @@
 "use client";
 import {
+  Box,
   Button,
   FormControl,
   FormLabel,
@@ -10,7 +11,7 @@ import React, { useState } from "react";
 import { CreateCreator } from "../api/ukuleleService";
 import { useRouter } from "next/navigation";
 
-const CreateUkuleleForm = () => {
+const EditUkuleleForm = () => {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
   const [tokenID, setTokenID] = useState<string>("");
@@ -19,7 +20,8 @@ const CreateUkuleleForm = () => {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  // [TO DO]
+  // [TO DO] Implement a ukulele detail fetching and update the states based on the response.
+  // [TO DO] Implement a delete button.
 
   // const HandleSubmit = (e: any) => {
   //   e.preventDefault();
@@ -75,7 +77,7 @@ const CreateUkuleleForm = () => {
         }}
       >
         <FormLabel style={{ fontSize: 24, marginBottom: 10 }}>
-          Create a Ukulele
+          Edit a Ukulele
         </FormLabel>
         <TextField
           label="title"
@@ -101,15 +103,35 @@ const CreateUkuleleForm = () => {
           value={chain}
           onChange={(e) => setChain(e.target.value)}
         />
-        <Button
-          style={{ background: loading ? "gray" : "black", marginBottom: 50 }}
-          size="large"
-          variant="contained"
-          type="submit"
-          disabled={loading}
+        <Box
+          style={{
+            display: "flex",
+            width: 400,
+            justifyContent: "space-between",
+          }}
         >
-          Submit
-        </Button>
+          <Button
+            style={{ background: loading ? "gray" : "black", marginBottom: 50 }}
+            size="large"
+            variant="contained"
+            type="submit"
+            disabled={loading}
+          >
+            Submit
+          </Button>
+          <Button
+            style={{ background: loading ? "gray" : "red", marginBottom: 50 }}
+            size="large"
+            variant="contained"
+            type="button"
+            disabled={loading}
+            onClick={() => {
+              console.log("Delete");
+            }}
+          >
+            Delete
+          </Button>
+        </Box>
         <Typography style={{ marginBottom: 100, color: "red" }}>
           {message}
         </Typography>
@@ -118,4 +140,4 @@ const CreateUkuleleForm = () => {
   );
 };
 
-export default CreateUkuleleForm;
+export default EditUkuleleForm;
