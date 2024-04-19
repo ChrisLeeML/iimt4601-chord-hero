@@ -29,20 +29,25 @@ export const GetUkulele = async () => {
   }
 };
 
-export const CreateCreator = async (name: string) => {
+export const CreateCreator = async (formInput: {
+  name: string;
+  schoolID: string;
+  creatorUkuleleID: string;
+}) => {
   try {
     const response = await cookieBasedClient.graphql({
       query: createCreator,
       variables: {
         input: {
-          name: name,
-          schoolID: "0",
+          name: formInput.name,
+          creatorUkuleleId: formInput.creatorUkuleleID,
+          schoolID: formInput.schoolID,
         },
       },
     });
     console.log("Created creator", response);
   } catch (error) {
-    console.error("Error fetching ukuleles:", error);
+    console.error("Error at CreateCreator:", error);
   }
 };
 

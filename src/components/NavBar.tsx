@@ -116,6 +116,7 @@ function NavBar() {
                 width={100}
                 alt="Chord Hero White Logo"
                 style={{ marginRight: 10 }}
+                priority
               />
             </Link>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
