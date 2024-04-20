@@ -8,10 +8,10 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { CreateCreator } from "../api/ukuleleService";
+import { UpdateCreator } from "../api/ukuleleService";
 import { useRouter } from "next/navigation";
 
-const EditCreatorForm = () => {
+const EditCreatorForm = ({ creatorID }: { creatorID: string }) => {
   const router = useRouter();
   const [name, setName] = useState<string>("");
   const [schoolID, setSchoolID] = useState<string>("");
@@ -21,15 +21,15 @@ const EditCreatorForm = () => {
 
   // [TO DO] Implement fetching.
   // [TO DO] Implement a delete button.
-
   const HandleSubmit = (e: any) => {
     e.preventDefault();
-    if (name.length > 0 && schoolID.length > 0 && creatorUkuleleID.length > 0) {
+    if (creatorID.length > 0 && name.length > 0 && schoolID.length > 0 && creatorUkuleleID.length > 0) {
       setLoading(true);
       setMessage("");
       console.log("Creating a Creator with the following data: ");
       console.log(name, schoolID, creatorUkuleleID);
       const formInput = {
+        id: creatorID as string,
         name: name as string,
         schoolID: schoolID as string,
         creatorUkuleleID: creatorUkuleleID as string,
@@ -41,13 +41,14 @@ const EditCreatorForm = () => {
   };
 
   const SubmitForm = async (formInput: {
+    id: string;
     name: string;
     schoolID: string;
     creatorUkuleleID: string;
   }) => {
     try {
       // [TO DO] Implement an editing.
-      // await CreateCreator(formInput);
+      await UpdateCreator(formInput);
       router.push("/creator");
     } catch (error: any) {
       console.error("Error at SubmitForm:", error);
@@ -77,6 +78,7 @@ const EditCreatorForm = () => {
         }}
       >
         <FormLabel style={{ fontSize: 24, marginBottom: 10 }}>
+          {creatorID}
           Create a Creator
         </FormLabel>
         <TextField

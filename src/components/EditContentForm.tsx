@@ -8,12 +8,15 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { UpdateContent, DeleteContent } from "../api/ukuleleService";
 import { useRouter } from "next/navigation";
+import { ContentType } from "../API";
 
-const EditContentForm = () => {
+const EditContentForm = ({ contentID }: { contentID: string }) => {
   const router = useRouter();
+  const [id, setID] = useState<string>("");
   const [title, setTitle] = useState<string>("");
-  const [threshold, setThreshold] = useState<string>("");
+  const [threshold, setThreshold] = useState<number>(0);
   const [type, setType] = useState<string>(""); // Video or Text
   const [videoLink, setVideoLink] = useState<string>(""); // If Video
   const [textContent, setTextContent] = useState<string>(""); // If Text
@@ -24,39 +27,72 @@ const EditContentForm = () => {
   // [TO DO] Fetch the content and edit an existing data entry.
   // [TO DO] Implement a delete button.
 
-  // const HandleSubmit = (e: any) => {
-  //   e.preventDefault();
-  //   if (name.length > 0 && schoolID.length > 0 && creatorUkuleleID.length > 0) {
-  //     setLoading(true);
-  //     setMessage("");
-  //     console.log("Creating a Creator with the following data: ");
-  //     console.log(name, schoolID, creatorUkuleleID);
-  //     const formInput = {
-  //       name: name as string,
-  //       schoolID: schoolID as string,
-  //       creatorUkuleleID: creatorUkuleleID as string,
-  //     };
-  //     SubmitForm(formInput);
-  //   } else {
-  //     setMessage("All fields are required.");
-  //   }
-  // };
+  const HandleSubmit = (e: any) => {
+    e.preventDefault();
+    if (contentID.length > 0 && title.length > 0 && threshold >= 0 && type.length > 0 && videoLink.length > 0 && textContent.length > 0) {
+      setLoading(true);
+      setMessage("");
+      console.log("Edit Content with the following data: ");
+      console.log(contentID, title,threshold, type, videoLink, textContent);
+      const formInput = {
+        id: contentID as string,
+        title: title as string,
+        threshold: threshold as number,
+        type: type as ContentType,
+        videoLink: videoLink as string,
+        textContent: textContent as string
+      };
+      SubmitForm(formInput);
+    } else {
+      setMessage("All fields are required.");
+    }
+  };
 
-  // const SubmitForm = async (formInput: {
-  //   name: string;
-  //   schoolID: string;
-  //   creatorUkuleleID: string;
-  // }) => {
-  //   try {
-  //     await CreateCreator(formInput);
-  //     router.push("/creator");
-  //   } catch (error: any) {
-  //     console.error("Error at SubmitForm:", error);
-  //     setMessage(error.message);
-  //     setLoading(false);
-  //   }
-  // };
+  const HandleDelete = () => {
+    if (contentID.length > 0) {
+      setLoading(true);
+      setMessage("");
+      console.log("Delete Content with the following data: ");
+      console.log(contentID);
+      const formInput = {
+        id: contentID as string,
+      };
+      DeleteForm(formInput);
+    } else {
+      setMessage("All fields are required.");
+    }
+  };
 
+  const SubmitForm = async (formInput: {
+    id: string;
+    title: string;
+    threshold: number;
+    type: ContentType;
+    videoLink: string;
+    textContent: string;
+  }) => {
+    try {
+      await UpdateContent(formInput);
+      router.push("/content");
+    } catch (error: any) {
+      console.error("Error at SubmitForm:", error);
+      setMessage(error.message);
+      setLoading(false);
+    }
+  };
+
+  const DeleteForm = async (formInput: {
+    id: string;
+  }) => {
+    try {
+      await DeleteContent(formInput);
+      router.push("/creator");
+    } catch (error: any) {
+      console.error("Error at DeleteForm:", error);
+      setMessage(error.message);
+      setLoading(false);
+    }
+  }
   return (
     <form
       style={{
@@ -65,7 +101,7 @@ const EditContentForm = () => {
         marginTop: 30,
         minHeight: "50vh",
       }}
-      // onSubmit={HandleSubmit}
+      onSubmit={HandleSubmit}
     >
       <FormControl
         style={{
@@ -90,7 +126,7 @@ const EditContentForm = () => {
           label="threshold"
           style={{ marginBottom: 20, width: 400 }}
           value={threshold}
-          onChange={(e) => setThreshold(e.target.value)}
+          onChange={(e) => setThreshold(parseInt(e.target.value))}
         />
         <TextField
           label="type"
@@ -132,9 +168,7 @@ const EditContentForm = () => {
             variant="contained"
             type="button"
             disabled={loading}
-            onClick={() => {
-              console.log("Delete");
-            }}
+            onClick={HandleDelete}
           >
             Delete
           </Button>

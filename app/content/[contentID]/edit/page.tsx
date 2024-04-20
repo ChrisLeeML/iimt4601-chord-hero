@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import EditContentForm from "@/src/components/EditContentForm";
 
 import { Box, Container, Typography } from "@mui/material";
 
@@ -31,6 +32,7 @@ export default function EditContent({
         >
           Editing Content ID: {params.contentID}
         </Typography>
+        <EditContentForm contentID={params.contentID}/>
       </Box>
     </Container>
   );

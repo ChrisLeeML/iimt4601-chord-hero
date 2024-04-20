@@ -32,7 +32,7 @@ export default function EditCreator({
           Editing Creator ID: {params.creatorID}
         </Typography>
       </Box>
-      <EditCreatorForm />
+      <EditCreatorForm creatorID={params.creatorID}/>
     </Container>
   );
 }

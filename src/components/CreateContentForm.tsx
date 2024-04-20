@@ -7,13 +7,14 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { CreateCreator } from "../api/ukuleleService";
+import { CreateContent } from "../api/ukuleleService";
 import { useRouter } from "next/navigation";
+import { ContentType } from "../API";
 
 const CreateContentForm = () => {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
-  const [threshold, setThreshold] = useState<string>("");
+  const [threshold, setThreshold] = useState<number>(0);
   const [type, setType] = useState<string>(""); // Video or Text
   const [videoLink, setVideoLink] = useState<string>(""); // If Video
   const [textContent, setTextContent] = useState<string>(""); // If Text
@@ -21,40 +22,50 @@ const CreateContentForm = () => {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  // [TO DO]
+    // [TO DO]
 
-  // const HandleSubmit = (e: any) => {
-  //   e.preventDefault();
-  //   if (name.length > 0 && schoolID.length > 0 && creatorUkuleleID.length > 0) {
-  //     setLoading(true);
-  //     setMessage("");
-  //     console.log("Creating a Creator with the following data: ");
-  //     console.log(name, schoolID, creatorUkuleleID);
-  //     const formInput = {
-  //       name: name as string,
-  //       schoolID: schoolID as string,
-  //       creatorUkuleleID: creatorUkuleleID as string,
-  //     };
-  //     SubmitForm(formInput);
-  //   } else {
-  //     setMessage("All fields are required.");
-  //   }
-  // };
+  const HandleSubmit = (e: any) => {
+    e.preventDefault();
+    if (title.length > 0 && threshold >= 0 && type.length > 0) {
+      if (type === "Text" && textContent.length === 0) {
+        setMessage("Text content is required for the 'Text' type.");
+      } else if (type === "Video" && videoLink.length === 0) {
+        setMessage("Video link is required for the 'Video' type.");
+      } else {
+        setLoading(true);
+        setMessage("");
+        console.log("Creating a Content with the following data: ");
+        console.log(title,threshold, type, videoLink, textContent);
+        const formInput = {
+          title: title as string,
+          threshold: threshold as number,
+          type: type as ContentType,
+          videoLink: videoLink as string,
+          textContent: textContent as string
+        };
+        SubmitForm(formInput);
+      }
+    } else {
+      setMessage("All fields are required.");
+    }
+  };
 
-  // const SubmitForm = async (formInput: {
-  //   name: string;
-  //   schoolID: string;
-  //   creatorUkuleleID: string;
-  // }) => {
-  //   try {
-  //     await CreateCreator(formInput);
-  //     router.push("/creator");
-  //   } catch (error: any) {
-  //     console.error("Error at SubmitForm:", error);
-  //     setMessage(error.message);
-  //     setLoading(false);
-  //   }
-  // };
+  const SubmitForm = async (formInput: {
+    title: string;
+    threshold: number;
+    type: ContentType;
+    videoLink: string;
+    textContent: string;
+  }) => {
+    try {
+      await CreateContent(formInput);
+      router.push("/content");
+    } catch (error: any) {
+      console.error("Error at SubmitForm:", error);
+      setMessage(error.message);
+      setLoading(false);
+    }
+  };
 
   return (
     <form
@@ -64,7 +75,7 @@ const CreateContentForm = () => {
         marginTop: 30,
         minHeight: "50vh",
       }}
-      // onSubmit={HandleSubmit}
+      onSubmit={HandleSubmit}
     >
       <FormControl
         style={{
@@ -89,7 +100,7 @@ const CreateContentForm = () => {
           label="threshold"
           style={{ marginBottom: 20, width: 400 }}
           value={threshold}
-          onChange={(e) => setThreshold(e.target.value)}
+          onChange={(e) => setThreshold(parseInt(e.target.value))}
         />
         <TextField
           label="type"

@@ -222,6 +222,7 @@ export type CreateUkuleleInput = {
   title?: string | null,
   tokenID?: string | null,
   contractAddress?: string | null,
+  chain?: string | null,
 };
 
 export type ModelUkuleleConditionInput = {
@@ -240,6 +241,7 @@ export type UpdateUkuleleInput = {
   title?: string | null,
   tokenID?: string | null,
   contractAddress?: string | null,
+  chain?: string | null,
 };
 
 export type DeleteUkuleleInput = {

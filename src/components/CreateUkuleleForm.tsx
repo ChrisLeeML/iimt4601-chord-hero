@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { CreateCreator } from "../api/ukuleleService";
+import { CreateUkulele } from "../api/ukuleleService";
 import { useRouter } from "next/navigation";
 
 const CreateUkuleleForm = () => {
@@ -21,38 +21,40 @@ const CreateUkuleleForm = () => {
 
   // [TO DO]
 
-  // const HandleSubmit = (e: any) => {
-  //   e.preventDefault();
-  //   if (name.length > 0 && schoolID.length > 0 && creatorUkuleleID.length > 0) {
-  //     setLoading(true);
-  //     setMessage("");
-  //     console.log("Creating a Creator with the following data: ");
-  //     console.log(name, schoolID, creatorUkuleleID);
-  //     const formInput = {
-  //       name: name as string,
-  //       schoolID: schoolID as string,
-  //       creatorUkuleleID: creatorUkuleleID as string,
-  //     };
-  //     SubmitForm(formInput);
-  //   } else {
-  //     setMessage("All fields are required.");
-  //   }
-  // };
+  const HandleSubmit = (e: any) => {
+    e.preventDefault();
+    if (title.length > 0 && tokenID.length > 0 && contractAddress.length > 0) {
+      setLoading(true);
+      setMessage("");
+      console.log("Creating a Ukulele with the following data: ");
+      console.log(title, tokenID, contractAddress);
+      const formInput = {
+        title: title as string,
+        tokenID: tokenID as string,
+        contractAddress: contractAddress as string,
+        chain: chain as string,
+      };
+      SubmitForm(formInput);
+    } else {
+      setMessage("All fields are required.");
+    }
+  };
 
-  // const SubmitForm = async (formInput: {
-  //   name: string;
-  //   schoolID: string;
-  //   creatorUkuleleID: string;
-  // }) => {
-  //   try {
-  //     await CreateCreator(formInput);
-  //     router.push("/creator");
-  //   } catch (error: any) {
-  //     console.error("Error at SubmitForm:", error);
-  //     setMessage(error.message);
-  //     setLoading(false);
-  //   }
-  // };
+  const SubmitForm = async (formInput: {
+    title: string;
+    tokenID: string;
+    contractAddress: string;
+    chain: string;
+  }) => {
+    try {
+      await CreateUkulele(formInput);
+      router.push("/ukulele");
+    } catch (error: any) {
+      console.error("Error at SubmitForm:", error);
+      setMessage(error.message);
+      setLoading(false);
+    }
+  };
 
   return (
     <form
@@ -62,7 +64,7 @@ const CreateUkuleleForm = () => {
         marginTop: 30,
         minHeight: "50vh",
       }}
-      // onSubmit={HandleSubmit}
+      onSubmit={HandleSubmit}
     >
       <FormControl
         style={{
