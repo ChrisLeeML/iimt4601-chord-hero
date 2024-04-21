@@ -2,7 +2,7 @@ import UploadButton from "@/src/components/UploadButton";
 import { Container } from "@mui/material";
 import React from "react";
 import { cookieBasedClient } from "@/app/layout";
-import { listContents, listUkuleles,listCreators } from "@/src/graphql/queries";
+import { listContents, listUkuleles,listCreators, getUkulele } from "@/src/graphql/queries";
 
 const List = () => {
   const handleUploadJSON = async () => {
@@ -10,7 +10,7 @@ const List = () => {
     console.log("clicked");
     try {
         const response = await cookieBasedClient.graphql({
-          query: listCreators
+          query: listUkuleles
         });
         console.log("Ukuleles: ", JSON.stringify(response.data, null, 2));
         return response.data;

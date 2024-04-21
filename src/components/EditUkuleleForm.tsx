@@ -8,10 +8,10 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { CreateCreator } from "../api/ukuleleService";
+import { UpdateUkulele, DeleteUkulele } from "../api/ukuleleService";
 import { useRouter } from "next/navigation";
 
-const EditUkuleleForm = () => {
+const EditUkuleleForm = ({ ukuleleID }: { ukuleleID: string }) => {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
   const [tokenID, setTokenID] = useState<string>("");
@@ -23,38 +23,70 @@ const EditUkuleleForm = () => {
   // [TO DO] Implement a ukulele detail fetching and update the states based on the response.
   // [TO DO] Implement a delete button.
 
-  // const HandleSubmit = (e: any) => {
-  //   e.preventDefault();
-  //   if (name.length > 0 && schoolID.length > 0 && creatorUkuleleID.length > 0) {
-  //     setLoading(true);
-  //     setMessage("");
-  //     console.log("Creating a Creator with the following data: ");
-  //     console.log(name, schoolID, creatorUkuleleID);
-  //     const formInput = {
-  //       name: name as string,
-  //       schoolID: schoolID as string,
-  //       creatorUkuleleID: creatorUkuleleID as string,
-  //     };
-  //     SubmitForm(formInput);
-  //   } else {
-  //     setMessage("All fields are required.");
-  //   }
-  // };
+  const HandleSubmit = (e: any) => {
+    e.preventDefault();
+    if (title.length > 0 && tokenID.length > 0 && contractAddress.length > 0 && chain.length) {
+      setLoading(true);
+      setMessage("");
+      console.log("Updating a Ukullee with the following data: ");
+      console.log(title, tokenID, contractAddress, chain);
+      const formInput = {
+        id: ukuleleID as string,
+        title: title as string,
+        tokenID: tokenID as string,
+        contractAddress: contractAddress as string,
+        chain: chain as string
+      };
+      SubmitForm(formInput);
+    } else {
+      setMessage("All fields are required.");
+    }
+  };
 
-  // const SubmitForm = async (formInput: {
-  //   name: string;
-  //   schoolID: string;
-  //   creatorUkuleleID: string;
-  // }) => {
-  //   try {
-  //     await CreateCreator(formInput);
-  //     router.push("/creator");
-  //   } catch (error: any) {
-  //     console.error("Error at SubmitForm:", error);
-  //     setMessage(error.message);
-  //     setLoading(false);
-  //   }
-  // };
+  const HandleDelete = () => {
+    if (ukuleleID.length > 0) {
+      setLoading(true);
+      setMessage("");
+      console.log("Delete Ukulele with the following data: ");
+      console.log(ukuleleID);
+      const formInput = {
+        id: ukuleleID as string,
+      };
+      DeleteForm(formInput);
+    } else {
+      setMessage("All fields are required.");
+    }
+  };
+
+  const SubmitForm = async (formInput: {
+    id: string;
+    title: string;
+    tokenID: string;
+    contractAddress: string;
+    chain: string;
+  }) => {
+    try {
+      await UpdateUkulele(formInput);
+      router.push("/creator");
+    } catch (error: any) {
+      console.error("Error at SubmitForm:", error);
+      setMessage(error.message);
+      setLoading(false);
+    }
+  };
+
+  const DeleteForm = async (formInput: {
+    id: string;
+  }) => {
+    try {
+      await DeleteUkulele(formInput);
+      router.push("/ukulele");
+    } catch (error: any) {
+      console.error("Error at Deleteform:", error);
+      setMessage(error.message);
+      setLoading(false);
+    }
+  };
 
   return (
     <form
@@ -64,7 +96,7 @@ const EditUkuleleForm = () => {
         marginTop: 30,
         minHeight: "50vh",
       }}
-      // onSubmit={HandleSubmit}
+      onSubmit={HandleSubmit}
     >
       <FormControl
         style={{
@@ -125,9 +157,7 @@ const EditUkuleleForm = () => {
             variant="contained"
             type="button"
             disabled={loading}
-            onClick={() => {
-              console.log("Delete");
-            }}
+            onClick={HandleDelete}
           >
             Delete
           </Button>

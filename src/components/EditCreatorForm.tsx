@@ -8,8 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { UpdateCreator } from "../api/ukuleleService";
+import { UpdateCreator, DeleteCreator } from "../api/ukuleleService";
 import { useRouter } from "next/navigation";
+import { ContentType } from "../API";
 
 const EditCreatorForm = ({ creatorID }: { creatorID: string }) => {
   const router = useRouter();
@@ -40,6 +41,21 @@ const EditCreatorForm = ({ creatorID }: { creatorID: string }) => {
     }
   };
 
+  const HandleDelete = () => {
+    if (creatorID.length > 0) {
+      setLoading(true);
+      setMessage("");
+      console.log("Delete Content with the following data: ");
+      console.log(creatorID);
+      const formInput = {
+        id: creatorID as string,
+      };
+      DeleteForm(formInput);
+    } else {
+      setMessage("All fields are required.");
+    }
+  };
+
   const SubmitForm = async (formInput: {
     id: string;
     name: string;
@@ -52,6 +68,19 @@ const EditCreatorForm = ({ creatorID }: { creatorID: string }) => {
       router.push("/creator");
     } catch (error: any) {
       console.error("Error at SubmitForm:", error);
+      setMessage(error.message);
+      setLoading(false);
+    }
+  };
+  
+  const DeleteForm = async (formInput: {
+    id: string;
+  }) => {
+    try {
+      await DeleteCreator(formInput);
+      router.push("/creator");
+    } catch (error: any) {
+      console.error("Error at DeleteForm:", error);
       setMessage(error.message);
       setLoading(false);
     }
@@ -78,8 +107,7 @@ const EditCreatorForm = ({ creatorID }: { creatorID: string }) => {
         }}
       >
         <FormLabel style={{ fontSize: 24, marginBottom: 10 }}>
-          {creatorID}
-          Create a Creator
+          Edit a Creator: {creatorID}
         </FormLabel>
         <TextField
           label="Name"
@@ -121,9 +149,7 @@ const EditCreatorForm = ({ creatorID }: { creatorID: string }) => {
             variant="contained"
             type="button"
             disabled={loading}
-            onClick={() => {
-              console.log("Delete");
-            }}
+            onClick={HandleDelete}
           >
             Delete
           </Button>

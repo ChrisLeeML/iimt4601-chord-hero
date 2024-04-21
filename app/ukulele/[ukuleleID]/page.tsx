@@ -1,10 +1,23 @@
 "use client";
 import * as React from "react";
-
+import { useState, useEffect } from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
+import { GetUkuleleByID } from "@/src/api/ukuleleService";
 
 export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
   // Implement a client-side method to fetch the Ukulele detail. [TO DO]
+  const [data, setData] = useState<any>([]);
+  
+  useEffect(() => {
+    const fetchCreator = async () => {
+      const creatorData = await GetUkuleleByID(params.ukuleleID);
+      console.log(creatorData);
+      setData(creatorData);
+    };
+
+    fetchCreator();
+  }, [params.ukuleleID]); 
+
   return (
     <Container maxWidth="lg" style={{ minHeight: "100vh" }}>
       <Box
@@ -44,7 +57,7 @@ export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
           marginBottom: 20,
         }}
       >
-        Ukulele Name
+        Ukulele Name: {data.title}
       </Typography>
       <Typography
         style={{
@@ -54,7 +67,7 @@ export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
           marginBottom: 20,
         }}
       >
-        Contract Address
+        Contract Address: {data.contractAddress}
       </Typography>
       <Typography
         style={{
@@ -64,7 +77,7 @@ export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
           marginBottom: 20,
         }}
       >
-        Token ID
+        Token ID: {data.tokenID}
       </Typography>
       <Typography
         style={{

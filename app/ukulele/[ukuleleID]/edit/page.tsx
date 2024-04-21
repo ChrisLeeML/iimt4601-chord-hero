@@ -32,7 +32,7 @@ export default function EditCreator({
           Editing Ukulele ID: {params.ukuleleID}
         </Typography>
       </Box>
-      <EditUkuleleForm />
+      <EditUkuleleForm ukuleleID={params.ukuleleID}/>
     </Container>
   );
 }

@@ -86,7 +86,7 @@ const EditContentForm = ({ contentID }: { contentID: string }) => {
   }) => {
     try {
       await DeleteContent(formInput);
-      router.push("/creator");
+      router.push("/content");
     } catch (error: any) {
       console.error("Error at DeleteForm:", error);
       setMessage(error.message);
@@ -114,7 +114,7 @@ const EditContentForm = ({ contentID }: { contentID: string }) => {
         }}
       >
         <FormLabel style={{ fontSize: 24, marginBottom: 10 }}>
-          Create a Exclusive Content
+          Edit a Exclusive Content
         </FormLabel>
         <TextField
           label="title"

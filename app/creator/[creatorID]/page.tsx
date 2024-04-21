@@ -1,15 +1,25 @@
 "use client";
 import * as React from "react";
-
+import { useState, useEffect } from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
 import { GetCreatorByID } from "@/src/api/ukuleleService";
+import { getCreator } from "@/src/graphql/queries"
 import { cookieBasedClient } from "../../layout";
 
 
-
 export default function Student({ params }: { params: { creatorID: string } }) {
-  // const student = async GetStudentInfo();
-  const content = GetCreatorByID(params.creatorID);
+  const [data, setData] = useState<any>([]);
+  
+  useEffect(() => {
+    const fetchCreator = async () => {
+      const creatorData = await GetCreatorByID(params.creatorID);
+      console.log(creatorData);
+      setData(creatorData);
+    };
+
+    fetchCreator();
+  }, [params.creatorID]); 
+
   return (
     <Container maxWidth="lg" style={{ minHeight: "100vh" }}>
       <Box
@@ -49,7 +59,7 @@ export default function Student({ params }: { params: { creatorID: string } }) {
           marginBottom: 20,
         }}
       >
-        Creator Name:
+        Creator Name: {data.name}
       </Typography>
       <Typography
         style={{
@@ -59,7 +69,7 @@ export default function Student({ params }: { params: { creatorID: string } }) {
           marginBottom: 20,
         }}
       >
-        Creator School
+        Creator School: {data.schoolID}
       </Typography>
       <Typography>Ukuleles Created</Typography>
       {/* Display a grid of ukuleles created */}

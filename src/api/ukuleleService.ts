@@ -10,10 +10,13 @@ import {
 import { 
   createCreator,
   updateCreator,
+  deleteCreator,
   createContent, 
   updateContent,
   deleteContent,
-  createUkulele 
+  createUkulele,
+  updateUkulele,
+  deleteUkulele
 } from "@/src/graphql/mutations";
 import { create } from "@mui/material/styles/createTransitions";
 import { ContentType, Creator } from "../API";
@@ -45,7 +48,7 @@ export const GetCreatorByID = async (creatorID: string) => {
         id: creatorID,
       },
     });
-    console.log(data);
+    console.log("CREATORDATA",data);
     return data.getCreator;
   } catch (error) {
     console.error("Error at getCreatorByID: ", error);
@@ -138,6 +141,25 @@ export const UpdateCreator = async (formInput: {
   }
 };
 
+export const DeleteCreator = async (formInput: {
+  id: string;
+}) => {
+  try {
+    const response = await cookieBasedClient.graphql({
+      query: deleteCreator,
+      variables: {
+        input: {
+          id: formInput.id
+        },
+      },
+    });
+    console.log("Deleted Content", response);
+  } catch (error) {
+    console.error("Error at DeleteContent:", error);
+  }
+};
+
+
 export const CreateContent = async (formInput: {
   title: string;
   threshold: number;
@@ -217,6 +239,20 @@ export const DeleteContent = async (formInput: {
   }
 };
 
+export const GetUkuleleByID = async (ukuleleID: string) => {
+  try {
+    const { data } = await cookieBasedClient.graphql({
+      query: getUkulele,
+      variables: {
+        id: ukuleleID,
+      },
+    });
+    console.log("CREATORDATA",data);
+    return data.getUkulele;
+  } catch (error) {
+    console.error("Error at getCreatorByID: ", error);
+  }
+};
 
 export const CreateUkulele = async (formInput: {
   title: string;
@@ -239,5 +275,49 @@ export const CreateUkulele = async (formInput: {
     console.log("Created ukulele", response);
   } catch (error) {
     console.error("Error at CreateUkulele:", error);
+  }
+};
+
+export const UpdateUkulele = async (formInput: {
+  id: string;
+  title: string;
+  tokenID: string;
+  contractAddress: string;
+  chain: string;
+}) => {
+  try {
+    const response = await cookieBasedClient.graphql({
+      query: updateUkulele,
+      variables: {
+        input: {
+          id: formInput.id,
+          title: formInput.title,
+          tokenID: formInput.tokenID,
+          contractAddress: formInput.contractAddress,
+          chain: formInput.chain
+        },
+      },
+    });
+    console.log("Updated Ukulele", response);
+  } catch (error) {
+    console.error("Error at UpdateUkulele:", error);
+  }
+};
+
+export const DeleteUkulele = async (formInput: {
+  id: string;
+}) => {
+  try {
+    const response = await cookieBasedClient.graphql({
+      query: deleteUkulele,
+      variables: {
+        input: {
+          id: formInput.id
+        },
+      },
+    });
+    console.log("Deleted Ukulele", response);
+  } catch (error) {
+    console.error("Error at DeleteUkulele:", error);
   }
 };
