@@ -7,18 +7,18 @@ import { ListUkuleles } from "../api/ukuleleService";
 import Link from "next/link";
 
 const UkulelesGrid = () => {
-  const [ukuleles, setCreators] = useState<Ukulele[]>([]);
+  const [ukuleles, setUkuleles] = useState<Ukulele[]>([]);
 
-  const FetchCreators = async () => {
+  const FetchUkuleles = async () => {
     try {
       const ukulelesRes = await ListUkuleles();
-      setCreators(ukulelesRes);
+      setUkuleles(ukulelesRes);
     } catch (error) {
       console.error("Error fetching creators: ", error);
     }
   };
   useEffect(() => {
-    FetchCreators();
+    FetchUkuleles();
   }, []);
 
   return (
