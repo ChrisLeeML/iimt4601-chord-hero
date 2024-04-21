@@ -6,6 +6,7 @@ import {
   getUkulele,
   listCreators,
   listUkuleles,
+  listContents
 } from "@/src/graphql/queries";
 import { 
   createCreator,
@@ -159,6 +160,16 @@ export const DeleteCreator = async (formInput: {
   }
 };
 
+export const ListContent = async () => {
+  try {
+    const { data }: any = await cookieBasedClient.graphql({
+      query: listContents,
+    });
+    return data.listContents.items;
+  } catch (error) {
+    console.error("Error at ListContent: ", error);
+  }
+};
 
 export const CreateContent = async (formInput: {
   title: string;
@@ -251,6 +262,20 @@ export const GetUkuleleByID = async (ukuleleID: string) => {
     return data.getUkulele;
   } catch (error) {
     console.error("Error at getCreatorByID: ", error);
+  }
+};
+
+export const ListUkuleles = async () => {
+  try {
+    const { data }: any = await cookieBasedClient.graphql({
+      query: listUkuleles,
+    });
+
+    const ukuleles = data.listUkuleles.items;
+    //console.log("$$$$$$$$$$", creators)
+    return ukuleles;
+  } catch (error) {
+    console.error("Error at ListUkuleles: ", error);
   }
 };
 
