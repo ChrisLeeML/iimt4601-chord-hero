@@ -87,23 +87,23 @@ export default function Analytics() {
       try {
         const ukuleleDataArray: any[] = [];
         const galleryPassData = await FetchByContract();
-        const ukuleleData = await GetUkulele(); //read ukulele data stored in DB
+        const ukuleleData = await GetUkulele(); 
         var ukuleleItems: any[] = [];
         if (ukuleleData) {
-          ukuleleItems = ukuleleData.listUkuleles.items; //store items attribute only
+          ukuleleItems = ukuleleData.listUkuleles.items;
         }
-        const ukuleleFetchResult = await FetchByUkulele(ukuleleItems); //based on items data from DB, send simpleHash API request
+        const ukuleleFetchResult = await FetchByUkulele(ukuleleItems); 
 
         if (Array.isArray(ukuleleFetchResult)) {
           //check type of fetched result
           for (let element of ukuleleFetchResult) {
             if (element && Object.keys(element.data).length) {
-              ukuleleDataArray.push(element.data); //stores data attribute of fetched result into array
+              ukuleleDataArray.push(element.data); 
             }
           }
         }
 
-        ukuleleDataArray.sort((a, b) => a.name.localeCompare(b.name)); //sort by alphabetical order, but not working LOL
+        ukuleleDataArray.sort((a, b) => a.name.localeCompare(b.name)); 
         setOwners(galleryPassData.owners);
         setData([[galleryPassData], ukuleleDataArray]);
       } catch (error) {
