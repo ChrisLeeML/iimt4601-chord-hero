@@ -12,6 +12,15 @@ const OwnerModal = ({
   walletAddress: string;
   selectedOwnerNickname: string;
 }) => {
+  const [ownerNickname, setOwnerNickname] = useState<string>(
+    selectedOwnerNickname
+  );
+  const [ownerNote, setOwnerNote] = useState<string>("");
+
+  // [TO DO] We need to check if there's an existing note based on the wallet address. If there is, we need to populate the data based on it.
+
+  // [TO DO] Update. Delete.
+
   return (
     <Modal
       open={isModalOpen}
@@ -44,12 +53,18 @@ const OwnerModal = ({
           />
           <TextField
             style={{ marginTop: 20, width: "100%" }}
-            value={selectedOwnerNickname}
+            value={ownerNickname}
+            onChange={(event) => {
+              setOwnerNickname(event.target.value);
+            }}
             label="Nickname"
           />
           <TextField
             style={{ marginTop: 20, width: "100%" }}
-            value={"Note"}
+            value={ownerNote}
+            onChange={(event) => {
+              setOwnerNote(event.target.value);
+            }}
             label="Note"
           />
         </Box>
