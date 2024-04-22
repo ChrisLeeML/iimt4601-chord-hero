@@ -1,3 +1,10 @@
+type Owner @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  walletAddress: String
+  nickname: String
+  notes: String
+}
+
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String

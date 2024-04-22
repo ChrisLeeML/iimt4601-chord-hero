@@ -8,6 +8,51 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
+export const onCreateOwner = /* GraphQL */ `subscription OnCreateOwner($filter: ModelSubscriptionOwnerFilterInput) {
+  onCreateOwner(filter: $filter) {
+    id
+    walletAddress
+    nickname
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateOwnerSubscriptionVariables,
+  APITypes.OnCreateOwnerSubscription
+>;
+export const onUpdateOwner = /* GraphQL */ `subscription OnUpdateOwner($filter: ModelSubscriptionOwnerFilterInput) {
+  onUpdateOwner(filter: $filter) {
+    id
+    walletAddress
+    nickname
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateOwnerSubscriptionVariables,
+  APITypes.OnUpdateOwnerSubscription
+>;
+export const onDeleteOwner = /* GraphQL */ `subscription OnDeleteOwner($filter: ModelSubscriptionOwnerFilterInput) {
+  onDeleteOwner(filter: $filter) {
+    id
+    walletAddress
+    nickname
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteOwnerSubscriptionVariables,
+  APITypes.OnDeleteOwnerSubscription
+>;
 export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
   onCreateUser(filter: $filter) {
     id
@@ -161,6 +206,7 @@ export const onCreateUkulele = /* GraphQL */ `subscription OnCreateUkulele($filt
     title
     tokenID
     contractAddress
+    chain
     createdAt
     updatedAt
     __typename
@@ -176,6 +222,7 @@ export const onUpdateUkulele = /* GraphQL */ `subscription OnUpdateUkulele($filt
     title
     tokenID
     contractAddress
+    chain
     createdAt
     updatedAt
     __typename
@@ -191,6 +238,7 @@ export const onDeleteUkulele = /* GraphQL */ `subscription OnDeleteUkulele($filt
     title
     tokenID
     contractAddress
+    chain
     createdAt
     updatedAt
     __typename
@@ -209,6 +257,7 @@ export const onCreateCreator = /* GraphQL */ `subscription OnCreateCreator($filt
       title
       tokenID
       contractAddress
+      chain
       createdAt
       updatedAt
       __typename
@@ -233,6 +282,7 @@ export const onUpdateCreator = /* GraphQL */ `subscription OnUpdateCreator($filt
       title
       tokenID
       contractAddress
+      chain
       createdAt
       updatedAt
       __typename
@@ -257,6 +307,7 @@ export const onDeleteCreator = /* GraphQL */ `subscription OnDeleteCreator($filt
       title
       tokenID
       contractAddress
+      chain
       createdAt
       updatedAt
       __typename

@@ -8,6 +8,41 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
+export const getOwner = /* GraphQL */ `query GetOwner($id: ID!) {
+  getOwner(id: $id) {
+    id
+    walletAddress
+    nickname
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetOwnerQueryVariables, APITypes.GetOwnerQuery>;
+export const listOwners = /* GraphQL */ `query ListOwners(
+  $filter: ModelOwnerFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listOwners(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      walletAddress
+      nickname
+      notes
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListOwnersQueryVariables,
+  APITypes.ListOwnersQuery
+>;
 export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
@@ -123,6 +158,7 @@ export const getUkulele = /* GraphQL */ `query GetUkulele($id: ID!) {
     title
     tokenID
     contractAddress
+    chain
     createdAt
     updatedAt
     __typename
@@ -143,9 +179,9 @@ export const listUkuleles = /* GraphQL */ `query ListUkuleles(
       title
       tokenID
       contractAddress
+      chain
       createdAt
       updatedAt
-      chain
       __typename
     }
     nextToken
@@ -165,6 +201,7 @@ export const getCreator = /* GraphQL */ `query GetCreator($id: ID!) {
       title
       tokenID
       contractAddress
+      chain
       createdAt
       updatedAt
       __typename

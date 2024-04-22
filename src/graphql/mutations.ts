@@ -8,6 +8,60 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
+export const createOwner = /* GraphQL */ `mutation CreateOwner(
+  $input: CreateOwnerInput!
+  $condition: ModelOwnerConditionInput
+) {
+  createOwner(input: $input, condition: $condition) {
+    id
+    walletAddress
+    nickname
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateOwnerMutationVariables,
+  APITypes.CreateOwnerMutation
+>;
+export const updateOwner = /* GraphQL */ `mutation UpdateOwner(
+  $input: UpdateOwnerInput!
+  $condition: ModelOwnerConditionInput
+) {
+  updateOwner(input: $input, condition: $condition) {
+    id
+    walletAddress
+    nickname
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateOwnerMutationVariables,
+  APITypes.UpdateOwnerMutation
+>;
+export const deleteOwner = /* GraphQL */ `mutation DeleteOwner(
+  $input: DeleteOwnerInput!
+  $condition: ModelOwnerConditionInput
+) {
+  deleteOwner(input: $input, condition: $condition) {
+    id
+    walletAddress
+    nickname
+    notes
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteOwnerMutationVariables,
+  APITypes.DeleteOwnerMutation
+>;
 export const createUser = /* GraphQL */ `mutation CreateUser(
   $input: CreateUserInput!
   $condition: ModelUserConditionInput
@@ -191,6 +245,7 @@ export const createUkulele = /* GraphQL */ `mutation CreateUkulele(
     title
     tokenID
     contractAddress
+    chain
     createdAt
     updatedAt
     __typename
@@ -209,6 +264,7 @@ export const updateUkulele = /* GraphQL */ `mutation UpdateUkulele(
     title
     tokenID
     contractAddress
+    chain
     createdAt
     updatedAt
     __typename
@@ -227,6 +283,7 @@ export const deleteUkulele = /* GraphQL */ `mutation DeleteUkulele(
     title
     tokenID
     contractAddress
+    chain
     createdAt
     updatedAt
     __typename
@@ -248,6 +305,7 @@ export const createCreator = /* GraphQL */ `mutation CreateCreator(
       title
       tokenID
       contractAddress
+      chain
       createdAt
       updatedAt
       __typename
@@ -275,6 +333,7 @@ export const updateCreator = /* GraphQL */ `mutation UpdateCreator(
       title
       tokenID
       contractAddress
+      chain
       createdAt
       updatedAt
       __typename
@@ -302,6 +361,7 @@ export const deleteCreator = /* GraphQL */ `mutation DeleteCreator(
       title
       tokenID
       contractAddress
+      chain
       createdAt
       updatedAt
       __typename

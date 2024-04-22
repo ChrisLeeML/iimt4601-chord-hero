@@ -2,20 +2,20 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateUserInput = {
+export type CreateOwnerInput = {
   id?: string | null,
-  name?: string | null,
-  authID?: string | null,
-  isChordHero?: boolean | null,
+  walletAddress?: string | null,
+  nickname?: string | null,
+  notes?: string | null,
 };
 
-export type ModelUserConditionInput = {
-  name?: ModelStringInput | null,
-  authID?: ModelStringInput | null,
-  isChordHero?: ModelBooleanInput | null,
-  and?: Array< ModelUserConditionInput | null > | null,
-  or?: Array< ModelUserConditionInput | null > | null,
-  not?: ModelUserConditionInput | null,
+export type ModelOwnerConditionInput = {
+  walletAddress?: ModelStringInput | null,
+  nickname?: ModelStringInput | null,
+  notes?: ModelStringInput | null,
+  and?: Array< ModelOwnerConditionInput | null > | null,
+  or?: Array< ModelOwnerConditionInput | null > | null,
+  not?: ModelOwnerConditionInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
@@ -58,6 +58,45 @@ export type ModelSizeInput = {
   ge?: number | null,
   gt?: number | null,
   between?: Array< number | null > | null,
+};
+
+export type Owner = {
+  __typename: "Owner",
+  id: string,
+  walletAddress?: string | null,
+  nickname?: string | null,
+  notes?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateOwnerInput = {
+  id: string,
+  walletAddress?: string | null,
+  nickname?: string | null,
+  notes?: string | null,
+};
+
+export type DeleteOwnerInput = {
+  id: string,
+};
+
+export type CreateUserInput = {
+  id?: string | null,
+  name?: string | null,
+  authID?: string | null,
+  isChordHero?: boolean | null,
+};
+
+export type ModelUserConditionInput = {
+  name?: ModelStringInput | null,
+  authID?: ModelStringInput | null,
+  isChordHero?: ModelBooleanInput | null,
+  and?: Array< ModelUserConditionInput | null > | null,
+  or?: Array< ModelUserConditionInput | null > | null,
+  not?: ModelUserConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type ModelBooleanInput = {
@@ -134,6 +173,7 @@ export type Ukulele = {
   title?: string | null,
   tokenID?: string | null,
   contractAddress?: string | null,
+  chain?: string | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -229,6 +269,7 @@ export type ModelUkuleleConditionInput = {
   title?: ModelStringInput | null,
   tokenID?: ModelStringInput | null,
   contractAddress?: ModelStringInput | null,
+  chain?: ModelStringInput | null,
   and?: Array< ModelUkuleleConditionInput | null > | null,
   or?: Array< ModelUkuleleConditionInput | null > | null,
   not?: ModelUkuleleConditionInput | null,
@@ -293,6 +334,24 @@ export type DeleteCreatorInput = {
   id: string,
 };
 
+export type ModelOwnerFilterInput = {
+  id?: ModelIDInput | null,
+  walletAddress?: ModelStringInput | null,
+  nickname?: ModelStringInput | null,
+  notes?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelOwnerFilterInput | null > | null,
+  or?: Array< ModelOwnerFilterInput | null > | null,
+  not?: ModelOwnerFilterInput | null,
+};
+
+export type ModelOwnerConnection = {
+  __typename: "ModelOwnerConnection",
+  items:  Array<Owner | null >,
+  nextToken?: string | null,
+};
+
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -352,6 +411,7 @@ export type ModelUkuleleFilterInput = {
   title?: ModelStringInput | null,
   tokenID?: ModelStringInput | null,
   contractAddress?: ModelStringInput | null,
+  chain?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelUkuleleFilterInput | null > | null,
@@ -383,15 +443,15 @@ export enum ModelSortDirection {
 }
 
 
-export type ModelSubscriptionUserFilterInput = {
+export type ModelSubscriptionOwnerFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  authID?: ModelSubscriptionStringInput | null,
-  isChordHero?: ModelSubscriptionBooleanInput | null,
+  walletAddress?: ModelSubscriptionStringInput | null,
+  nickname?: ModelSubscriptionStringInput | null,
+  notes?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionUserFilterInput | null > | null,
-  or?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  and?: Array< ModelSubscriptionOwnerFilterInput | null > | null,
+  or?: Array< ModelSubscriptionOwnerFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -422,6 +482,17 @@ export type ModelSubscriptionStringInput = {
   beginsWith?: string | null,
   in?: Array< string | null > | null,
   notIn?: Array< string | null > | null,
+};
+
+export type ModelSubscriptionUserFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  authID?: ModelSubscriptionStringInput | null,
+  isChordHero?: ModelSubscriptionBooleanInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  or?: Array< ModelSubscriptionUserFilterInput | null > | null,
 };
 
 export type ModelSubscriptionBooleanInput = {
@@ -468,6 +539,7 @@ export type ModelSubscriptionUkuleleFilterInput = {
   title?: ModelSubscriptionStringInput | null,
   tokenID?: ModelSubscriptionStringInput | null,
   contractAddress?: ModelSubscriptionStringInput | null,
+  chain?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUkuleleFilterInput | null > | null,
@@ -483,6 +555,57 @@ export type ModelSubscriptionCreatorFilterInput = {
   and?: Array< ModelSubscriptionCreatorFilterInput | null > | null,
   or?: Array< ModelSubscriptionCreatorFilterInput | null > | null,
   creatorUkuleleId?: ModelSubscriptionIDInput | null,
+};
+
+export type CreateOwnerMutationVariables = {
+  input: CreateOwnerInput,
+  condition?: ModelOwnerConditionInput | null,
+};
+
+export type CreateOwnerMutation = {
+  createOwner?:  {
+    __typename: "Owner",
+    id: string,
+    walletAddress?: string | null,
+    nickname?: string | null,
+    notes?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateOwnerMutationVariables = {
+  input: UpdateOwnerInput,
+  condition?: ModelOwnerConditionInput | null,
+};
+
+export type UpdateOwnerMutation = {
+  updateOwner?:  {
+    __typename: "Owner",
+    id: string,
+    walletAddress?: string | null,
+    nickname?: string | null,
+    notes?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteOwnerMutationVariables = {
+  input: DeleteOwnerInput,
+  condition?: ModelOwnerConditionInput | null,
+};
+
+export type DeleteOwnerMutation = {
+  deleteOwner?:  {
+    __typename: "Owner",
+    id: string,
+    walletAddress?: string | null,
+    nickname?: string | null,
+    notes?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
 };
 
 export type CreateUserMutationVariables = {
@@ -662,6 +785,7 @@ export type CreateUkuleleMutation = {
     title?: string | null,
     tokenID?: string | null,
     contractAddress?: string | null,
+    chain?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -679,6 +803,7 @@ export type UpdateUkuleleMutation = {
     title?: string | null,
     tokenID?: string | null,
     contractAddress?: string | null,
+    chain?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -696,6 +821,7 @@ export type DeleteUkuleleMutation = {
     title?: string | null,
     tokenID?: string | null,
     contractAddress?: string | null,
+    chain?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -717,6 +843,7 @@ export type CreateCreatorMutation = {
       title?: string | null,
       tokenID?: string | null,
       contractAddress?: string | null,
+      chain?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -743,6 +870,7 @@ export type UpdateCreatorMutation = {
       title?: string | null,
       tokenID?: string | null,
       contractAddress?: string | null,
+      chain?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -769,6 +897,7 @@ export type DeleteCreatorMutation = {
       title?: string | null,
       tokenID?: string | null,
       contractAddress?: string | null,
+      chain?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -776,6 +905,44 @@ export type DeleteCreatorMutation = {
     createdAt: string,
     updatedAt: string,
     creatorUkuleleId?: string | null,
+  } | null,
+};
+
+export type GetOwnerQueryVariables = {
+  id: string,
+};
+
+export type GetOwnerQuery = {
+  getOwner?:  {
+    __typename: "Owner",
+    id: string,
+    walletAddress?: string | null,
+    nickname?: string | null,
+    notes?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListOwnersQueryVariables = {
+  filter?: ModelOwnerFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListOwnersQuery = {
+  listOwners?:  {
+    __typename: "ModelOwnerConnection",
+    items:  Array< {
+      __typename: "Owner",
+      id: string,
+      walletAddress?: string | null,
+      nickname?: string | null,
+      notes?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -908,6 +1075,7 @@ export type GetUkuleleQuery = {
     title?: string | null,
     tokenID?: string | null,
     contractAddress?: string | null,
+    chain?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -928,6 +1096,7 @@ export type ListUkulelesQuery = {
       title?: string | null,
       tokenID?: string | null,
       contractAddress?: string | null,
+      chain?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -950,6 +1119,7 @@ export type GetCreatorQuery = {
       title?: string | null,
       tokenID?: string | null,
       contractAddress?: string | null,
+      chain?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1003,6 +1173,54 @@ export type CreatorsBySchoolIDQuery = {
       creatorUkuleleId?: string | null,
     } | null >,
     nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateOwnerSubscriptionVariables = {
+  filter?: ModelSubscriptionOwnerFilterInput | null,
+};
+
+export type OnCreateOwnerSubscription = {
+  onCreateOwner?:  {
+    __typename: "Owner",
+    id: string,
+    walletAddress?: string | null,
+    nickname?: string | null,
+    notes?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateOwnerSubscriptionVariables = {
+  filter?: ModelSubscriptionOwnerFilterInput | null,
+};
+
+export type OnUpdateOwnerSubscription = {
+  onUpdateOwner?:  {
+    __typename: "Owner",
+    id: string,
+    walletAddress?: string | null,
+    nickname?: string | null,
+    notes?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteOwnerSubscriptionVariables = {
+  filter?: ModelSubscriptionOwnerFilterInput | null,
+};
+
+export type OnDeleteOwnerSubscription = {
+  onDeleteOwner?:  {
+    __typename: "Owner",
+    id: string,
+    walletAddress?: string | null,
+    nickname?: string | null,
+    notes?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -1173,6 +1391,7 @@ export type OnCreateUkuleleSubscription = {
     title?: string | null,
     tokenID?: string | null,
     contractAddress?: string | null,
+    chain?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1189,6 +1408,7 @@ export type OnUpdateUkuleleSubscription = {
     title?: string | null,
     tokenID?: string | null,
     contractAddress?: string | null,
+    chain?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1205,6 +1425,7 @@ export type OnDeleteUkuleleSubscription = {
     title?: string | null,
     tokenID?: string | null,
     contractAddress?: string | null,
+    chain?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1225,6 +1446,7 @@ export type OnCreateCreatorSubscription = {
       title?: string | null,
       tokenID?: string | null,
       contractAddress?: string | null,
+      chain?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1250,6 +1472,7 @@ export type OnUpdateCreatorSubscription = {
       title?: string | null,
       tokenID?: string | null,
       contractAddress?: string | null,
+      chain?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -1275,6 +1498,7 @@ export type OnDeleteCreatorSubscription = {
       title?: string | null,
       tokenID?: string | null,
       contractAddress?: string | null,
+      chain?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,

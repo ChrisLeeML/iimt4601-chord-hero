@@ -6,6 +6,8 @@
 
 export { default as ContentCreateForm } from "./ContentCreateForm";
 export { default as ContentUpdateForm } from "./ContentUpdateForm";
+export { default as OwnerCreateForm } from "./OwnerCreateForm";
+export { default as OwnerUpdateForm } from "./OwnerUpdateForm";
 export { default as SchoolCreateForm } from "./SchoolCreateForm";
 export { default as SchoolUpdateForm } from "./SchoolUpdateForm";
 export { default as UkuleleCreateForm } from "./UkuleleCreateForm";

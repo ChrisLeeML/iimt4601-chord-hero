@@ -3,7 +3,6 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { GetUkulele } from "@/src/api/ukuleleService";
-
 import {
   Box,
   Container,
@@ -16,9 +15,14 @@ import {
   Paper,
   TableBody,
   Button,
+  IconButton,
+  DialogProps,
 } from "@mui/material";
+import { FaPencilAlt } from "react-icons/fa";
+import Link from "next/link";
+import OwnerModal from "@/src/components/OwnerModal";
 
-interface Owner {
+interface OwnerInterface {
   owner_address: string;
   quantity: number;
   first_acquired_date: string;
@@ -41,7 +45,6 @@ const FetchByContract = async () => {
   try {
     const response = await axios.get(url, { headers });
     const data = response.data;
-    //console.log(data);
     return data;
   } catch (error) {
     console.error("Error at FetchByContract: ", error);
@@ -56,8 +59,6 @@ const FetchByUkulele = async (items: Array<any>) => {
   };
 
   const requests = items.map((element) => {
-    //const nftType = element.chain;
-    //console.log("ELEMENT", element);
     const nftType = element.chain;
     const contractAddress = element.contractAddress;
     const tokenId = element.tokenID;
@@ -70,46 +71,63 @@ const FetchByUkulele = async (items: Array<any>) => {
     const responses = await Promise.all(requests);
     console.log("RESPONSES", responses);
     return responses;
-    // Do something with all responses
   } catch (error) {
-    // Handle any error from all requests
-    console.error(error);
+    console.error("Error at FetchByUkulele: ", error);
   }
 };
 
 export default function Analytics() {
-  const [owners, setOwners] = useState<Owner[]>([]);
+  const [savedOwners, setSavedOwners] = useState<any[]>([
+    {
+      nickname: "Chord Hero",
+      walletAddress: "0xADE5949A14DF4ef9c966F94668B6E6A1861dCED4",
+      note: "Internal Wallet",
+    },
+  ]);
   const [data, setData] = useState<any[][]>([]);
   const [index, setIndex] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedOwnerAddress, setSelectedOwnerAddress] = useState<string>("");
+  const [selectedOwnerNickname, setSelectedOwnerNickname] =
+    useState<string>("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const ukuleleDataArray: any[] = [];
-        const galleryPassData = await FetchByContract();
-        const ukuleleData = await GetUkulele(); 
-        var ukuleleItems: any[] = [];
-        if (ukuleleData) {
-          ukuleleItems = ukuleleData.listUkuleles.items;
-        }
-        const ukuleleFetchResult = await FetchByUkulele(ukuleleItems); 
+  const fetchData = async () => {
+    try {
+      const ukuleleDataArray: any[] = [];
+      const galleryPassData = await FetchByContract();
+      const ukuleleData = await GetUkulele();
+      var ukuleleItems: any[] = [];
+      if (ukuleleData) {
+        ukuleleItems = ukuleleData.listUkuleles.items;
+      }
+      const ukuleleFetchResult = await FetchByUkulele(ukuleleItems);
 
-        if (Array.isArray(ukuleleFetchResult)) {
-          //check type of fetched result
-          for (let element of ukuleleFetchResult) {
-            if (element && Object.keys(element.data).length) {
-              ukuleleDataArray.push(element.data); 
-            }
+      if (Array.isArray(ukuleleFetchResult)) {
+        //check type of fetched result
+        for (let element of ukuleleFetchResult) {
+          if (element && Object.keys(element.data).length) {
+            ukuleleDataArray.push(element.data);
           }
         }
-
-        ukuleleDataArray.sort((a, b) => a.name.localeCompare(b.name)); 
-        setOwners(galleryPassData.owners);
-        setData([[galleryPassData], ukuleleDataArray]);
-      } catch (error) {
-        console.error("Error fetching data:", error);
       }
-    };
+
+      ukuleleDataArray.sort((a, b) => a.name.localeCompare(b.name));
+      // setOwners(galleryPassData.owners);
+      setData([[galleryPassData], ukuleleDataArray]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleClose: DialogProps["onClose"] = (event, reason) => {
+    if (reason && reason === "backdropClick") {
+      setIsModalOpen(false);
+      setSelectedOwnerAddress("");
+      setSelectedOwnerNickname("");
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -228,7 +246,7 @@ export default function Analytics() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {item.owners.map((owner: Owner) => (
+                    {item.owners.map((owner: OwnerInterface) => (
                       <TableRow
                         key={owner.owner_address}
                         sx={{
@@ -236,7 +254,94 @@ export default function Analytics() {
                         }}
                       >
                         <TableCell component="th" scope="row">
-                          {owner.owner_address}
+                          <Box
+                            style={{
+                              width: "100%",
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            }}
+                          >
+                            {(() => {
+                              const formattedAddress = owner.owner_address
+                                .toLowerCase()
+                                .trim();
+                              console.log("DEBUGGING: ", savedOwners);
+                              const foundOwner = savedOwners.find(
+                                (savedOwner) =>
+                                  savedOwner.walletAddress
+                                    .toLowerCase()
+                                    .trim() === formattedAddress
+                              );
+                              if (foundOwner) {
+                                return (
+                                  <>
+                                    <Link
+                                      href={`https://opensea.io/${formattedAddress}`}
+                                      target="_blank"
+                                      style={{
+                                        textOverflow: "ellipsis",
+                                        overflow: "hidden",
+                                        width: "18rem",
+                                      }}
+                                    >
+                                      <Typography
+                                        noWrap
+                                        style={{
+                                          fontSize: "14px",
+                                        }}
+                                      >
+                                        <strong>{foundOwner.nickname}</strong> (
+                                        {formattedAddress})
+                                      </Typography>
+                                    </Link>
+                                    <IconButton
+                                      onClick={() => {
+                                        setSelectedOwnerAddress(
+                                          owner.owner_address
+                                        );
+                                        setSelectedOwnerNickname(
+                                          foundOwner.nickname
+                                        );
+                                        setIsModalOpen(true);
+                                      }}
+                                    >
+                                      <FaPencilAlt size={15} />
+                                    </IconButton>
+                                  </>
+                                );
+                              } else {
+                                return (
+                                  <>
+                                    <Link
+                                      href={`https://opensea.io/${formattedAddress}`}
+                                      target="_blank"
+                                    >
+                                      <Typography
+                                        style={{
+                                          fontSize: "14px",
+                                          textOverflow: "ellipsis",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        {formattedAddress}
+                                      </Typography>
+                                    </Link>
+                                    <IconButton
+                                      onClick={() => {
+                                        setSelectedOwnerAddress(
+                                          owner.owner_address
+                                        );
+                                        setIsModalOpen(true);
+                                      }}
+                                    >
+                                      <FaPencilAlt size={15} />
+                                    </IconButton>
+                                  </>
+                                );
+                              }
+                            })()}
+                          </Box>
                         </TableCell>
                         <TableCell align="right">{owner.quantity}</TableCell>
                         <TableCell align="right">
@@ -253,6 +358,12 @@ export default function Analytics() {
             </Box>
           ))
         : "Loading..."}
+      <OwnerModal
+        isModalOpen={isModalOpen}
+        onClose={handleClose}
+        walletAddress={selectedOwnerAddress}
+        selectedOwnerNickname={selectedOwnerNickname}
+      />
     </Container>
   );
 }
