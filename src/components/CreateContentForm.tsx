@@ -3,6 +3,8 @@ import {
   Button,
   FormControl,
   FormLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -22,7 +24,7 @@ const CreateContentForm = () => {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-    // [TO DO]
+  // [TO DO]
 
   const HandleSubmit = (e: any) => {
     e.preventDefault();
@@ -35,13 +37,13 @@ const CreateContentForm = () => {
         setLoading(true);
         setMessage("");
         console.log("Creating a Content with the following data: ");
-        console.log(title,threshold, type, videoLink, textContent);
+        console.log(title, threshold, type, videoLink, textContent);
         const formInput = {
           title: title as string,
           threshold: threshold as number,
           type: type as ContentType,
           videoLink: videoLink as string,
-          textContent: textContent as string
+          textContent: textContent as string,
         };
         SubmitForm(formInput);
       }
@@ -91,41 +93,60 @@ const CreateContentForm = () => {
           Create a Exclusive Content
         </FormLabel>
         <TextField
-          label="title"
+          label="Content Title"
           style={{ marginBottom: 20, width: 400 }}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <TextField
-          label="threshold"
+          label="How many NFTs should the user own?"
           style={{ marginBottom: 20, width: 400 }}
           value={threshold}
           onChange={(e) => setThreshold(parseInt(e.target.value))}
         />
-        <TextField
-          label="type"
-          style={{ marginBottom: 20, width: 400 }}
+        <Typography>Choose the content type </Typography>
+        <Select
           value={type}
-          onChange={(e) => setType(e.target.value)}
-        />
-        <TextField
-          label="videoLink"
+          onChange={(e) => {
+            setType(e.target.value);
+            setVideoLink("");
+            setTextContent("");
+          }}
           style={{ marginBottom: 20, width: 400 }}
-          value={videoLink}
-          onChange={(e) => setVideoLink(e.target.value)}
-        />
-        <TextField
-          label="textContent"
-          style={{ marginBottom: 20, width: 400 }}
-          value={textContent}
-          onChange={(e) => setTextContent(e.target.value)}
-        />
+        >
+          <MenuItem value="TEXT">Text</MenuItem>
+          <MenuItem value="VIDEO">Video</MenuItem>
+        </Select>
+        {type && type == "VIDEO" ? (
+          <TextField
+            label="Link to the video"
+            style={{ marginBottom: 20, width: 400 }}
+            value={videoLink}
+            onChange={(e) => setVideoLink(e.target.value)}
+          />
+        ) : type == "TEXT" ? (
+          <TextField
+            label="Text Content"
+            style={{ marginBottom: 20, width: 400 }}
+            value={textContent}
+            onChange={(e) => setTextContent(e.target.value)}
+          />
+        ) : null}
+
         <Button
-          style={{ background: loading ? "gray" : "black", marginBottom: 50 }}
+          style={{
+            background:
+              loading || !(videoLink.length > 0 || textContent.length > 0)
+                ? "gray"
+                : "black",
+            marginBottom: 50,
+          }}
           size="large"
           variant="contained"
           type="submit"
-          disabled={loading}
+          disabled={
+            loading || !(videoLink.length > 0 || textContent.length > 0)
+          }
         >
           Submit
         </Button>
