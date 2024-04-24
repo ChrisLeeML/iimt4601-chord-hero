@@ -2,16 +2,18 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
-import { GetUkuleleByID, ListCreators} from "@/src/api/ukuleleService";
+import { GetUkuleleByID, ListCreators } from "@/src/api/ukuleleService";
 import axios from "axios";
+import { Ukulele } from "@/src/API";
+
 //import { FetchTransactionByUkulele } from "@/src/api/simpleHash";
 
 const FetchTransactionByUkulele = async (ukuleleData: Array<any>) => {
   const chain = ukuleleData[0].chain;
   const contractAddress = ukuleleData[0].contractAddress;
   const tokenId = ukuleleData[0].tokenID;
-  const url = `https://api.simplehash.com/api/v0/nfts/transfers/${chain}/${contractAddress}/${tokenId}?order_by=timestamp_desc&limit=50`
- 
+  const url = `https://api.simplehash.com/api/v0/nfts/transfers/${chain}/${contractAddress}/${tokenId}?order_by=timestamp_desc&limit=50`;
+
   const headers = {
     accept: "application/json",
     "X-API-KEY":
@@ -27,47 +29,54 @@ const FetchTransactionByUkulele = async (ukuleleData: Array<any>) => {
   }
 };
 
-export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
+export default function UkulelePage({
+  params,
+}: {
+  params: { ukuleleID: string };
+}) {
   // Implement a client-side method to fetch the Ukulele detail. [TO DO]
   const [ukuleleData, setUkuleleData] = useState<any>([]);
   const [transactionData, setTransactionData] = useState<any>(null);
   const [creatorData, setCreatorData] = useState<any>([]);
-  
-  useEffect(() => {
-    const fetchUkulele = async () => {
-      try{
-        const ukuleleResponse = await GetUkuleleByID(params.ukuleleID);
-        const creatorsResponse = await ListCreators();
-        console.log("creatorsResponse", creatorsResponse);
-        console.log("ukueleleResponse",ukuleleResponse);
-        setUkuleleData(ukuleleResponse);
+  const [data, setData] = useState<any>([]);
 
-        if(ukuleleResponse){
-          const matchingCreator = creatorsResponse.find(creator => creator.creatorUkuleleId === ukuleleResponse.id);
-          if (matchingCreator) {
-            console.log(matchingCreator);
-            setCreatorData(matchingCreator);
-            console.log("creatorData",creatorData);
-          }
+  const fetchUkulele = async () => {
+    try {
+      const ukuleleResponse = await GetUkuleleByID(params.ukuleleID);
+      const creatorsResponse = await ListCreators();
+      console.log("creatorsResponse", creatorsResponse);
+      console.log("ukueleleResponse", ukuleleResponse);
+      setUkuleleData(ukuleleResponse);
+
+      if (ukuleleResponse) {
+        const matchingCreator = creatorsResponse.find(
+          (creator) => creator.creatorUkuleleId === ukuleleResponse.id
+        );
+        if (matchingCreator) {
+          console.log(matchingCreator);
+          setCreatorData(matchingCreator);
+          console.log("creatorData", creatorData);
         }
-      } catch (error) {
-        console.error("Error fetching ukuleleData", error);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching ukuleleData", error);
+    }
+  };
 
+  useEffect(() => {
     fetchUkulele();
-  }, [params.ukuleleID]); 
+  }, [params.ukuleleID]);
 
   useEffect(() => {
     if (!ukuleleData || ukuleleData.length === 0) {
       // If ukuleleData is not set or is empty, do not fetch transactions
       return;
     }
-    const fetchTransaction = async() => {
+    const fetchTransaction = async () => {
       try {
         const transactions = await FetchTransactionByUkulele([ukuleleData]);
 
-        if(transactions && transactions.data) {
+        if (transactions && transactions.data) {
           const transfers = transactions.data.transfers;
           setTransactionData(transfers);
           console.log("transactionData", transactionData);
@@ -149,9 +158,9 @@ export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
         }}
       >
         Creator Info <br></br>
-        Name: {creatorData.name}<br></br>
-        School: 
-      
+        Name: {creatorData.name}
+        <br></br>
+        School:
       </Typography>
       <Typography>Analytics</Typography>
       {/* Display an analytics. owner info, stuff stuff... */}

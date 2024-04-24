@@ -54,10 +54,22 @@ const CreatorsGrid = () => {
                     {creator?.name}
                   </Typography>
                   <Typography style={{ fontSize: "12px", fontStyle: "italic" }}>
-                    {creator?.school?.title}
+                    {creator?.school?.title ? (
+                      "School: " + creator?.school?.title
+                    ) : (
+                      <div style={{ color: "red", fontSize: "9px" }}>
+                        No school was assigned
+                      </div>
+                    )}
                   </Typography>
                   <Typography style={{ fontSize: "12px", fontStyle: "italic" }}>
-                    Ukulele: {creator?.ukulele?.title}
+                    {creator?.ukulele?.title ? (
+                      "Ukulele: " + creator?.ukulele?.title
+                    ) : (
+                      <div style={{ color: "red", fontSize: "9px" }}>
+                        No Ukulele was assigned.
+                      </div>
+                    )}
                   </Typography>
                 </Box>
               </Link>

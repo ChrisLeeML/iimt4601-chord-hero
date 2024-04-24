@@ -9,11 +9,19 @@ const OwnerModal = ({
   onClose,
   walletAddress,
   selectedOwnerNickname,
+  isChanged,
+  setIsChanged,
+  resetModal,
+  setIsFetchRequired,
 }: {
   isModalOpen: boolean;
   onClose: any;
   walletAddress: string;
   selectedOwnerNickname: string;
+  isChanged: boolean;
+  setIsChanged: any;
+  resetModal: any;
+  setIsFetchRequired: any;
 }) => {
   const router = useRouter();
   const [ownerNickname, setOwnerNickname] = useState<string>(
@@ -23,38 +31,21 @@ const OwnerModal = ({
   const [data, setOwnerData] = useState<any>([]);
   const [ownerId, setOwnerId] = useState<string>("");
 
+  const [loading, setLoading] = useState<boolean>(false);
 
-  // [TO DO] We need to check if there's an existing note based on the wallet address. If there is, we need to populate the data based on it.
-
-  // [TO DO] Update. Delete.
-  useEffect(() => {
-    const FetchOwnerData = async () => {
-      try {
-        const ownerData = await ListOwners();
-        console.log("ownerDATA:",ownerData);
-        setOwnerData(ownerData);
-      } catch (error) {
-        console.error("Error fetching ownerData:", error);
-      }
-    };
-    FetchOwnerData();
-  }, []);
-
-  useEffect(() => {
-    const owner = data.find((item: any) => item.walletAddress === walletAddress);
-    if (owner) {
-      setOwnerId(owner.id);
-      setOwnerNickname(owner.nickname);
-      setOwnerNote(owner.notes);
-    } else {
-       // Assuming CreateOwner is a function you will define
-      setOwnerId("");
-      setOwnerNickname("");
-      setOwnerNote("");
+  const FetchOwnerData = async () => {
+    try {
+      resetModal();
+      const ownerData = await ListOwners();
+      console.log("ownerDATA:", ownerData);
+      setOwnerData(ownerData);
+    } catch (error) {
+      console.error("Error fetching ownerData:", error);
     }
-  }, [data, walletAddress]);
+  };
 
   const HandleSubmit = async () => {
+    setLoading(true);
     const formInput = {
       walletAddress: walletAddress as string,
       nickname: ownerNickname as string,
@@ -66,6 +57,7 @@ const OwnerModal = ({
     } else {
       await createNewOwner(formInput);
     }
+    setLoading(false);
   };
 
   const createNewOwner = async (formInput: {
@@ -75,25 +67,54 @@ const OwnerModal = ({
   }) => {
     try {
       await CreateOwner(formInput);
-      router.push("/analytics");
+      console.log("Successfully created the owner.");
+      FetchOwnerData();
+      setIsFetchRequired(true);
     } catch (error) {
       console.error("Error creating new owner:", error);
+      setLoading(false);
     }
   };
 
-  const updateOwner = async (formInput: {
-    walletAddress: string;
-    nickname: string;
-    notes: string;
-  }, ownerId: string) => {
+  const updateOwner = async (
+    formInput: {
+      walletAddress: string;
+      nickname: string;
+      notes: string;
+    },
+    ownerId: string
+  ) => {
     try {
       console.log({ id: ownerId, ...formInput });
       await UpdateOwner({ id: ownerId, ...formInput });
-      router.push("/analytics");
+      console.log("Successfully updated the owner.");
+      FetchOwnerData();
+      setIsFetchRequired(true);
     } catch (error) {
       console.error("Error updating owner:", error);
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const owner = data.find(
+      (item: any) => item.walletAddress === walletAddress
+    );
+    if (owner) {
+      setOwnerId(owner.id);
+      setOwnerNickname(owner.nickname);
+      setOwnerNote(owner.notes);
+    } else {
+      // Assuming CreateOwner is a function you will define
+      setOwnerId("");
+      setOwnerNickname("");
+      setOwnerNote("");
+    }
+  }, [data, walletAddress]);
+
+  useEffect(() => {
+    FetchOwnerData();
+  }, []);
 
   return (
     <Modal
@@ -130,6 +151,7 @@ const OwnerModal = ({
             value={ownerNickname}
             onChange={(event) => {
               setOwnerNickname(event.target.value);
+              setIsChanged(true);
             }}
             label="Nickname"
           />
@@ -138,6 +160,7 @@ const OwnerModal = ({
             value={ownerNote}
             onChange={(event) => {
               setOwnerNote(event.target.value);
+              setIsChanged(true);
             }}
             label="Note"
           />
@@ -148,11 +171,12 @@ const OwnerModal = ({
             width: "100%",
             bottom: 20,
             left: 0,
-            background: "black",
+            background: loading || !isChanged ? "gray" : "black",
             color: "white",
             borderRadius: 10,
             height: 50,
           }}
+          disabled={loading || !isChanged}
         >
           Submit
         </Button>

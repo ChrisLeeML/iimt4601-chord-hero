@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { GetUkulele } from "@/src/api/ukuleleService";
+import { GetUkulele, ListOwners } from "@/src/api/ukuleleService";
 import {
   Box,
   Container,
@@ -77,19 +77,28 @@ const FetchByUkulele = async (items: Array<any>) => {
 };
 
 export default function Analytics() {
-  const [savedOwners, setSavedOwners] = useState<any[]>([
-    {
-      nickname: "Chord Hero",
-      walletAddress: "0xADE5949A14DF4ef9c966F94668B6E6A1861dCED4",
-      note: "Internal Wallet",
-    },
-  ]);
+  const [savedOwners, setSavedOwners] = useState<any[]>([]);
   const [data, setData] = useState<any[][]>([]);
   const [index, setIndex] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedOwnerAddress, setSelectedOwnerAddress] = useState<string>("");
   const [selectedOwnerNickname, setSelectedOwnerNickname] =
     useState<string>("");
+
+  const [isChanged, setIsChanged] = useState<boolean>(false);
+  const [isFetchRequired, setIsFetchRequired] = useState<boolean>(false);
+
+  const fetchOwners = async () => {
+    try {
+      resetModal();
+      const ownerData = await ListOwners();
+      console.log("ownerDATA:", ownerData);
+      setSavedOwners(ownerData);
+      setIsFetchRequired(false);
+    } catch (error) {
+      console.error("Error fetching ownerData:", error);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -103,7 +112,6 @@ export default function Analytics() {
       const ukuleleFetchResult = await FetchByUkulele(ukuleleItems);
 
       if (Array.isArray(ukuleleFetchResult)) {
-        //check type of fetched result
         for (let element of ukuleleFetchResult) {
           if (element && Object.keys(element.data).length) {
             ukuleleDataArray.push(element.data);
@@ -112,23 +120,34 @@ export default function Analytics() {
       }
 
       ukuleleDataArray.sort((a, b) => a.name.localeCompare(b.name));
-      // setOwners(galleryPassData.owners);
       setData([[galleryPassData], ukuleleDataArray]);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
+  const resetModal = () => {
+    setIsModalOpen(false);
+    setSelectedOwnerAddress("");
+    setSelectedOwnerNickname("");
+    setIsChanged(false);
+  };
+
   const handleClose: DialogProps["onClose"] = (event, reason) => {
     if (reason && reason === "backdropClick") {
-      setIsModalOpen(false);
-      setSelectedOwnerAddress("");
-      setSelectedOwnerNickname("");
+      resetModal();
     }
   };
 
   useEffect(() => {
+    if (isFetchRequired) {
+      fetchOwners();
+    }
+  }, [isFetchRequired]);
+
+  useEffect(() => {
     fetchData();
+    fetchOwners();
   }, []);
 
   return (
@@ -262,85 +281,87 @@ export default function Analytics() {
                               alignItems: "center",
                             }}
                           >
-                            {(() => {
-                              const formattedAddress = owner.owner_address
-                                .toLowerCase()
-                                .trim();
-                              console.log("DEBUGGING: ", savedOwners);
-                              const foundOwner = savedOwners.find(
+                            <Link
+                              href={`https://opensea.io/${owner.owner_address}`}
+                              target="_blank"
+                              style={{
+                                textOverflow: "ellipsis",
+                                overflow: "hidden",
+                                width: "22rem",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "flex-start",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <Typography
+                                noWrap
+                                style={{
+                                  fontSize: "14px",
+                                }}
+                              >
+                                {savedOwners.find(
+                                  (savedOwner) =>
+                                    savedOwner.walletAddress
+                                      .toLowerCase()
+                                      .trim() ===
+                                    owner.owner_address.toLowerCase().trim()
+                                ) ? (
+                                  <>
+                                    <strong>
+                                      {
+                                        savedOwners.find(
+                                          (savedOwner) =>
+                                            savedOwner.walletAddress
+                                              .toLowerCase()
+                                              .trim() ===
+                                            owner.owner_address
+                                              .toLowerCase()
+                                              .trim()
+                                        ).nickname
+                                      }
+                                    </strong>{" "}
+                                    ({owner.owner_address})
+                                  </>
+                                ) : (
+                                  owner.owner_address
+                                )}
+                              </Typography>
+
+                              {savedOwners.find(
                                 (savedOwner) =>
                                   savedOwner.walletAddress
                                     .toLowerCase()
-                                    .trim() === formattedAddress
-                              );
-                              if (foundOwner) {
-                                return (
-                                  <>
-                                    <Link
-                                      href={`https://opensea.io/${formattedAddress}`}
-                                      target="_blank"
-                                      style={{
-                                        textOverflow: "ellipsis",
-                                        overflow: "hidden",
-                                        width: "18rem",
-                                      }}
-                                    >
-                                      <Typography
-                                        noWrap
-                                        style={{
-                                          fontSize: "14px",
-                                        }}
-                                      >
-                                        <strong>{foundOwner.nickname}</strong> (
-                                        {formattedAddress})
-                                      </Typography>
-                                    </Link>
-                                    <IconButton
-                                      onClick={() => {
-                                        setSelectedOwnerAddress(
-                                          owner.owner_address
-                                        );
-                                        setSelectedOwnerNickname(
-                                          foundOwner.nickname
-                                        );
-                                        setIsModalOpen(true);
-                                      }}
-                                    >
-                                      <FaPencilAlt size={15} />
-                                    </IconButton>
-                                  </>
-                                );
-                              } else {
-                                return (
-                                  <>
-                                    <Link
-                                      href={`https://opensea.io/${formattedAddress}`}
-                                      target="_blank"
-                                    >
-                                      <Typography
-                                        style={{
-                                          fontSize: "14px",
-                                          textOverflow: "ellipsis",
-                                          overflow: "hidden",
-                                        }}
-                                      >
-                                        {formattedAddress}
-                                      </Typography>
-                                    </Link>
-                                    <IconButton
-                                      onClick={() => {
-                                        setSelectedOwnerAddress(
-                                          owner.owner_address
-                                        );
-                                        setIsModalOpen(true);
-                                      }}
-                                    >
-                                      <FaPencilAlt size={15} />
-                                    </IconButton>
-                                  </>
-                                );
-                              }
-                            })()}
+                                    .trim() ===
+                                  owner.owner_address.toLowerCase().trim()
+                              ) ? (
+                                <Typography
+                                  noWrap
+                                  style={{
+                                    fontSize: "12px",
+                                    fontStyle: "italic",
+                                  }}
+                                >
+                                  {
+                                    savedOwners.find(
+                                      (savedOwner) =>
+                                        savedOwner.walletAddress
+                                          .toLowerCase()
+                                          .trim() ===
+                                        owner.owner_address.toLowerCase().trim()
+                                    ).notes
+                                  }
+                                </Typography>
+                              ) : null}
+                            </Link>
+                            <IconButton
+                              onClick={() => {
+                                setSelectedOwnerAddress(owner.owner_address);
+                                setIsModalOpen(true);
+                              }}
+                            >
+                              <FaPencilAlt size={15} />
+                            </IconButton>
                           </Box>
                         </TableCell>
                         <TableCell align="right">{owner.quantity}</TableCell>
@@ -363,6 +384,10 @@ export default function Analytics() {
         onClose={handleClose}
         walletAddress={selectedOwnerAddress}
         selectedOwnerNickname={selectedOwnerNickname}
+        isChanged={isChanged}
+        setIsChanged={setIsChanged}
+        resetModal={resetModal}
+        setIsFetchRequired={setIsFetchRequired}
       />
     </Container>
   );

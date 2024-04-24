@@ -9,7 +9,7 @@ import {
   listContents,
   getOwner,
   listOwners,
-  listSchools
+  listSchools,
 } from "@/src/graphql/queries";
 import {
   createCreator,
@@ -22,7 +22,7 @@ import {
   updateUkulele,
   deleteUkulele,
   createOwner,
-  updateOwner
+  updateOwner,
 } from "@/src/graphql/mutations";
 import { create } from "@mui/material/styles/createTransitions";
 import { ContentType, Creator } from "../API";
@@ -358,7 +358,6 @@ export const DeleteUkulele = async (formInput: { id: string }) => {
   }
 };
 
-
 export const ListOwners = async () => {
   try {
     const { data }: any = await cookieBasedClient.graphql({
@@ -374,7 +373,6 @@ export const ListOwners = async () => {
   }
 };
 
-
 export const CreateOwner = async (formInput: {
   walletAddress: string;
   nickname: string;
@@ -387,11 +385,11 @@ export const CreateOwner = async (formInput: {
         input: {
           walletAddress: formInput.walletAddress,
           nickname: formInput.nickname,
-          notes: formInput.notes
+          notes: formInput.notes,
         },
       },
     });
-    console.log("Created owner", response);
+    console.log("Created owner: ", response);
   } catch (error) {
     console.error("Error at CreateOwner:", error);
   }
@@ -411,11 +409,11 @@ export const UpdateOwner = async (formInput: {
           id: formInput.id,
           walletAddress: formInput.walletAddress,
           nickname: formInput.nickname,
-          notes: formInput.notes
+          notes: formInput.notes,
         },
       },
     });
-    console.log("Updated Owner", response);
+    console.log("Updated Owner: ", response);
   } catch (error) {
     console.error("Error at UpdateOwner:", error);
   }
