@@ -14,7 +14,7 @@ import { ContentType } from "../API";
 const CreateContentForm = () => {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
-  const [threshold, setThreshold] = useState<number>(0);
+  const [threshold, setThreshold] = useState<string>("");
   const [type, setType] = useState<string>(""); // Video or Text
   const [videoLink, setVideoLink] = useState<string>(""); // If Video
   const [textContent, setTextContent] = useState<string>(""); // If Text
@@ -26,7 +26,7 @@ const CreateContentForm = () => {
 
   const HandleSubmit = (e: any) => {
     e.preventDefault();
-    if (title.length > 0 && threshold >= 0 && type.length > 0) {
+    if (title.length > 0 && threshold.length >=0 && type.length > 0) {
       if (type === "Text" && textContent.length === 0) {
         setMessage("Text content is required for the 'Text' type.");
       } else if (type === "Video" && videoLink.length === 0) {
@@ -38,7 +38,7 @@ const CreateContentForm = () => {
         console.log(title,threshold, type, videoLink, textContent);
         const formInput = {
           title: title as string,
-          threshold: threshold as number,
+          threshold: threshold as string,
           type: type as ContentType,
           videoLink: videoLink as string,
           textContent: textContent as string
@@ -52,7 +52,7 @@ const CreateContentForm = () => {
 
   const SubmitForm = async (formInput: {
     title: string;
-    threshold: number;
+    threshold: string;
     type: ContentType;
     videoLink: string;
     textContent: string;
@@ -100,7 +100,7 @@ const CreateContentForm = () => {
           label="threshold"
           style={{ marginBottom: 20, width: 400 }}
           value={threshold}
-          onChange={(e) => setThreshold(parseInt(e.target.value))}
+          onChange={(e) => setThreshold(e.target.value)}
         />
         <TextField
           label="type"

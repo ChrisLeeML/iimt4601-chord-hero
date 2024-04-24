@@ -6,7 +6,10 @@ import {
   getUkulele,
   listCreators,
   listUkuleles,
-  listContents
+  listContents,
+  getOwnerByWallet,
+  getOwner,
+  listOwners
 } from "@/src/graphql/queries";
 import { 
   createCreator,
@@ -17,7 +20,9 @@ import {
   deleteContent,
   createUkulele,
   updateUkulele,
-  deleteUkulele
+  deleteUkulele,
+  createOwner,
+  updateOwner
 } from "@/src/graphql/mutations";
 import { create } from "@mui/material/styles/createTransitions";
 import { ContentType, Creator } from "../API";
@@ -173,7 +178,7 @@ export const ListContent = async () => {
 
 export const CreateContent = async (formInput: {
   title: string;
-  threshold: number;
+  threshold: string;
   type: ContentType;
   videoLink: string;
   textContent: string;
@@ -346,3 +351,80 @@ export const DeleteUkulele = async (formInput: {
     console.error("Error at DeleteUkulele:", error);
   }
 };
+
+
+export const ListOwners = async () => {
+  try {
+    const { data }: any = await cookieBasedClient.graphql({
+      query: listOwners,
+    });
+
+    const owners = data.listOwners.items;
+
+    return owners;
+  } catch (error) {
+    console.error("Error at ListCreators: ", error);
+    throw error;
+  }
+};
+
+export const GetOwnerNote = async (walletAddress: string) => {
+  try {
+    const { data } = await cookieBasedClient.graphql({
+      query: getOwnerByWallet,
+      variables: {
+        walletAddress: walletAddress
+      }
+    });
+    console.log("CREATORDATA",data);
+    return data.getOwnerByWallet;
+  } catch (error) {
+    console.error("Error at GetOwnerNote", error);
+  }
+};
+
+export const CreateOwnerNote = async (formInput: {
+  walletAddress: string;
+  nickname: string;
+  notes: string;
+}) => {
+  try {
+    const response = await cookieBasedClient.graphql({
+      query: createOwner,
+      variables: {
+        input: {
+          walletAddress: formInput.walletAddress,
+          nickname: formInput.nickname,
+          notes: formInput.notes
+        },
+      },
+    });
+    console.log("Created notes", response);
+  } catch (error) {
+    console.error("Error at CreateOwnerNote:", error);
+  }
+};
+
+// export const UpdateOwnerNote = async (formInput: {
+//   walletAddress: string;
+//   nickname: string;
+//   notes: string;
+// }) => {
+//   try {
+//     const response = await cookieBasedClient.graphql({
+//       query: updateUkulele,
+//       variables: {
+//         input: {
+//           id: formInput.id,
+//           title: formInput.title,
+//           tokenID: formInput.tokenID,
+//           contractAddress: formInput.contractAddress,
+//           chain: formInput.chain
+//         },
+//       },
+//     });
+//     console.log("Updated Ukulele", response);
+//   } catch (error) {
+//     console.error("Error at UpdateUkulele:", error);
+//   }
+// };
