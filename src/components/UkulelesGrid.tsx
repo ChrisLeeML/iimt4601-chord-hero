@@ -12,6 +12,7 @@ const UkulelesGrid = () => {
   const FetchUkuleles = async () => {
     try {
       const ukulelesRes = await ListUkuleles();
+      console.log("ukulelesRes: ", ukulelesRes);
       setUkuleles(ukulelesRes);
     } catch (error) {
       console.error("Error fetching creators: ", error);
@@ -23,46 +24,47 @@ const UkulelesGrid = () => {
 
   return (
     <Grid
-        container
-        style={{
-            width: "100%",
-            paddingTop: 20,
-        }}
-        spacing={2}
-        >
-        {ukuleles?.map((ukulele: Ukulele) => (
-            <Grid key={ukulele.id} item xs={6} sm={4} md={3}>
-            <Link href={`ukulele/${ukulele.id}`}>
+      container
+      style={{
+        width: "100%",
+        paddingTop: 20,
+      }}
+      spacing={2}
+    >
+      {ukuleles.length > 0
+        ? ukuleles?.map((ukulele: Ukulele) => (
+            <Grid
+              key={ukulele.id}
+              item
+              xs={6}
+              sm={4}
+              md={3}
+              style={{ minHeight: "150px" }}
+            >
+              <Link href={`ukulele/${ukulele.id}`}>
                 <Box
-                style={{
+                  style={{
                     padding: 20,
                     borderRadius: 10,
                     height: "100%",
-                }}
-                sx={{ boxShadow: 2 }}
+                  }}
+                  sx={{ boxShadow: 2 }}
                 >
-                {/* <Image
-                src={ukulele.image}
-                alt={ukulele.title}
-                style={{ width: "100%", height: "auto" }}
-                /> */}
-                <Typography style={{ fontSize: "8px", color: "gray" }}>
+                  <Typography style={{ fontSize: "8px", color: "gray" }}>
                     {ukulele.id}
-                </Typography>
-                <Typography style={{ fontWeight: "bold", fontSize: "14px" }}>
+                  </Typography>
+                  <Typography style={{ fontWeight: "bold", fontSize: "14px" }}>
                     {ukulele.title}
-                </Typography>
-                <Typography style={{ fontSize: "10px", fontStyle: "italic" }}>
-                    {/*Creator:*/}
-                </Typography>
-                <Typography style={{ fontSize: "10px", fontStyle: "italic" }}>
-                    {/*NFT Owned by:*/}
-                </Typography>
+                  </Typography>
+                  <Typography style={{ fontSize: "10px", fontStyle: "italic" }}>
+                    {ukulele.chain}
+                  </Typography>
                 </Box>
-            </Link>
+              </Link>
             </Grid>
-        ))}
-        </Grid>
+          ))
+        : "Loading..."}
+    </Grid>
   );
 };
 

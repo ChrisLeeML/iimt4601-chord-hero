@@ -32,7 +32,7 @@ const CreatorsGrid = () => {
     >
       {creators && creators.length > 0
         ? creators?.map((creator: any) => (
-            <Grid key={creator?.id} item xs={6} sm={4} md={3} lg={2}>
+            <Grid key={creator?.id} item xs={6} sm={4} md={3}>
               <Link href={`creator/${creator?.id}`}>
                 <Box
                   style={{

@@ -7,8 +7,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { UpdateUkulele, DeleteUkulele } from "../api/ukuleleService";
+import React, { useEffect, useState } from "react";
+import {
+  UpdateUkulele,
+  DeleteUkulele,
+  GetUkuleleByID,
+} from "../api/ukuleleService";
 import { useRouter } from "next/navigation";
 
 const EditUkuleleForm = ({ ukuleleID }: { ukuleleID: string }) => {
@@ -18,14 +22,33 @@ const EditUkuleleForm = ({ ukuleleID }: { ukuleleID: string }) => {
   const [contractAddress, setContractAddress] = useState<string>("");
   const [chain, setChain] = useState<string>("");
   const [message, setMessage] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  // [TO DO] Implement a ukulele detail fetching and update the states based on the response.
-  // [TO DO] Implement a delete button.
+  const FetchUkulele = async () => {
+    try {
+      const ukuleleData = await GetUkuleleByID(ukuleleID);
+      if (ukuleleData) {
+        setTitle(ukuleleData.title as string);
+        setTokenID(ukuleleData.tokenID as string);
+        setContractAddress(ukuleleData.contractAddress as string);
+        setChain(ukuleleData.chain as string);
+        setLoading(false);
+      }
+    } catch (error: any) {
+      console.error("Error at FetchUkulele: ", error);
+      setMessage(error.message);
+      setLoading(false);
+    }
+  };
 
   const HandleSubmit = (e: any) => {
     e.preventDefault();
-    if (title.length > 0 && tokenID.length > 0 && contractAddress.length > 0 && chain.length) {
+    if (
+      title.length > 0 &&
+      tokenID.length > 0 &&
+      contractAddress.length > 0 &&
+      chain.length
+    ) {
       setLoading(true);
       setMessage("");
       console.log("Updating a Ukullee with the following data: ");
@@ -35,7 +58,7 @@ const EditUkuleleForm = ({ ukuleleID }: { ukuleleID: string }) => {
         title: title as string,
         tokenID: tokenID as string,
         contractAddress: contractAddress as string,
-        chain: chain as string
+        chain: chain as string,
       };
       SubmitForm(formInput);
     } else {
@@ -75,9 +98,7 @@ const EditUkuleleForm = ({ ukuleleID }: { ukuleleID: string }) => {
     }
   };
 
-  const DeleteForm = async (formInput: {
-    id: string;
-  }) => {
+  const DeleteForm = async (formInput: { id: string }) => {
     try {
       await DeleteUkulele(formInput);
       router.push("/ukulele");
@@ -88,6 +109,9 @@ const EditUkuleleForm = ({ ukuleleID }: { ukuleleID: string }) => {
     }
   };
 
+  useEffect(() => {
+    FetchUkulele();
+  }, []);
   return (
     <form
       style={{
@@ -112,24 +136,28 @@ const EditUkuleleForm = ({ ukuleleID }: { ukuleleID: string }) => {
           Edit a Ukulele
         </FormLabel>
         <TextField
+          disabled={loading}
           label="title"
           style={{ marginBottom: 20, width: 400 }}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <TextField
+          disabled={loading}
           label="tokenID"
           style={{ marginBottom: 20, width: 400 }}
           value={tokenID}
           onChange={(e) => setTokenID(e.target.value)}
         />
         <TextField
+          disabled={loading}
           label="contractAddress"
           style={{ marginBottom: 20, width: 400 }}
           value={contractAddress}
           onChange={(e) => setContractAddress(e.target.value)}
         />{" "}
         <TextField
+          disabled={loading}
           label="chain"
           style={{ marginBottom: 20, width: 400 }}
           value={chain}

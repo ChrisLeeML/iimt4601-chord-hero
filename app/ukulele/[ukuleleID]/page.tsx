@@ -1,12 +1,29 @@
 "use client";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Box, Button, Container, Typography } from "@mui/material";
-import { GetUkuleleByID, ListCreators } from "@/src/api/ukuleleService";
+import {
+  Box,
+  Button,
+  Container,
+  Typography,
+  Table,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableCell,
+  Paper,
+  TableBody,
+  IconButton,
+  DialogProps,
+  Divider,
+} from "@mui/material";
+import {
+  GetSchoolByID,
+  GetUkuleleByID,
+  ListCreators,
+} from "@/src/api/ukuleleService";
 import axios from "axios";
-import { Ukulele } from "@/src/API";
-
-//import { FetchTransactionByUkulele } from "@/src/api/simpleHash";
+import Link from "next/link";
 
 const FetchTransactionByUkulele = async (ukuleleData: Array<any>) => {
   const chain = ukuleleData[0].chain;
@@ -35,10 +52,10 @@ export default function UkulelePage({
   params: { ukuleleID: string };
 }) {
   // Implement a client-side method to fetch the Ukulele detail. [TO DO]
-  const [ukuleleData, setUkuleleData] = useState<any>([]);
+  const [ukuleleData, setUkuleleData] = useState<any>();
   const [transactionData, setTransactionData] = useState<any>(null);
-  const [creatorData, setCreatorData] = useState<any>([]);
-  const [data, setData] = useState<any>([]);
+  const [creatorData, setCreatorData] = useState<any>();
+  const [school, setSchool] = useState<any>();
 
   const fetchUkulele = async () => {
     try {
@@ -63,29 +80,42 @@ export default function UkulelePage({
     }
   };
 
+  const fetchSchool = async (schoolID: string) => {
+    try {
+      const schoolData = await GetSchoolByID(schoolID);
+      setSchool(schoolData);
+    } catch (error) {
+      console.error("Error at fetchSchool: ", error);
+    }
+  };
+
+  const fetchTransaction = async () => {
+    try {
+      const transactions = await FetchTransactionByUkulele([ukuleleData]);
+      if (transactions && transactions.data) {
+        const transfers = transactions.data.transfers;
+        setTransactionData(transfers);
+        console.log("transactionData", transactionData);
+      }
+    } catch (error) {
+      console.error("Error fetching transaction", error);
+    }
+  };
+
   useEffect(() => {
     fetchUkulele();
   }, [params.ukuleleID]);
 
   useEffect(() => {
-    if (!ukuleleData || ukuleleData.length === 0) {
-      // If ukuleleData is not set or is empty, do not fetch transactions
-      return;
+    if (creatorData) {
+      fetchSchool(creatorData.schoolID);
     }
-    const fetchTransaction = async () => {
-      try {
-        const transactions = await FetchTransactionByUkulele([ukuleleData]);
+  }, [creatorData]);
 
-        if (transactions && transactions.data) {
-          const transfers = transactions.data.transfers;
-          setTransactionData(transfers);
-          console.log("transactionData", transactionData);
-        }
-      } catch (error) {
-        console.error("Error fetching transaction", error);
-      }
-    };
-    fetchTransaction();
+  useEffect(() => {
+    if (ukuleleData) {
+      fetchTransaction();
+    }
   }, [ukuleleData]);
 
   return (
@@ -119,51 +149,194 @@ export default function UkulelePage({
         </Button>
       </Box>
 
-      <Typography
-        style={{
-          fontSize: 20,
-          fontWeight: "bold",
-          marginTop: 10,
-          marginBottom: 20,
-        }}
-      >
-        Ukulele Name: {ukuleleData.title}
-      </Typography>
-      <Typography
-        style={{
-          fontSize: 16,
-          fontWeight: "bold",
-          marginTop: 10,
-          marginBottom: 20,
-        }}
-      >
-        Contract Address: {ukuleleData.contractAddress}
-      </Typography>
-      <Typography
-        style={{
-          fontSize: 16,
-          fontWeight: "bold",
-          marginTop: 10,
-          marginBottom: 20,
-        }}
-      >
-        Token ID: {ukuleleData.tokenID}
-      </Typography>
-      <Typography
-        style={{
-          fontSize: 16,
-          fontWeight: "bold",
-          marginTop: 10,
-          marginBottom: 20,
-        }}
-      >
-        Creator Info <br></br>
-        Name: {creatorData.name}
-        <br></br>
-        School:
-      </Typography>
-      <Typography>Analytics</Typography>
-      {/* Display an analytics. owner info, stuff stuff... */}
+      {ukuleleData ? (
+        <>
+          {" "}
+          <Typography
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              marginTop: 10,
+              marginBottom: 20,
+            }}
+          >
+            {ukuleleData.title}
+          </Typography>
+          <Typography
+            style={{
+              fontSize: 12,
+              marginTop: 10,
+            }}
+          >
+            <strong>Contract Address:</strong> {ukuleleData.contractAddress}
+          </Typography>
+          <Typography
+            style={{
+              fontSize: 12,
+              marginBottom: 20,
+            }}
+          >
+            <strong>Token ID:</strong> {ukuleleData.tokenID}
+          </Typography>
+          {creatorData ? (
+            <Link href={`/creator/${creatorData.id}`}>
+              <Typography
+                style={{
+                  fontSize: 14,
+                  marginTop: 10,
+                  marginBottom: 20,
+                }}
+              >
+                <strong>Creator Info</strong> <br></br>
+                <strong>Name:</strong> {creatorData.name}
+                <br></br>
+                {school ? (
+                  <>
+                    <strong>School:</strong> {school.title}
+                  </>
+                ) : null}
+              </Typography>
+            </Link>
+          ) : (
+            <Typography
+              style={{
+                fontSize: 12,
+                marginTop: 10,
+                marginBottom: 20,
+                color: "red",
+              }}
+            >
+              No creator was assigned.
+            </Typography>
+          )}
+          {transactionData && transactionData.length > 0 ? (
+            <>
+              <Divider
+                style={{
+                  height: "3px",
+                  background: "black",
+                  marginBottom: 10,
+                }}
+              />
+              <Typography style={{ fontWeight: "bold", marginBottom: 20 }}>
+                Analytics
+              </Typography>
+              <TableContainer component={Paper}>
+                <Table
+                  sx={{ minWidth: 650 }}
+                  aria-label="NFT Owners List Table"
+                >
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="left">Timestamp</TableCell>
+                      <TableCell align="left">NFT ID</TableCell>
+                      <TableCell align="left">Chain</TableCell>
+                      <TableCell align="left">Contract Address</TableCell>
+                      <TableCell align="left">Token ID</TableCell>
+                      <TableCell align="left">Event Type</TableCell>
+                      <TableCell align="left">From Address</TableCell>
+                      <TableCell align="left">To Address</TableCell>
+                      <TableCell align="left">Quantity</TableCell>
+                      <TableCell align="left">Block Number</TableCell>
+                      <TableCell align="left">Batch Transfer Index</TableCell>
+                      <TableCell align="left">Block Hash</TableCell>
+                      <TableCell align="left">Log Index</TableCell>
+                      <TableCell align="left">Collection ID</TableCell>
+                      <TableCell align="left">Quantity String</TableCell>
+                      <TableCell align="left">Transaction</TableCell>
+                      <TableCell align="left">Transaction Initiator</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {transactionData.map((transaction: any) => (
+                      <TableRow
+                        key={transaction.timestamp}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell align="left">
+                          {transaction.timestamp}
+                        </TableCell>
+                        <TableCell component="th" align="center" scope="row">
+                          <Box
+                            style={{
+                              textOverflow: "ellipsis",
+                              overflow: "hidden",
+                              width: "22rem",
+                            }}
+                          >
+                            <Typography
+                              noWrap
+                              style={{
+                                fontSize: "14px",
+                              }}
+                            >
+                              {transaction.nft_id}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell align="left">{transaction.chain}</TableCell>
+                        <TableCell align="left">
+                          {transaction.contract_address}
+                        </TableCell>
+                        <TableCell align="left">
+                          {transaction.token_id}
+                        </TableCell>
+                        <TableCell align="left">
+                          {transaction.event_type}
+                        </TableCell>
+                        <TableCell align="left">
+                          {transaction.from_address
+                            ? transaction.from_address
+                            : "N/A"}
+                        </TableCell>
+                        <TableCell align="left">
+                          {transaction.to_address
+                            ? transaction.to_address
+                            : "N/A"}
+                        </TableCell>
+                        <TableCell align="left">
+                          {transaction.quantity}
+                        </TableCell>
+
+                        <TableCell align="left">
+                          {transaction.block_number}
+                        </TableCell>
+                        <TableCell align="left">
+                          {transaction.batch_transfer_index}
+                        </TableCell>
+                        <TableCell align="left">
+                          {transaction.block_hash}
+                        </TableCell>
+                        <TableCell align="left">
+                          {transaction.log_index}
+                        </TableCell>
+                        <TableCell align="left">
+                          {transaction.collection_id}
+                        </TableCell>
+                        <TableCell align="left">
+                          {transaction.quantity_string}
+                        </TableCell>
+                        <TableCell align="left">
+                          {transaction.transaction}
+                        </TableCell>
+                        <TableCell align="left">
+                          {transaction.transaction_initiator}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </>
+          ) : (
+            <Typography>Loading...</Typography>
+          )}
+        </>
+      ) : (
+        "Loading..."
+      )}
     </Container>
   );
 }

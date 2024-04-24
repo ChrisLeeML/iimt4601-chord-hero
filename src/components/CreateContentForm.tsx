@@ -28,7 +28,7 @@ const CreateContentForm = () => {
 
   const HandleSubmit = (e: any) => {
     e.preventDefault();
-    if (title.length > 0 && threshold.length >=0 && type.length > 0) {
+    if (title.length > 0 && threshold.length >= 0 && type.length > 0) {
       if (type === "Text" && textContent.length === 0) {
         setMessage("Text content is required for the 'Text' type.");
       } else if (type === "Video" && videoLink.length === 0) {
@@ -89,8 +89,8 @@ const CreateContentForm = () => {
           alignItems: "center",
         }}
       >
-        <FormLabel style={{ fontSize: 24, marginBottom: 10 }}>
-          Create a Exclusive Content
+        <FormLabel style={{ fontSize: 16, marginBottom: 20 }}>
+          Create an Exclusive Content
         </FormLabel>
         <TextField
           label="Content Title"

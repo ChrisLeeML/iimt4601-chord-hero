@@ -10,6 +10,7 @@ import {
   getOwner,
   listOwners,
   listSchools,
+  getContent,
 } from "@/src/graphql/queries";
 import {
   createCreator,
@@ -58,6 +59,36 @@ export const GetCreatorByID = async (creatorID: string) => {
     return data.getCreator;
   } catch (error) {
     console.error("Error at getCreatorByID: ", error);
+  }
+};
+
+export const GetSchoolByID = async (schoolID: string) => {
+  try {
+    const { data } = await cookieBasedClient.graphql({
+      query: getSchool,
+      variables: {
+        id: schoolID,
+      },
+    });
+    console.log("School Data: ", data);
+    return data.getSchool;
+  } catch (error) {
+    console.error("Error at GetSchoolByID: ", error);
+  }
+};
+
+export const GetContentByID = async (contentID: string) => {
+  try {
+    const { data } = await cookieBasedClient.graphql({
+      query: getContent,
+      variables: {
+        id: contentID,
+      },
+    });
+    console.log("Content Data: ", data);
+    return data.getContent;
+  } catch (error) {
+    console.error("Error at GetContentByID: ", error);
   }
 };
 

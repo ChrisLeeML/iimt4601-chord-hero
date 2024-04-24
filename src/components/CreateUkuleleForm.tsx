@@ -19,8 +19,6 @@ const CreateUkuleleForm = () => {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  // [TO DO]
-
   const HandleSubmit = (e: any) => {
     e.preventDefault();
     if (title.length > 0 && tokenID.length > 0 && contractAddress.length > 0) {
@@ -80,25 +78,25 @@ const CreateUkuleleForm = () => {
           Create a Ukulele
         </FormLabel>
         <TextField
-          label="title"
+          label="Ukulele Title"
           style={{ marginBottom: 20, width: 400 }}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <TextField
-          label="tokenID"
+          label="Token ID"
           style={{ marginBottom: 20, width: 400 }}
           value={tokenID}
           onChange={(e) => setTokenID(e.target.value)}
         />
         <TextField
-          label="contractAddress"
+          label="Contract Address"
           style={{ marginBottom: 20, width: 400 }}
           value={contractAddress}
           onChange={(e) => setContractAddress(e.target.value)}
         />{" "}
         <TextField
-          label="chain"
+          label="Chain"
           style={{ marginBottom: 20, width: 400 }}
           value={chain}
           onChange={(e) => setChain(e.target.value)}
