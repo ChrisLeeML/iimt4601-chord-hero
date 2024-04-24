@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
-import { GetUkuleleByID } from "@/src/api/ukuleleService";
+import { GetUkuleleByID, ListCreators} from "@/src/api/ukuleleService";
 import axios from "axios";
 //import { FetchTransactionByUkulele } from "@/src/api/simpleHash";
 
@@ -31,13 +31,25 @@ export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
   // Implement a client-side method to fetch the Ukulele detail. [TO DO]
   const [ukuleleData, setUkuleleData] = useState<any>([]);
   const [transactionData, setTransactionData] = useState<any>(null);
+  const [creatorData, setCreatorData] = useState<any>([]);
   
   useEffect(() => {
     const fetchUkulele = async () => {
       try{
-        const ukuleleData = await GetUkuleleByID(params.ukuleleID);
-        console.log("ukueleleData",ukuleleData);
-        setUkuleleData(ukuleleData);
+        const ukuleleResponse = await GetUkuleleByID(params.ukuleleID);
+        const creatorsResponse = await ListCreators();
+        console.log("creatorsResponse", creatorsResponse);
+        console.log("ukueleleResponse",ukuleleResponse);
+        setUkuleleData(ukuleleResponse);
+
+        if(ukuleleResponse){
+          const matchingCreator = creatorsResponse.find(creator => creator.creatorUkuleleId === ukuleleResponse.id);
+          if (matchingCreator) {
+            console.log(matchingCreator);
+            setCreatorData(matchingCreator);
+            console.log("creatorData",creatorData);
+          }
+        }
       } catch (error) {
         console.error("Error fetching ukuleleData", error);
       }
@@ -136,7 +148,10 @@ export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
           marginBottom: 20,
         }}
       >
-        Creator Info
+        Creator Info <br></br>
+        Name: {creatorData.name}<br></br>
+        School: 
+      
       </Typography>
       <Typography>Analytics</Typography>
       {/* Display an analytics. owner info, stuff stuff... */}
