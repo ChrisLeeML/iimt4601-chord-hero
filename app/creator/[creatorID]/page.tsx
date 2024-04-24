@@ -114,7 +114,7 @@ export default function Student({ params }: { params: { creatorID: string } }) {
                 spacing={2}
               >
                 <Grid key={ukuleleData.id} item xs={6} sm={4} md={3}>
-                  <Link href={`ukulele/${ukuleleData.id}`}>
+                  <Link href={`/ukulele/${ukuleleData.id}`}>
                     <Box
                       style={{
                         padding: 20,
