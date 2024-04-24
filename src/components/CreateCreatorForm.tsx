@@ -3,12 +3,20 @@ import {
   Button,
   FormControl,
   FormLabel,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { CreateCreator } from "../api/ukuleleService";
+import React, { useEffect, useState } from "react";
+import {
+  CreateCreator,
+  ListSchools,
+  ListUkuleles,
+} from "../api/ukuleleService";
 import { useRouter } from "next/navigation";
+import { School, Ukulele } from "../API";
 
 const CreateCreatorForm = () => {
   const router = useRouter();
@@ -17,6 +25,9 @@ const CreateCreatorForm = () => {
   const [creatorUkuleleID, setCreatorUkuleleID] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+
+  const [schoolOptions, setSchoolOptions] = useState<School[]>([]);
+  const [ukuleleOptions, setUkuleleOptions] = useState<Ukulele[]>([]);
 
   const HandleSubmit = (e: any) => {
     e.preventDefault();
@@ -51,6 +62,33 @@ const CreateCreatorForm = () => {
     }
   };
 
+  const HandleListUkuleles = async () => {
+    try {
+      const ukuleles = await ListUkuleles();
+      if (ukuleles && ukuleles?.length > 0) {
+        setUkuleleOptions(ukuleles);
+      }
+    } catch (error) {
+      console.error("Error at HandleListUkuleles: ", error);
+    }
+  };
+
+  const HandleListSchools = async () => {
+    try {
+      const schools = await ListSchools();
+      if (schools && schools?.length > 0) {
+        setSchoolOptions(schools);
+      }
+    } catch (error) {
+      console.error("Error at HandleListSchools: ", error);
+    }
+  };
+
+  useEffect(() => {
+    HandleListUkuleles();
+    HandleListSchools();
+  }, []);
+
   return (
     <form
       style={{
@@ -80,18 +118,40 @@ const CreateCreatorForm = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <TextField
-          label="Ukulele ID"
-          style={{ marginBottom: 20, width: 400 }}
-          value={schoolID}
-          onChange={(e) => setSchoolID(e.target.value)}
-        />
-        <TextField
-          label="School ID"
-          style={{ marginBottom: 20, width: 400 }}
+        <Typography>
+          {schoolOptions.length > 0 ? "Choose School" : "Loading Schools..."}
+        </Typography>
+        <FormControl style={{ marginBottom: 20, width: 400 }}>
+          <Select
+            value={schoolID}
+            onChange={(e) => setSchoolID(e.target.value)}
+            style={{ width: "100%" }}
+          >
+            {schoolOptions.map((option) => (
+              <MenuItem key={option.id} value={option.id}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Typography>
+          {ukuleleOptions.length > 0 ? "Choose Ukulele" : "Loading Ukuleles..."}
+        </Typography>
+        <Select
           value={creatorUkuleleID}
           onChange={(e) => setCreatorUkuleleID(e.target.value)}
-        />
+          style={{ width: 400, marginBottom: 20 }}
+          disabled={ukuleleOptions.length == 0}
+        >
+          {ukuleleOptions.length > 0
+            ? ukuleleOptions.map((option) => (
+                <MenuItem key={option.id} value={option.id}>
+                  {option.title}
+                </MenuItem>
+              ))
+            : ""}
+        </Select>
+
         <Button
           style={{ background: loading ? "gray" : "black", marginBottom: 50 }}
           size="large"

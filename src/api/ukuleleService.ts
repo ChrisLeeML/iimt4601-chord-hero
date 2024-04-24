@@ -7,15 +7,15 @@ import {
   listCreators,
   listUkuleles,
   listContents,
-  getOwnerByWallet,
   getOwner,
-  listOwners
+  listOwners,
+  listSchools
 } from "@/src/graphql/queries";
-import { 
+import {
   createCreator,
   updateCreator,
   deleteCreator,
-  createContent, 
+  createContent,
   updateContent,
   deleteContent,
   createUkulele,
@@ -54,7 +54,7 @@ export const GetCreatorByID = async (creatorID: string) => {
         id: creatorID,
       },
     });
-    console.log("CREATORDATA",data);
+    console.log("CREATORDATA", data);
     return data.getCreator;
   } catch (error) {
     console.error("Error at getCreatorByID: ", error);
@@ -147,15 +147,13 @@ export const UpdateCreator = async (formInput: {
   }
 };
 
-export const DeleteCreator = async (formInput: {
-  id: string;
-}) => {
+export const DeleteCreator = async (formInput: { id: string }) => {
   try {
     const response = await cookieBasedClient.graphql({
       query: deleteCreator,
       variables: {
         input: {
-          id: formInput.id
+          id: formInput.id,
         },
       },
     });
@@ -193,9 +191,9 @@ export const CreateContent = async (formInput: {
       },
     };
 
-    if (type === 'VIDEO') {
+    if (type === "VIDEO") {
       variables.input.videoLink = videoLink;
-    } else if (type === 'TEXT') {
+    } else if (type === "TEXT") {
       variables.input.textContent = textContent;
     }
 
@@ -227,7 +225,7 @@ export const UpdateContent = async (formInput: {
           threshold: formInput.threshold,
           type: formInput.type,
           videoLink: formInput.videoLink,
-          textContent: formInput.textContent
+          textContent: formInput.textContent,
         },
       },
     });
@@ -237,15 +235,13 @@ export const UpdateContent = async (formInput: {
   }
 };
 
-export const DeleteContent = async (formInput: {
-  id: string;
-}) => {
+export const DeleteContent = async (formInput: { id: string }) => {
   try {
     const response = await cookieBasedClient.graphql({
       query: deleteContent,
       variables: {
         input: {
-          id: formInput.id
+          id: formInput.id,
         },
       },
     });
@@ -263,7 +259,7 @@ export const GetUkuleleByID = async (ukuleleID: string) => {
         id: ukuleleID,
       },
     });
-    console.log("CREATORDATA",data);
+    console.log("CREATORDATA", data);
     return data.getUkulele;
   } catch (error) {
     console.error("Error at getCreatorByID: ", error);
@@ -277,10 +273,22 @@ export const ListUkuleles = async () => {
     });
 
     const ukuleles = data.listUkuleles.items;
-    //console.log("$$$$$$$$$$", creators)
     return ukuleles;
   } catch (error) {
     console.error("Error at ListUkuleles: ", error);
+  }
+};
+
+export const ListSchools = async () => {
+  try {
+    const { data }: any = await cookieBasedClient.graphql({
+      query: listSchools,
+    });
+
+    const schools = data.listSchools.items;
+    return schools;
+  } catch (error) {
+    console.error("Error at ListSchools: ", error);
   }
 };
 
@@ -298,7 +306,7 @@ export const CreateUkulele = async (formInput: {
           title: formInput.title,
           tokenID: formInput.tokenID,
           contractAddress: formInput.contractAddress,
-          chain: formInput.chain
+          chain: formInput.chain,
         },
       },
     });
@@ -324,7 +332,7 @@ export const UpdateUkulele = async (formInput: {
           title: formInput.title,
           tokenID: formInput.tokenID,
           contractAddress: formInput.contractAddress,
-          chain: formInput.chain
+          chain: formInput.chain,
         },
       },
     });
@@ -334,15 +342,13 @@ export const UpdateUkulele = async (formInput: {
   }
 };
 
-export const DeleteUkulele = async (formInput: {
-  id: string;
-}) => {
+export const DeleteUkulele = async (formInput: { id: string }) => {
   try {
     const response = await cookieBasedClient.graphql({
       query: deleteUkulele,
       variables: {
         input: {
-          id: formInput.id
+          id: formInput.id,
         },
       },
     });
@@ -368,20 +374,20 @@ export const ListOwners = async () => {
   }
 };
 
-export const GetOwnerNote = async (walletAddress: string) => {
-  try {
-    const { data } = await cookieBasedClient.graphql({
-      query: getOwnerByWallet,
-      variables: {
-        walletAddress: walletAddress
-      }
-    });
-    console.log("CREATORDATA",data);
-    return data.getOwnerByWallet;
-  } catch (error) {
-    console.error("Error at GetOwnerNote", error);
-  }
-};
+// export const GetOwnerNote = async (walletAddress: string) => {
+//   try {
+//     const { data } = await cookieBasedClient.graphql({
+//       query: listOwners,
+//       variables: {
+//         walletAddress: walletAddress
+//       }
+//     });
+//     console.log("CREATORDATA",data);
+//     return data.getOwnerByWallet;
+//   } catch (error) {
+//     console.error("Error at GetOwnerNote", error);
+//   }
+// };
 
 export const CreateOwnerNote = async (formInput: {
   walletAddress: string;

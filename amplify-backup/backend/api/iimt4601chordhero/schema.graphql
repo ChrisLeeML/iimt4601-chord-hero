@@ -1,18 +1,22 @@
-type Owner @model @auth(rules: [{ allow: public }]) {
+type Owner 
+@model 
+@auth(rules: [{allow: public}])
+@key(name: "byWalletAddress", fields: ["walletAddress"], queryField: "ownerByWalletAddress") 
+ {
   id: ID!
-  walletAddress: String! @index(name: "byWalletAddress")
+  walletAddress: String!
   nickname: String
   notes: String
 }
 
-type User @model @auth(rules: [{ allow: public }]) {
+type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   authID: String
   isChordHero: Boolean
 }
 
-type School @model @auth(rules: [{ allow: public }]) {
+type School @model @auth(rules: [{allow: public}]) {
   id: ID!
   title: String
   Creators: [Creator] @hasMany(indexName: "bySchool", fields: ["id"])
@@ -23,7 +27,7 @@ enum ContentType {
   TEXT
 }
 
-type Content @model @auth(rules: [{ allow: public }]) {
+type Content @model @auth(rules: [{allow: public}]) {
   id: ID!
   title: String
   threshold: Int
@@ -32,7 +36,7 @@ type Content @model @auth(rules: [{ allow: public }]) {
   textContent: String
 }
 
-type Ukulele @model @auth(rules: [{ allow: public }]) {
+type Ukulele @model @auth(rules: [{allow: public}]) {
   id: ID!
   title: String
   tokenID: String
@@ -40,9 +44,10 @@ type Ukulele @model @auth(rules: [{ allow: public }]) {
   chain: String
 }
 
-type Creator @model @auth(rules: [{ allow: public }]) {
+type Creator @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   Ukulele: Ukulele @hasOne
   schoolID: ID! @index(name: "bySchool")
 }
+ 

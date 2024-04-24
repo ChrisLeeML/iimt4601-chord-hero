@@ -35,6 +35,10 @@ function NavBar() {
   const [isSignInLoading, setIsSignInLoading] = useState<boolean>(false);
   const [isMetamask, setIsMetamask] = useState<boolean>(false);
 
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+
   const MetaMaskStatus = () => {
     const { status, connect, account, chainId, ethereum } = useMetaMask();
 
@@ -100,10 +104,27 @@ function NavBar() {
   // Implement a real sign out. [TO DO]
   const handleSignOut = () => {
     //
+    setIsSignedIn(false);
   };
 
   const handleSignIn = () => {
     setIsSignInLoading(true);
+    setMessage("");
+    if (email.length > 0 && password.length > 0) {
+      if (email == "anthonyc@chordhero.com" && password == "123456") {
+        setIsSignedIn(true);
+        setEmail("");
+        setPassword("");
+        setIsModalOpen(false);
+        setIsSignInLoading(false);
+      } else {
+        setMessage("Username or password is incorrect.");
+        setIsSignInLoading(false);
+      }
+    } else {
+      setMessage("Username and password are required.");
+      setIsSignInLoading(false);
+    }
   };
   // Implement a real sign in. [TO DO]
 
@@ -275,6 +296,10 @@ function NavBar() {
               variant="outlined"
               type="email"
               style={{ width: "100%", marginBottom: 10 }}
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
             <TextField
               id="outlined-basic"
@@ -282,8 +307,20 @@ function NavBar() {
               variant="outlined"
               type="password"
               style={{ width: "100%", marginBottom: 10 }}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
-
+            {message.length > 0 ? (
+              <Typography
+                style={{ color: "red", fontSize: 12, marginBottom: 10 }}
+              >
+                {message}
+              </Typography>
+            ) : (
+              ""
+            )}
             <Button
               variant="outlined"
               style={{ color: "black", borderColor: "black", marginBottom: 10 }}
