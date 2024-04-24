@@ -374,22 +374,8 @@ export const ListOwners = async () => {
   }
 };
 
-// export const GetOwnerNote = async (walletAddress: string) => {
-//   try {
-//     const { data } = await cookieBasedClient.graphql({
-//       query: listOwners,
-//       variables: {
-//         walletAddress: walletAddress
-//       }
-//     });
-//     console.log("CREATORDATA",data);
-//     return data.getOwnerByWallet;
-//   } catch (error) {
-//     console.error("Error at GetOwnerNote", error);
-//   }
-// };
 
-export const CreateOwnerNote = async (formInput: {
+export const CreateOwner = async (formInput: {
   walletAddress: string;
   nickname: string;
   notes: string;
@@ -405,32 +391,32 @@ export const CreateOwnerNote = async (formInput: {
         },
       },
     });
-    console.log("Created notes", response);
+    console.log("Created owner", response);
   } catch (error) {
-    console.error("Error at CreateOwnerNote:", error);
+    console.error("Error at CreateOwner:", error);
   }
 };
 
-// export const UpdateOwnerNote = async (formInput: {
-//   walletAddress: string;
-//   nickname: string;
-//   notes: string;
-// }) => {
-//   try {
-//     const response = await cookieBasedClient.graphql({
-//       query: updateUkulele,
-//       variables: {
-//         input: {
-//           id: formInput.id,
-//           title: formInput.title,
-//           tokenID: formInput.tokenID,
-//           contractAddress: formInput.contractAddress,
-//           chain: formInput.chain
-//         },
-//       },
-//     });
-//     console.log("Updated Ukulele", response);
-//   } catch (error) {
-//     console.error("Error at UpdateUkulele:", error);
-//   }
-// };
+export const UpdateOwner = async (formInput: {
+  id: string;
+  walletAddress: string;
+  nickname: string;
+  notes: string;
+}) => {
+  try {
+    const response = await cookieBasedClient.graphql({
+      query: updateOwner,
+      variables: {
+        input: {
+          id: formInput.id,
+          walletAddress: formInput.walletAddress,
+          nickname: formInput.nickname,
+          notes: formInput.notes
+        },
+      },
+    });
+    console.log("Updated Owner", response);
+  } catch (error) {
+    console.error("Error at UpdateOwner:", error);
+  }
+};

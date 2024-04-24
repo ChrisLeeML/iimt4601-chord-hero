@@ -1,5 +1,8 @@
+"use client";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { ListOwners, CreateOwner, UpdateOwner } from "../api/ukuleleService";
+import { useRouter } from "next/navigation";
 
 const OwnerModal = ({
   isModalOpen,
@@ -12,14 +15,85 @@ const OwnerModal = ({
   walletAddress: string;
   selectedOwnerNickname: string;
 }) => {
+  const router = useRouter();
   const [ownerNickname, setOwnerNickname] = useState<string>(
     selectedOwnerNickname
   );
   const [ownerNote, setOwnerNote] = useState<string>("");
+  const [data, setOwnerData] = useState<any>([]);
+  const [ownerId, setOwnerId] = useState<string>("");
+
 
   // [TO DO] We need to check if there's an existing note based on the wallet address. If there is, we need to populate the data based on it.
 
   // [TO DO] Update. Delete.
+  useEffect(() => {
+    const FetchOwnerData = async () => {
+      try {
+        const ownerData = await ListOwners();
+        console.log("ownerDATA:",ownerData);
+        setOwnerData(ownerData);
+      } catch (error) {
+        console.error("Error fetching ownerData:", error);
+      }
+    };
+    FetchOwnerData();
+  }, []);
+
+  useEffect(() => {
+    const owner = data.find((item: any) => item.walletAddress === walletAddress);
+    if (owner) {
+      setOwnerId(owner.id);
+      setOwnerNickname(owner.nickname);
+      setOwnerNote(owner.notes);
+    } else {
+       // Assuming CreateOwner is a function you will define
+      setOwnerId("");
+      setOwnerNickname("");
+      setOwnerNote("");
+    }
+  }, [data, walletAddress]);
+
+  const HandleSubmit = async () => {
+    const formInput = {
+      walletAddress: walletAddress as string,
+      nickname: ownerNickname as string,
+      notes: ownerNote as string,
+    };
+    console.log(formInput);
+    if (ownerId) {
+      await updateOwner(formInput, ownerId);
+    } else {
+      await createNewOwner(formInput);
+    }
+  };
+
+  const createNewOwner = async (formInput: {
+    walletAddress: string;
+    nickname: string;
+    notes: string;
+  }) => {
+    try {
+      await CreateOwner(formInput);
+      router.push("/analytics");
+    } catch (error) {
+      console.error("Error creating new owner:", error);
+    }
+  };
+
+  const updateOwner = async (formInput: {
+    walletAddress: string;
+    nickname: string;
+    notes: string;
+  }, ownerId: string) => {
+    try {
+      console.log({ id: ownerId, ...formInput });
+      await UpdateOwner({ id: ownerId, ...formInput });
+      router.push("/analytics");
+    } catch (error) {
+      console.error("Error updating owner:", error);
+    }
+  };
 
   return (
     <Modal
@@ -69,6 +143,7 @@ const OwnerModal = ({
           />
         </Box>
         <Button
+          onClick={HandleSubmit}
           style={{
             width: "100%",
             bottom: 20,
