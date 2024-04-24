@@ -259,10 +259,10 @@ export const GetUkuleleByID = async (ukuleleID: string) => {
         id: ukuleleID,
       },
     });
-    console.log("CREATORDATA", data);
+    console.log("Ukulele data", data);
     return data.getUkulele;
   } catch (error) {
-    console.error("Error at getCreatorByID: ", error);
+    console.error("Error at getUkuleleByID: ", error);
   }
 };
 

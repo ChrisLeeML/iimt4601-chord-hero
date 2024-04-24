@@ -2,23 +2,44 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
-import { GetCreatorByID } from "@/src/api/ukuleleService";
+import { GetCreatorByID, GetUkuleleByID } from "@/src/api/ukuleleService";
 import { getCreator } from "@/src/graphql/queries"
 import { cookieBasedClient } from "../../layout";
 
 
 export default function Student({ params }: { params: { creatorID: string } }) {
   const [data, setData] = useState<any>([]);
+  const [ukuleleID, setUkuleleID] = useState<string>("");
+  const [ukuleleData, setUkuleleData] = useState<any>([]);
   
   useEffect(() => {
     const fetchCreator = async () => {
       const creatorData = await GetCreatorByID(params.creatorID);
       console.log(creatorData);
+      if(creatorData && creatorData.creatorUkuleleId){
+        setUkuleleID(creatorData.creatorUkuleleId);
+      }
       setData(creatorData);
     };
 
     fetchCreator();
   }, [params.creatorID]); 
+
+  useEffect(() => {
+    if (!ukuleleID || ukuleleID.length === 0) {
+      // If ukuleleData is not set or is empty, do not fetch transactions
+      return;
+    }
+    const fetchCreatorUkulele = async () => {
+      console.log("ukuleleID: ", ukuleleID);
+      const creatorUkuleleData = await GetUkuleleByID(ukuleleID);
+      console.log("creatorUkuleleData",creatorUkuleleData);
+      setUkuleleData(creatorUkuleleData);
+    };
+
+    fetchCreatorUkulele();
+  }, [data]); 
+
 
   return (
     <Container maxWidth="lg" style={{ minHeight: "100vh" }}>
@@ -71,7 +92,7 @@ export default function Student({ params }: { params: { creatorID: string } }) {
       >
         Creator School: {data.schoolID}
       </Typography>
-      <Typography>Ukuleles Created</Typography>
+      <Typography>Ukuleles Created {ukuleleData.title}</Typography>
       {/* Display a grid of ukuleles created */}
     </Container>
   );
