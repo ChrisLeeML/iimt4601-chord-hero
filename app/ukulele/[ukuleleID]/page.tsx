@@ -3,20 +3,69 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
 import { GetUkuleleByID } from "@/src/api/ukuleleService";
+import axios from "axios";
+//import { FetchTransactionByUkulele } from "@/src/api/simpleHash";
+
+const FetchTransactionByUkulele = async (ukuleleData: Array<any>) => {
+  const chain = ukuleleData[0].chain;
+  const contractAddress = ukuleleData[0].contractAddress;
+  const tokenId = ukuleleData[0].tokenID;
+  const url = `https://api.simplehash.com/api/v0/nfts/transfers/${chain}/${contractAddress}/${tokenId}?order_by=timestamp_desc&limit=50`
+ 
+  const headers = {
+    accept: "application/json",
+    "X-API-KEY":
+      "jihoolee529_sk_33a931b9-be65-41db-827c-ff09c2b316bf_g222szbb6t04ufl4",
+  };
+
+  try {
+    const response = await axios.get(url, { headers });
+    console.log("RESPONSES", response.data);
+    return response;
+  } catch (error) {
+    console.error("Error at FetchByUkulele: ", error);
+  }
+};
 
 export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
   // Implement a client-side method to fetch the Ukulele detail. [TO DO]
-  const [data, setData] = useState<any>([]);
+  const [ukuleleData, setUkuleleData] = useState<any>([]);
+  const [transactionData, setTransactionData] = useState<any>(null);
   
   useEffect(() => {
-    const fetchCreator = async () => {
-      const creatorData = await GetUkuleleByID(params.ukuleleID);
-      console.log(creatorData);
-      setData(creatorData);
+    const fetchUkulele = async () => {
+      try{
+        const ukuleleData = await GetUkuleleByID(params.ukuleleID);
+        console.log("ukueleleData",ukuleleData);
+        setUkuleleData(ukuleleData);
+      } catch (error) {
+        console.error("Error fetching ukuleleData", error);
+      }
     };
 
-    fetchCreator();
+    fetchUkulele();
   }, [params.ukuleleID]); 
+
+  useEffect(() => {
+    if (!ukuleleData || ukuleleData.length === 0) {
+      // If ukuleleData is not set or is empty, do not fetch transactions
+      return;
+    }
+    const fetchTransaction = async() => {
+      try {
+        const transactions = await FetchTransactionByUkulele([ukuleleData]);
+
+        if(transactions && transactions.data) {
+          const transfers = transactions.data.transfers;
+          setTransactionData(transfers);
+          console.log("transactionData", transactionData);
+        }
+      } catch (error) {
+        console.error("Error fetching transaction", error);
+      }
+    };
+    fetchTransaction();
+  }, [ukuleleData]);
 
   return (
     <Container maxWidth="lg" style={{ minHeight: "100vh" }}>
@@ -57,7 +106,7 @@ export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
           marginBottom: 20,
         }}
       >
-        Ukulele Name: {data.title}
+        Ukulele Name: {ukuleleData.title}
       </Typography>
       <Typography
         style={{
@@ -67,7 +116,7 @@ export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
           marginBottom: 20,
         }}
       >
-        Contract Address: {data.contractAddress}
+        Contract Address: {ukuleleData.contractAddress}
       </Typography>
       <Typography
         style={{
@@ -77,7 +126,7 @@ export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
           marginBottom: 20,
         }}
       >
-        Token ID: {data.tokenID}
+        Token ID: {ukuleleData.tokenID}
       </Typography>
       <Typography
         style={{
@@ -89,7 +138,7 @@ export default function Ukulele({ params }: { params: { ukuleleID: string } }) {
       >
         Creator Info
       </Typography>
-      <Typography>Ukulele Analytics</Typography>
+      <Typography>Analytics</Typography>
       {/* Display an analytics. owner info, stuff stuff... */}
     </Container>
   );
