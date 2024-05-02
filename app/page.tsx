@@ -92,6 +92,7 @@ function Home() {
                 padding: "15px 0px",
               }}
               href="https://chordhero.com/en-hk"
+              target="_blank"
             >
               Website
             </Button>
@@ -118,6 +119,7 @@ function Home() {
                 padding: "15px 0px",
               }}
               href="https://www.instagram.com/chordheromusic/"
+              target="_blank"
             >
               Social Media
             </Button>
@@ -144,6 +146,7 @@ function Home() {
                 padding: "15px 0px",
               }}
               href="https://opensea.io/"
+              target="_blank"
             >
               OpenSea
             </Button>

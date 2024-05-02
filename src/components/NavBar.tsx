@@ -226,11 +226,6 @@ function NavBar() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  <Link href="/profile">
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">Profile</Typography>
-                    </MenuItem>
-                  </Link>
                   {isMetamask ? null : (
                     <MenuItem onClick={handleSignOut}>
                       <Typography textAlign="center">Logout</Typography>

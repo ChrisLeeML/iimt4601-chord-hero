@@ -90,7 +90,7 @@ const EditUkuleleForm = ({ ukuleleID }: { ukuleleID: string }) => {
   }) => {
     try {
       await UpdateUkulele(formInput);
-      router.push("/creator");
+      router.push(`/ukulele/${ukuleleID}`);
     } catch (error: any) {
       console.error("Error at SubmitForm:", error);
       setMessage(error.message);
